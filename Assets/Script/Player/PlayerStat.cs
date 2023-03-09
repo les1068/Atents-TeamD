@@ -31,7 +31,7 @@ public class PlayerStat : MonoBehaviour
         }
     }
     //Attack ���ݷ�
-    protected float Attack;
+    protected float attack;
     //moveSpeed �̵��ӵ�
     float moveSpeed;
     //attackSpeed ���ݼӵ�
@@ -71,7 +71,7 @@ public class PlayerStat : MonoBehaviour
         maxExp = 10;
         HP = maxHp;
         moveSpeed = 10.0f;
-        Attack = 1;
+        attack = 1;
         attackSpeed = 2.0f;
     }
 
@@ -95,7 +95,7 @@ public class PlayerStat : MonoBehaviour
         HP = maxHp;
         maxExp *= 2; //(����?->float?)
         moveSpeed *= 1.2f;
-        Attack *= 1.2f;
+        attack *= 1.2f;
         attackSpeed *= 1.2f;
     }   
 }
