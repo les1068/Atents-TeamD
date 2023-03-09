@@ -203,7 +203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &7092591
 Rigidbody2D:
   serializedVersion: 4
@@ -573,7 +573,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693903861}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -662,7 +662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &734924473
 Rigidbody2D:
   serializedVersion: 4
@@ -785,7 +785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &956636322
 Rigidbody2D:
   serializedVersion: 4
@@ -938,7 +938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &985660763
 Rigidbody2D:
   serializedVersion: 4
@@ -1061,7 +1061,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &1634955335
 Rigidbody2D:
   serializedVersion: 4
@@ -1184,7 +1184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &1893155868
 Rigidbody2D:
   serializedVersion: 4
@@ -1403,8 +1403,16 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3313352767453639682, guid: c83a5a9c6a2cc714d95b94e42d6830c0, type: 3}
+      propertyPath: JumpPower
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313352767453639682, guid: c83a5a9c6a2cc714d95b94e42d6830c0, type: 3}
       propertyPath: MoveSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313352767453639682, guid: c83a5a9c6a2cc714d95b94e42d6830c0, type: 3}
+      propertyPath: jumpCount
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3313352767453639683, guid: c83a5a9c6a2cc714d95b94e42d6830c0, type: 3}
       propertyPath: m_Name
@@ -1432,7 +1440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3313352767453639687, guid: c83a5a9c6a2cc714d95b94e42d6830c0, type: 3}
       propertyPath: m_GravityScale
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c83a5a9c6a2cc714d95b94e42d6830c0, type: 3}

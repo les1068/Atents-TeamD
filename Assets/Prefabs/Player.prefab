@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3fb820c2b65660479415cf22b332325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveSpeed: 1
+  JumpPower: 30
+  jumpCount: 2
   inputVec: {x: 0, y: 0}
-  Speed: 1
 --- !u!50 &3313352767453639687
 Rigidbody2D:
   serializedVersion: 4
@@ -116,7 +118,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
