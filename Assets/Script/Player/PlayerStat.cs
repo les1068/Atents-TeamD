@@ -7,7 +7,7 @@ public class PlayerStat : MonoBehaviour
 {
     Player player;
     
-    //Level ·¹º§ (+ ÇÁ·ÎÆÛÆ¼)
+    //Level ï¿½ï¿½ï¿½ï¿½ (+ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼)
     byte level;
     public byte Level
     {
@@ -18,7 +18,7 @@ public class PlayerStat : MonoBehaviour
 
         }
     }
-    //Hp Ã¼·Â (+ ÇÁ·ÎÆÛÆ¼)
+    //Hp Ã¼ï¿½ï¿½ (+ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼)
     float currentHp;
     float maxHp;
     public float HP
@@ -30,13 +30,13 @@ public class PlayerStat : MonoBehaviour
             onHPChange?.Invoke(currentHp);
         }
     }
-    //Attack °ø°Ý·Â
-    float Attack;
-    //moveSpeed ÀÌµ¿¼Óµµ
+    //Attack ï¿½ï¿½ï¿½Ý·ï¿½
+    protected float Attack;
+    //moveSpeed ï¿½Ìµï¿½ï¿½Óµï¿½
     float moveSpeed;
-    //attackSpeed °ø°Ý¼Óµµ
+    //attackSpeed ï¿½ï¿½ï¿½Ý¼Óµï¿½
     float attackSpeed;
-    //Exp °æÇèÄ¡ + (ÇÁ·ÎÆÛÆ¼)
+    //Exp ï¿½ï¿½ï¿½ï¿½Ä¡ + (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼)
 
     private int maxExp;
     private int currentExp;
@@ -62,8 +62,8 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
-    // ---------------¾Æ·¡´Â ÇÔ¼ö±¸ÇöºÎ-----------
-    //½ºÅÈ ÃÊ±âÈ­ (°ÔÀÓ ½ÃÀÛÇÒ¶§)
+    // ---------------ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-----------
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½)
     void InitStat()
     {
         level = 1;
@@ -78,22 +78,22 @@ public class PlayerStat : MonoBehaviour
     public void AddHP(float plus)
     {
         HP += plus;
-        Debug.Log($"ÇöÀç HP:{HP}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ HP:{HP}");
     }
 
     public void AddExp(int plus)
     {
         EXP += plus;
-        Debug.Log($"ÇöÀç EXP:{currentExp}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ EXP:{currentExp}");
     }
-    void LevelUp() // ·¹º§¾÷
+    void LevelUp() // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         EXP -= maxExp;
         Level += 1;
-        //Æ¯¼º UP±ÔÄ¢ÇÊ¿ä
+        //Æ¯ï¿½ï¿½ UPï¿½ï¿½Ä¢ï¿½Ê¿ï¿½
         maxHp *= 1.2f;
         HP = maxHp;
-        maxExp *= 2; //(¸î¹è·Î?->float?)
+        maxExp *= 2; //(ï¿½ï¿½ï¿½ï¿½?->float?)
         moveSpeed *= 1.2f;
         Attack *= 1.2f;
         attackSpeed *= 1.2f;

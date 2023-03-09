@@ -13,7 +13,7 @@ public class Skill1 : Radar
         get => skillPower;
         set
         {
-            skillPower = str * value;
+            skillPower = Attack * value;
                 
         }
     }
