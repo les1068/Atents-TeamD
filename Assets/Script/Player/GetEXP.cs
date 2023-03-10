@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +7,7 @@ public class GetExp : MonoBehaviour
 {
     PlayerStat playerstat;
 
-    //¾òÀº °æÇèÄ¡
+    //ì–»ì€ ê²½í—˜ì¹˜
     int getExp;
 
     //--------------delegate-----------------

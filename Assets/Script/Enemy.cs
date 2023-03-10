@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Vector2 dirVec = target.position- rigid.position;   // Å¸°ÙÆ÷Áö¼Ç - ³ªÀÇ Æ÷Áö¼Ç
+        Vector2 dirVec = target.position- rigid.position;   // íƒ€ê²Ÿí¬ì§€ì…˜ - ë‚˜ì˜ í¬ì§€ì…˜
         Vector2 nextVec = dirVec.normalized * enemySpeed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
         rigid.velocity = Vector2.zero;

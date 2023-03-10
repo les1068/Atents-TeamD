@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -53,16 +53,16 @@ public class Player : MonoBehaviour
         inputDir = dir;
     }
 
-    private void OnAttack(InputAction.CallbackContext context)  // Å°º¸µå AÅ°
+    private void OnAttack(InputAction.CallbackContext context)  // í‚¤ë³´ë“œ Aí‚¤
     {
         Debug.Log("Attack");
     }
 
-    private void OnSkills(InputAction.CallbackContext context)  // Å°º¸µå SÅ°
+    private void OnSkills(InputAction.CallbackContext context)  // í‚¤ë³´ë“œ Sí‚¤
     {
         Debug.Log("SkillS");
     }
-    private void OnSkilld(InputAction.CallbackContext context)  // Å°º¸µå DÅ°
+    private void OnSkilld(InputAction.CallbackContext context)  // í‚¤ë³´ë“œ Dí‚¤
     {
         Debug.Log("SkillD");
     }
@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
         }
        
     }
-    private void FixedUpdate()  // ¹°¸® ¿¬»ê ÇÁ·¹ÀÓ¸¶´Ù È£ÃâµÇ´Â »ı¸íÁÖ±â ÇÔ¼ö
+    private void FixedUpdate()  // ë¬¼ë¦¬ ì—°ì‚° í”„ë ˆì„ë§ˆë‹¤ í˜¸ì¶œë˜ëŠ” ìƒëª…ì£¼ê¸° í•¨ìˆ˜
     {
         if (rigid.velocity.y < 0)
         {
@@ -94,10 +94,10 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        /*rigid.AddForce(inputVec);   // ÈûÀ» ÁÖ±â
+        /*rigid.AddForce(inputVec);   // í˜ì„ ì£¼ê¸°
 
-        rigid.velocity= inputVec;   // ¼Óµµ Á¦¾î
+        rigid.velocity= inputVec;   // ì†ë„ ì œì–´
 
-        rigid.MovePosition(rigid.position + inputVec);  // À§Ä¡ ÀÌµ¿*/
+        rigid.MovePosition(rigid.position + inputVec);  // ìœ„ì¹˜ ì´ë™*/
     }
 }
