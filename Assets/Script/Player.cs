@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class Player : MonoBehaviour
 {
     public float MoveSpeed = 0.1f;
@@ -13,12 +14,17 @@ public class Player : MonoBehaviour
     Vector3 inputDir = Vector3.zero;
     public Vector2 inputVec;
 
+    public GameObject skill1;                                   // ìŠ¤í‚¬1 ì˜¤ë¸Œì íŠ¸ ì„ ì–¸
+    Transform skillTransform;                                   // ìŠ¤í‚¬ ë‚˜ì˜¤ëŠ” ìœ„ì¹˜ ì„ ì–¸ 
+
+
     Rigidbody2D rigid;
 
     private void Awake()
     {
         inputActions = new PlayerInputAction();
         rigid = GetComponent<Rigidbody2D>();
+        skillTransform = transform.GetChild(1);                 // ìì‹ ì¤‘ ìŠ¤í‚¬ ë‚˜ì˜¤ëŠ” ìœ„ì¹˜ ì°¾ì•„ì£¼ê¸° 
     }
     private void OnEnable()
     {
@@ -49,16 +55,19 @@ public class Player : MonoBehaviour
         inputDir = dir;
     }
 
-    private void OnAttack(InputAction.CallbackContext context)   // Å°º¸µå AÅ°
+    private void OnAttack(InputAction.CallbackContext context)   // Å°ï¿½ï¿½ï¿½ï¿½ AÅ°
     {
         Debug.Log("Attack");
     }
 
-    private void OnSkills(InputAction.CallbackContext context)  // Å°º¸µå SÅ°
+    private void OnSkills(InputAction.CallbackContext context)  // Å°ï¿½ï¿½ï¿½ï¿½ SÅ°
     {
         Debug.Log("SkillS");
+        GameObject obj = Instantiate(skill1);                   // ìŠ¤í‚¬ s í‚¤ì— skill1 ë‚˜ì˜¤ë„ë¡ ì—°ê²°
+        obj.transform.position = skillTransform.position;       // ìŠ¤í‚¬ ë‚˜ì˜¤ëŠ” ìœ„ì¹˜ ì™€ ìŠ¤í‚¬ì˜ ìœ„ì¹˜ ì—°ê²° 
+
     }
-    private void OnSkilld(InputAction.CallbackContext context)  // Å°º¸µå DÅ°
+    private void OnSkilld(InputAction.CallbackContext context)  // Å°ï¿½ï¿½ï¿½ï¿½ DÅ°
     {
         Debug.Log("SkillD");
     }
@@ -66,16 +75,16 @@ public class Player : MonoBehaviour
     {
         transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
     }
-    private void FixedUpdate()  // ¹°¸® ¿¬»ê ÇÁ·¹ÀÓ¸¶´Ù È£ÃâµÇ´Â »ı¸íÁÖ±â ÇÔ¼ö
+    private void FixedUpdate()  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ ï¿½Ô¼ï¿½
     {
        
         rigid.MovePosition(rigid.position + inputVec);
         
         
-        /*rigid.AddForce(inputVec);   // ÈûÀ» ÁÖ±â
+        /*rigid.AddForce(inputVec);   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
 
-        rigid.velocity= inputVec;   // ¼Óµµ Á¦¾î
+        rigid.velocity= inputVec;   // ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        rigid.MovePosition(rigid.position + inputVec);  // À§Ä¡ ÀÌµ¿*/
+        rigid.MovePosition(rigid.position + inputVec);  // ï¿½ï¿½Ä¡ ï¿½Ìµï¿½*/
     }
 }
