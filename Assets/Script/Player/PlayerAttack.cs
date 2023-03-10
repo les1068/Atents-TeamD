@@ -33,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        transform.localPosition += Time.deltaTime * palyerAttackSpeed * transform.right;    // 오른쪽으로 이동
+        transform.localPosition += Time.deltaTime * playerAttackSpeed * transform.right;    // 오른쪽으로 이동
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -64,7 +64,7 @@ public class PlayerAttack : MonoBehaviour
 
     protected void OnDamage()
     {
-        player.HP -= enemy.GetAttackDamage();
+        //player.HP -= enemy.GetAttackDamage();
     }
 
     private void OnSkill1(InputAction.CallbackContext _)

@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public float MoveSpeed = 0.1f;
+    public float JumpPower = 10.0f;
+    public float jumpCount;
 
     PlayerInputAction inputActions;
 
@@ -112,15 +114,8 @@ public class Player : MonoBehaviour
    
     private void FixedUpdate()  // 물리 연산 프레임마다 호출되는 생명주기 함수
     {
-       
-        //rigid.MovePosition(rigid.position + inputVec);
-        
-        
-        /*rigid.AddForce(inputVec);   // 힘을 주기
 
-        rigid.velocity= inputVec;   // 속도 제어
-
-        rigid.MovePosition(rigid.position + inputVec);  // 위치 이동*/
+        
     }
 
   //-----------------------------------------------------------------------------------------------------------
@@ -130,6 +125,17 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+        }
+        transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
+
+        if (Input.GetKeyDown(KeyCode.UpArrow) && jumpCount < 2)
+        {
+            rigid.AddForce(Vector2.up * JumpPower * 2, ForceMode2D.Impulse);
+            jumpCount++;
+        }
         if (currentExp >= maxExp)
         {
             LevelUp();

@@ -7,7 +7,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float enemySpeed = 2.0f;
-    public Rigidbody2D enemyTarget;
+    public Rigidbody2D enemysTarget;
     protected Transform target;
 
     bool isLive;
@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Vector2 dirVec = enemyTarget.position - rigid.position;   // 타겟포지션 - 나의 포지션
+        Vector2 dirVec = enemysTarget.position - rigid.position;   // 타겟포지션 - 나의 포지션
         Vector2 nextVec = dirVec.normalized * enemySpeed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
         rigid.velocity = Vector2.zero;
@@ -112,7 +112,7 @@ public class Enemy : MonoBehaviour
     private void EnemyAttack()
     {
         // 플레이어 방향으로 공격하는 함수 만들기
-        transform.localPosition += Time.deltaTime * enemyAttackSpeed * -transform.right;    // 왼쪽으로 이동
+        //transform.localPosition += Time.deltaTime * enemyAttackSpeed * -transform.right;    // 왼쪽으로 이동
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -120,10 +120,10 @@ public class Enemy : MonoBehaviour
         if (currentHP != 0)
         {
             // Player 충돌시 Enemy HP 감소
-            if (collision.gameObject.CompareTag("PlayerAttack"))
+            /*if (collision.gameObject.CompareTag("PlayerAttack"))
             {
                 onDamageEnemy();
-            }
+            }*/
         }
         // Enemy 죽이면, player 경험치 증가
         else if (currentHP < 1)
