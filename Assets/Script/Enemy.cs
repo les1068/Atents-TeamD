@@ -1,13 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using TMPro;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     public float enemySpeed = 2.0f;
-    public Rigidbody2D target;
+    public Rigidbody2D enemyTarget;
+    protected Transform target;
 
     bool isLive;
 
@@ -19,23 +20,23 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Vector2 dirVec = target.position- rigid.position;   // 타겟포지션 - 나의 포지션
+        Vector2 dirVec = enemyTarget.position - rigid.position;   // 타겟포지션 - 나의 포지션
         Vector2 nextVec = dirVec.normalized * enemySpeed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
         rigid.velocity = Vector2.zero;
     }
     private void LateUpdate()
     {
-        
+
     }
 
     /// <summary>
-    /// Enemy �ִ� HP
+    /// Enemy 최대 HP
     /// </summary>
     protected float maxHP = 100.0f;
 
     /// <summary>
-    /// Enemy ���� HP
+    /// Enemy 현재 HP
     /// </summary>
     protected float currentHP = 100.0f;
 
@@ -47,12 +48,12 @@ public class Enemy : MonoBehaviour
     public TMP_Text EnemyHpText;
 
     /// <summary>
-    /// Enemy ����� player�� ��� �� ����ġ
+    /// Enemy 사망시 player가 얻게 될 경험치
     /// </summary>
     protected float exp = 30.0f;
 
     /// <summary>
-    /// Enemy ���ݷ�
+    /// Enemy 공격력
     /// </summary>
     protected float attackDamage = 10.0f;
 
@@ -62,35 +63,34 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// Enemy ����
+    /// Enemy 방어력
     /// </summary>
     protected float EnemyDefence = 20.0f;
 
     /// <summary>
-    /// Enemy �̵��ӵ�
+    /// Enemy 이동속도
     /// </summary>
     protected float moveSpeed = 10.0f;
 
     /// <summary>
-    /// Enemy ���� �ӵ�
+    /// Enemy 공격 속도
     /// </summary>
     protected float enemyAttackSpeed = 8.0f;
 
     /// <summary>
-    /// Enemy ������ flase, ����� true
+    /// Enemy 생존시 flase, 사망시 true
     /// </summary>
     bool isEnemyDead = false;
 
     /// <summary>
-    /// Enemy HP ��������Ʈ
+    /// Enemy HP 델리게이트
     /// </summary>
     public Action<int> onChangeEnemyHP;
 
     Player player = FindObjectOfType<Player>();
     PlayerStat playerStat = FindObjectOfType<PlayerStat>();
 
-    protected Transform target;
-    
+
     void Start()
     {
         target = player.transform;
@@ -98,31 +98,31 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.localPosition = Vector3.zero;      // ��ġ �ʱ�ȭ
+        transform.localPosition = Vector3.zero;      // 위치 초기화
     }
 
     private void Update()
     {
-        EnemyAttack();   
+        EnemyAttack();
     }
 
     private void EnemyAttack()
     {
-        // �÷��̾� �������� �����ϴ� �Լ� �����
-        transform.localPosition += Time.deltaTime * enemyAttackSpeed * -transform.right;    // �������� �̵�
+        // 플레이어 방향으로 공격하는 함수 만들기
+        transform.localPosition += Time.deltaTime * enemyAttackSpeed * -transform.right;    // 왼쪽으로 이동
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (currentHP != 0)
         {
-            // Player �浹�� Enemy HP ����
+            // Player 충돌시 Enemy HP 감소
             if (collision.gameObject.CompareTag("PlayerAttack"))
             {
                 onDamageEnemy();
             }
         }
-        // Enemy ���̸�, player ����ġ ����
+        // Enemy 죽이면, player 경험치 증가
         else if (currentHP < 1)
         {
             isEnemyDead = true;
@@ -134,14 +134,14 @@ public class Enemy : MonoBehaviour
     {
         if (!isEnemyDead)
         {
-            playerStat.AddExp((int)exp);    // playerStat�� exp�� int. Enemy�� exp�� float. player�� exp �߰�
-            gameObject.SetActive(false);    // Enemy ��Ȱ��ȭ
+            playerStat.AddExp((int)exp);    // playerStat의 exp는 int. Enemy의 exp는 float. player에 exp 추가
+            gameObject.SetActive(false);    // Enemy 비활성화
         }
     }
 
     private void onDamageEnemy()
     {
-        currentHP = currentHP - playerStat.EXP;     // player Attack ���� �Ұ�. ���Ƿ� EXP �Է�
+        currentHP = currentHP - playerStat.EXP;     // player Attack 접근 불가. 임의로 EXP 입력
         EnemyHpText.text = "HP: " + currentHP.ToString();
     }
 }
