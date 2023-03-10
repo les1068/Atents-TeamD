@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,17 +7,17 @@ using UnityEngine.InputSystem;
 public class Attack : MonoBehaviour
 {
     /// <summary>
-    /// °ø°İ ¼Óµµ
+    /// ê³µê²© ì†ë„
     /// </summary>
     protected float palyerAttackSpeed = 10.0f;
 
     /// <summary>
-    /// player »ıÁ¸½Ã flase, »ç¸Á½Ã true
+    /// player ìƒì¡´ì‹œ flase, ì‚¬ë§ì‹œ true
     /// </summary>
     bool isPlayerDead = false;
 
     /// <summary>
-    /// player ¹æ¾î·Â
+    /// player ë°©ì–´ë ¥
     /// </summary>
     protected float playerDefence = 30.0f;
 
@@ -29,25 +29,25 @@ public class Attack : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.localPosition= Vector3.zero;      // À§Ä¡ ÃÊ±âÈ­
+        transform.localPosition= Vector3.zero;      // ìœ„ì¹˜ ì´ˆê¸°í™”
     }
 
     private void Update()
     {
-        transform.localPosition += Time.deltaTime * palyerAttackSpeed * transform.right;    // ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿
+        transform.localPosition += Time.deltaTime * palyerAttackSpeed * transform.right;    // ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (player != null)
         {
-            // Enemy¿Í Ãæµ¹½Ã HP °¨¼Ò
+            // Enemyì™€ ì¶©ëŒì‹œ HP ê°ì†Œ
             if (collision.gameObject.CompareTag("EnemyAttack"))
             {
                 OnDamage();
             }
         }
-        // player »ç¸ÁÃ³¸®
+        // player ì‚¬ë§ì²˜ë¦¬
         else if (playerStat.HP < 1) {
             isPlayerDead = true;
             PlayerDie();
@@ -58,7 +58,7 @@ public class Attack : MonoBehaviour
     {
         if(!isPlayerDead)
         {
-            playerStat.EXP = playerStat.EXP - 50;   // player »ç¸Á½Ã °æÇèÄ¡ °¨¼Ò
+            playerStat.EXP = playerStat.EXP - 50;   // player ì‚¬ë§ì‹œ ê²½í—˜ì¹˜ ê°ì†Œ
             gameObject.SetActive(false);
         }
     }
