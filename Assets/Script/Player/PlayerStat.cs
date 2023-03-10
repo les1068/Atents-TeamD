@@ -7,7 +7,7 @@ public class PlayerStat : MonoBehaviour
 {
     Player player;
     
-    //Level ���� (+ ������Ƽ)
+    //Level 관련 (+ 프로퍼티)
     byte level;
     public byte Level
     {
@@ -18,7 +18,7 @@ public class PlayerStat : MonoBehaviour
 
         }
     }
-    //Hp ü�� (+ ������Ƽ)
+    //Hp 관련 (+ 프로퍼티)
     float currentHp;
     float maxHp;
     public float HP
@@ -30,14 +30,13 @@ public class PlayerStat : MonoBehaviour
             onHPChange?.Invoke(currentHp);
         }
     }
-    //Attack ���ݷ�
-    protected float Attack;
-    //moveSpeed �̵��ӵ�
+    //attack 공격력
+    protected float attack;
+    //moveSpeed 이동속도
     float moveSpeed;
-    //attackSpeed ���ݼӵ�
+    //attackSpeed 공격속도
     float attackSpeed;
-    //Exp ����ġ + (������Ƽ)
-
+    //Exp 경험치 + (프로퍼티)
     private int maxExp;
     private int currentExp;
     public int EXP
@@ -62,8 +61,8 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
-    // ---------------�Ʒ��� �Լ�������-----------
-    //���� �ʱ�ȭ (���� �����Ҷ�)
+    // --------------함수시작-----------
+    //초기스탯
     void InitStat()
     {
         level = 1;
@@ -71,7 +70,7 @@ public class PlayerStat : MonoBehaviour
         maxExp = 10;
         HP = maxHp;
         moveSpeed = 10.0f;
-        Attack = 1;
+        attack = 1;
         attackSpeed = 2.0f;
     }
 
@@ -86,16 +85,16 @@ public class PlayerStat : MonoBehaviour
         EXP += plus;
         Debug.Log($"���� EXP:{currentExp}");
     }
-    void LevelUp() // ������
+    void LevelUp() // 레벨업
     {
         EXP -= maxExp;
         Level += 1;
-        //Ư�� UP��Ģ�ʿ�
+        //레벨업시 어떻게 변화할지는 의논필요
         maxHp *= 1.2f;
         HP = maxHp;
-        maxExp *= 2; //(����?->float?)
+        maxExp *= 2; //부드러운 경험치 bar를 위해 float으로 변경해야할지?
         moveSpeed *= 1.2f;
-        Attack *= 1.2f;
+        attack *= 1.2f;
         attackSpeed *= 1.2f;
     }   
 }
