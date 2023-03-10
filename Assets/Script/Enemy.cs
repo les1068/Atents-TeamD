@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,12 +7,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     /// <summary>
-    /// Enemy ÃÖ´ë HP
+    /// Enemy ìµœëŒ€ HP
     /// </summary>
     protected float maxHP = 100.0f;
 
     /// <summary>
-    /// Enemy ÇöÀç HP
+    /// Enemy í˜„ì¬ HP
     /// </summary>
     protected float currentHP = 100.0f;
 
@@ -24,12 +24,12 @@ public class Enemy : MonoBehaviour
     public TMP_Text EnemyHpText;
 
     /// <summary>
-    /// Enemy »ç¸Á½Ã player°¡ ¾ò°Ô µÉ °æÇèÄ¡
+    /// Enemy ì‚¬ë§ì‹œ playerê°€ ì–»ê²Œ ë  ê²½í—˜ì¹˜
     /// </summary>
     protected float exp = 30.0f;
 
     /// <summary>
-    /// Enemy °ø°İ·Â
+    /// Enemy ê³µê²©ë ¥
     /// </summary>
     protected float attackDamage = 10.0f;
 
@@ -39,27 +39,27 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// Enemy ¹æ¾î·Â
+    /// Enemy ë°©ì–´ë ¥
     /// </summary>
     protected float EnemyDefence = 20.0f;
 
     /// <summary>
-    /// Enemy ÀÌµ¿¼Óµµ
+    /// Enemy ì´ë™ì†ë„
     /// </summary>
     protected float moveSpeed = 10.0f;
 
     /// <summary>
-    /// Enemy °ø°İ ¼Óµµ
+    /// Enemy ê³µê²© ì†ë„
     /// </summary>
     protected float enemyAttackSpeed = 8.0f;
 
     /// <summary>
-    /// Enemy »ıÁ¸½Ã flase, »ç¸Á½Ã true
+    /// Enemy ìƒì¡´ì‹œ flase, ì‚¬ë§ì‹œ true
     /// </summary>
     bool isEnemyDead = false;
 
     /// <summary>
-    /// Enemy HP µ¨¸®°ÔÀÌÆ®
+    /// Enemy HP ë¸ë¦¬ê²Œì´íŠ¸
     /// </summary>
     public Action<int> onChangeEnemyHP;
 
@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.localPosition = Vector3.zero;      // À§Ä¡ ÃÊ±âÈ­
+        transform.localPosition = Vector3.zero;      // ìœ„ì¹˜ ì´ˆê¸°í™”
     }
 
     private void Update()
@@ -85,21 +85,21 @@ public class Enemy : MonoBehaviour
 
     private void EnemyAttack()
     {
-        // ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î °ø°İÇÏ´Â ÇÔ¼ö ¸¸µé±â
-        transform.localPosition += Time.deltaTime * enemyAttackSpeed * -transform.right;    // ¿ŞÂÊÀ¸·Î ÀÌµ¿
+        // í”Œë ˆì´ì–´ ë°©í–¥ìœ¼ë¡œ ê³µê²©í•˜ëŠ” í•¨ìˆ˜ ë§Œë“¤ê¸°
+        transform.localPosition += Time.deltaTime * enemyAttackSpeed * -transform.right;    // ì™¼ìª½ìœ¼ë¡œ ì´ë™
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (currentHP != 0)
         {
-            // Player Ãæµ¹½Ã Enemy HP °¨¼Ò
+            // Player ì¶©ëŒì‹œ Enemy HP ê°ì†Œ
             if (collision.gameObject.CompareTag("PlayerAttack"))
             {
                 onDamageEnemy();
             }
         }
-        // Enemy Á×ÀÌ¸é, player °æÇèÄ¡ Áõ°¡
+        // Enemy ì£½ì´ë©´, player ê²½í—˜ì¹˜ ì¦ê°€
         else if (currentHP < 1)
         {
             isEnemyDead = true;
@@ -111,14 +111,14 @@ public class Enemy : MonoBehaviour
     {
         if (!isEnemyDead)
         {
-            playerStat.AddExp((int)exp);    // playerStatÀÇ exp´Â int. EnemyÀÇ exp´Â float. player¿¡ exp Ãß°¡
-            gameObject.SetActive(false);    // Enemy ºñÈ°¼ºÈ­
+            playerStat.AddExp((int)exp);    // playerStatì˜ expëŠ” int. Enemyì˜ expëŠ” float. playerì— exp ì¶”ê°€
+            gameObject.SetActive(false);    // Enemy ë¹„í™œì„±í™”
         }
     }
 
     private void onDamageEnemy()
     {
-        currentHP = currentHP - playerStat.EXP;     // player Attack Á¢±Ù ºÒ°¡. ÀÓÀÇ·Î EXP ÀÔ·Â
+        currentHP = currentHP - playerStat.EXP;     // player Attack ì ‘ê·¼ ë¶ˆê°€. ì„ì˜ë¡œ EXP ì…ë ¥
         EnemyHpText.text = "HP: " + currentHP.ToString();
     }
 }
