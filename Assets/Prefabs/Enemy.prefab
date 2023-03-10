@@ -47,8 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa041ca539eafec419c0e1beb8ad0ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playMoveSpeed: 0
+  jumpPower: 0
+  jumpCount: 0
+  inputVec: {x: 0, y: 0}
   enemySpeed: 5
-  target: {fileID: 0}
+  enemytarget: {fileID: 0}
+  EnemyHpText: {fileID: 0}
 --- !u!212 &3673097552442205932
 SpriteRenderer:
   m_ObjectHideFlags: 0
