@@ -8,14 +8,16 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    public float MoveSpeed = 0.1f;
-    public float JumpPower = 10.0f;
+    public float playMoveSpeed = 0.1f;
+    public float jumpPower = 10.0f;
     public float jumpCount;
-    PlayerInputAction inputActions;
-    Vector3 inputDir = Vector3.zero;
     public Vector2 inputVec;
 
+    PlayerInputAction inputActions;
     Rigidbody2D rigid;
+
+    Vector3 inputDir = Vector3.zero;
+
 
     private void Awake()
     {
@@ -68,13 +70,13 @@ public class Player : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.UpArrow))
         {
-            rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
-        transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
+        transform.Translate(Time.deltaTime * playMoveSpeed * inputDir);
 
         if(Input.GetKeyDown(KeyCode.UpArrow)&& jumpCount < 2)
         {
-            rigid.AddForce(Vector2.up * JumpPower *2, ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.up * jumpPower *2, ForceMode2D.Impulse);
             jumpCount++;
         }
        
