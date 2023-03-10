@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        
     }
     private void FixedUpdate()
     {
@@ -87,12 +88,14 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public Action<int> onChangeEnemyHP;
 
-    Player player = FindObjectOfType<Player>();
-    PlayerStat playerStat = FindObjectOfType<PlayerStat>();
+    Player player;
+
+
 
 
     void Start()
     {
+        player = FindObjectOfType<Player>();
         target = player.transform;
     }
 
@@ -134,14 +137,14 @@ public class Enemy : MonoBehaviour
     {
         if (!isEnemyDead)
         {
-            playerStat.AddExp((int)exp);    // playerStat의 exp는 int. Enemy의 exp는 float. player에 exp 추가
+            player.AddExp((int)exp);    // playerStat의 exp는 int. Enemy의 exp는 float. player에 exp 추가
             gameObject.SetActive(false);    // Enemy 비활성화
         }
     }
 
     private void onDamageEnemy()
     {
-        currentHP = currentHP - playerStat.EXP;     // player Attack 접근 불가. 임의로 EXP 입력
+        currentHP = currentHP - player.EXP;     // player Attack 접근 불가. 임의로 EXP 입력
         EnemyHpText.text = "HP: " + currentHP.ToString();
     }
 }

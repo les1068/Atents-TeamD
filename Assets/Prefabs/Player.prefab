@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3506770}
   - component: {fileID: 3506769}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Radar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,9 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3fb820c2b65660479415cf22b332325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playMoveSpeed: 10
-  jumpPower: 20
-  jumpCount: 2
+  MoveSpeed: 10
   inputVec: {x: 0, y: 0}
 --- !u!50 &3313352767453639687
 Rigidbody2D:

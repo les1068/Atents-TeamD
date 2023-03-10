@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Skill1 : Radar
+public class Skill1 : Player
 {
     /// <summary>
     /// 스킬 데미지 계산용 상수  
