@@ -90,9 +90,6 @@ public class Enemy : MonoBehaviour
 
     Player player;
 
-
-
-
     void Start()
     {
         player = FindObjectOfType<Player>();

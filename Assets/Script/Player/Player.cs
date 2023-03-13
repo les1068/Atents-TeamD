@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
     public float MoveSpeed = 0.1f;
     public float JumpPower = 10.0f;
     public float jumpCount;
+    SpriteRenderer spriteRenderer;
 
     PlayerInputAction inputActions;
 
@@ -69,6 +71,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         inputActions = new PlayerInputAction();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
     }
     private void OnEnable()
@@ -117,8 +120,33 @@ public class Player : MonoBehaviour
 
         
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+            OnDamaged(collision.transform.position);
+        //Debug.Log("피격");
+        
+    }
+    void OnDamaged(Vector2 targetPos)
+    {
+        gameObject.layer = 9;
 
-  //-----------------------------------------------------------------------------------------------------------
+        spriteRenderer.color = new Color(1, 1, 1, 0.1f);
+
+        int dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;
+        rigid.AddForce(new Vector2(dirc,1),ForceMode2D.Impulse);
+
+        Invoke("OffDamaged",3);
+    }
+    void OffDamaged()
+    {
+        gameObject.layer = 7;
+        spriteRenderer.color = new Color(1, 1, 1, 10);
+    }
+
+
+
+    //-----------------------------------------------------------------------------------------------------------
     // ----------- delegate-----------
     Action<float> onHPChange;
     // ---------------------------------
