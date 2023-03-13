@@ -19,6 +19,11 @@ public class Player : MonoBehaviour
     public Vector2 inputVec;
 
     Rigidbody2D rigid;
+
+    public GameObject skills;               // 스킬1 등록
+
+    float h;                                //키 입력 방향 우측:1, 좌측 :-1
+
     //---------------------------------------------------------------------------------------------------
     byte level;
 
@@ -99,13 +104,25 @@ public class Player : MonoBehaviour
     }
 
     private void OnAttack(InputAction.CallbackContext context)   // 키보드 A키
-    {
-        Debug.Log("Attack");
+    {              
+        //Debug.Log("Attack");
     }
 
     private void OnSkills(InputAction.CallbackContext context)  // 키보드 S키
     {
-        Debug.Log("SkillS");
+        GameObject obj = Instantiate(skills);                   //skills 생성
+        float x = this.transform.position.x;
+        float y = this.transform.position.y;
+        obj.transform.position = new Vector3(x, y, 0);          //skills 생성위치
+        if (h >= 0)
+        {
+            skills.transform.localScale = new Vector3(1,1,0);       //우 누르면 우측에 생성             
+        }
+        else if(h < 0)
+        {
+            skills.transform.localScale = new Vector3(-1, 1, 0);    //좌 누르면 좌측에 생성 
+        }
+            //Debug.Log("SkillS");
     }
     private void OnSkilld(InputAction.CallbackContext context)  // 키보드 D키
     {
@@ -114,11 +131,11 @@ public class Player : MonoBehaviour
    
     private void FixedUpdate()  // 물리 연산 프레임마다 호출되는 생명주기 함수
     {
+        h = Input.GetAxis("Horizontal");                  //키 입력 방향 우측:1, 좌측 :-1
 
-        
     }
 
-  //-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
     // ----------- delegate-----------
     Action<float> onHPChange;
     // ---------------------------------

@@ -11,12 +11,12 @@ public class Enemy : MonoBehaviour
     protected Transform target;
 
     bool isLive;
-
     Rigidbody2D rigid;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        Collider2D collider2D = GetComponent<Collider2D>();
         
     }
     private void FixedUpdate()
@@ -132,6 +132,16 @@ public class Enemy : MonoBehaviour
             EnemyDie();
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (GetComponent<Collider2D>().CompareTag("Skill"))
+        {
+            Debug.Log(" 아프다 !");
+        }
+        
+    }
+
 
     void EnemyDie()
     {
