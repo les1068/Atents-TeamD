@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Radar : Player
+public class Radar : MonoBehaviour
 {
     public int maxTargetCount = 5;
 
@@ -17,7 +17,7 @@ public class Radar : Player
     {
         if (collision.gameObject.CompareTag("Enemy") && targetList.Count < maxTargetCount)
         {
-            Debug.Log($"큐에 들어감 - 대상 트리거 : {collision.gameObject.name}");
+            //Debug.Log($"큐에 들어감 - 대상 트리거 : {collision.gameObject.name}");
             targetList.Enqueue(collision.gameObject);
 
         }
@@ -27,7 +27,7 @@ public class Radar : Player
     {
         if (collision.gameObject.CompareTag("Enemy") && targetList.Count < maxTargetCount)
         {
-            Debug.Log($"큐에서 나감 - 대상 트리거 : {collision.gameObject.name}");
+            //Debug.Log($"큐에서 나감 - 대상 트리거 : {collision.gameObject.name}");
             targetList.Dequeue();
             
         }
