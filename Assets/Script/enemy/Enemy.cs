@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
     public float enemySpeed = 2.0f;
     public Rigidbody2D enemysTarget;
     protected Transform target;
-    
 
     bool isLive;
     Rigidbody2D rigid;
@@ -104,7 +103,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        
         EnemyAttack();
     }
 
