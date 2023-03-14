@@ -13,11 +13,10 @@ public class Player : MonoBehaviour
     public float JumpPower = 10.0f;
     public float jumpCount;
     SpriteRenderer spriteRenderer;
-
     PlayerInputAction inputActions;
 
     Vector3 inputDir = Vector3.zero;
-
+    Animator anim;
     public Vector2 inputVec;
 
     Rigidbody2D rigid;
@@ -78,6 +77,7 @@ public class Player : MonoBehaviour
         inputActions = new PlayerInputAction();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
     private void OnEnable()
     {
@@ -131,11 +131,35 @@ public class Player : MonoBehaviour
     {
         Debug.Log("SkillD");
     }
-   
+
     private void FixedUpdate()  // 물리 연산 프레임마다 호출되는 생명주기 함수
     {
         h = Input.GetAxis("Horizontal");                  //키 입력 방향 우측:1, 좌측 :-1
 
+        float d = Input.GetAxisRaw("Horizontal");
+        rigid.AddForce(Vector2.right * d, ForceMode2D.Impulse);
+        if (rigid.velocity.x > MoveSpeed)
+        {
+            rigid.velocity = new Vector2(moveSpeed, rigid.velocity.y);
+        }
+        else if (rigid.velocity.x < MoveSpeed * (-1))
+        {
+            rigid.velocity = new Vector2(moveSpeed * (-1), rigid.velocity.y);
+        }
+
+        if (rigid.velocity.y < 0)
+        {
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
+            if (rayHit.collider != null)
+            {
+                if (rayHit.distance < 0.5f)
+                {
+                    jumpCount = 0;
+                }
+                anim.SetBool("Jump", false);
+            }
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -170,16 +194,28 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Mathf.Abs(rigid.velocity.x) < 0.3)  // 애니메이션 
         {
-            rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+            anim.SetBool("Walking", false);
         }
+        else
+        {
+            anim.SetBool("Walking", true);
+        }
+
+        if (Input.GetButton("Horizontal"))
+        {
+            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        }
+        
         transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && jumpCount < 2)
+
+        if (Input.GetButtonDown("Jump") && jumpCount < 2)
         {
             rigid.AddForce(Vector2.up * JumpPower * 2, ForceMode2D.Impulse);
             jumpCount++;
+            anim.SetBool("Jump", true);
         }
         if (currentExp >= maxExp)
         {
