@@ -214,6 +214,7 @@ public class Player : MonoBehaviour
             rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
             anim.SetBool("Jump", true);
         }*/
+
         transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
 
         if (Input.GetButtonDown("Jump") && jumpCount < 2)
