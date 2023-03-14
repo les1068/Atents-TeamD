@@ -460,14 +460,14 @@ AnimationClip:
   - time: 0.25
     functionName: AttackStart
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 4564241149494531938, guid: 9443fa67701e044a481f5dc94404ea50, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.33333334
     functionName: AttackEnd
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 4564241149494531938, guid: 9443fa67701e044a481f5dc94404ea50, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
