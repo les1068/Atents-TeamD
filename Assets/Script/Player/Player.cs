@@ -196,7 +196,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Mathf.Abs (rigid.velocity.x) <0.5)  // 애니메이션 
+        if (Mathf.Abs (rigid.velocity.x) <0.7)  // 애니메이션 
         {
             anim.SetBool("Walking", false);
         }
@@ -209,11 +209,11 @@ public class Player : MonoBehaviour
         {
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow)&& !anim.GetBool("Jump"))
+        /*if (Input.GetKeyDown(KeyCode.UpArrow)&& !anim.GetBool("Jump"))
         {
             rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
             anim.SetBool("Jump", true);
-        }
+        }*/
         transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
 
         if (Input.GetButtonDown("Jump") && jumpCount < 2)
