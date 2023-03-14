@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
         GameObject obj = Instantiate(skills);                   //skills 생성
         float x = this.transform.position.x;
         float y = this.transform.position.y;
-        obj.transform.position = new Vector3(x, y, 0);          //skills 생성위치
+        
         if (h >= 0)
         {
             skills.transform.localScale = new Vector3(1,1,0);       //우 누르면 우측에 생성             
@@ -125,7 +125,8 @@ public class Player : MonoBehaviour
         {
             skills.transform.localScale = new Vector3(-1, 1, 0);    //좌 누르면 좌측에 생성 
         }
-            //Debug.Log("SkillS");
+        obj.transform.position = new Vector3(x, y + 0.5f, 0);          //skills 생성위치
+                                                                       //Debug.Log("SkillS");
     }
     private void OnSkilld(InputAction.CallbackContext context)  // 키보드 D키
     {

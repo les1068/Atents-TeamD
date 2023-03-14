@@ -7,11 +7,12 @@ using UnityEngine.InputSystem;
 public class Attack : MonoBehaviour
 {
     PlayerInputAction inputActions;
-    Transform attacktransform;
-    Animator anim;
+    Transform attackTransform;
+    Animator attackAnim;
+    float h;                                //키 입력 방향 우측:1, 좌측 :-1
 
     bool doingAttack;
-    public float attackSpeedMulti = 1.0f;
+    public float attackSpeed = 1.0f;
 
     void AttackStart()
     {
@@ -43,7 +44,7 @@ public class Attack : MonoBehaviour
     {
         inputActions = new PlayerInputAction();
         Collider2D collider2D = GetComponentInChildren<Collider2D>();
-        anim = GetComponent<Animator>();
+        attackAnim = GetComponent<Animator>();
     }
 
     public void OnEnable()
@@ -60,13 +61,27 @@ public class Attack : MonoBehaviour
 
     private void Start()
     {
-        anim.SetFloat("attackSpeed", attackSpeedMulti);
-        
+        attackAnim.SetFloat("attackSpeed", attackSpeed);     
+    }
+
+    private void FixedUpdate()
+    {
+        h = Input.GetAxis("Horizontal");                  //키 입력 방향 우측:1, 좌측 :-1
     }
 
     public void OnAttack(InputAction.CallbackContext context)   // 키보드 A키
     {
-        anim.SetTrigger("Attack");
+        
+        if (h >= 0)
+        {
+            attackAnim.SetBool("right", true);
+        }
+        else if (h < 0)
+        {
+            attackAnim.SetBool("right", false);
+        }
+        attackAnim.SetTrigger("Attack");
+        
         //Vector2 dir = context.ReadValue<Vector2>();
         //anim.SetFloat("InputY", dir.y);
     }
