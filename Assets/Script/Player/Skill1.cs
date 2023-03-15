@@ -6,53 +6,36 @@ using UnityEngine.InputSystem;
 
 public class Skill1 : MonoBehaviour
 {
-    Player player;
-    
-    bool doingAttack;
-
-    void AttackStart()
-    {
-        doingAttack = true;
-    }
-    void AttackEnd()
-    {
-        doingAttack = false;
-        Destroy(gameObject, 0.01f);
-    }
-    
     /// <summary>
-    /// 스킬 데미지 계산용 변수
+    /// 스킬 데미지 계산용 상수  
     /// </summary>
     public float skillValue = 1.0f;
 
     /// <summary>
-    /// 스킬 데미지 계산 후 변수 
+    /// 스킬 데미지 계산용 프로퍼티 
     /// </summary>
-    public float skillPower
+    private float skillPower
     {
         get => skillPower;
         set
         {
-            skillPower = value * skillValue * player.attackPoint;
+            skillPower = value * skillValue;
         }
-    }
-
-    private void Awake()
-    {
-    //    Collider2D collider2D = GetComponentInChildren<Collider2D>();
     }
 
     private void Start()
     {
-        
+        Destroy(gameObject, 0.1f);
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && doingAttack)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log($"공격이 {collision.gameObject.name}과 충돌");
+            Debug.Log($"스킬이 {collision.gameObject.name}과 충돌");
         }
     }
-   
+
+    
+
+
 }
