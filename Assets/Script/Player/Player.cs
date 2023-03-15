@@ -6,9 +6,12 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Player : StateBase
 {
+    private bool isPlayerDead = false;
+
     public float MoveSpeed = 0.1f;
     public float JumpPower = 10.0f;
     public float jumpCount;
@@ -18,6 +21,10 @@ public class Player : StateBase
     Animator anim;
     Rigidbody2D rigid;
 
+    EnemyBase enemy;
+        
+
+
     IEnumerator skill1Coroutine;
 
     Vector3 inputDir = Vector3.zero;
@@ -25,9 +32,8 @@ public class Player : StateBase
     public Vector2 inputVec;
     public GameObject skill1;               // 스킬1 등록
     public GameObject skill2;               // 스킬2 등록
-
-
     float skill1Interval = 1.5f;
+
     IEnumerator Skill1Coroutine()
     {
         while (true)
@@ -52,6 +58,8 @@ public class Player : StateBase
         InitStat();
 
         skill1Coroutine = Skill1Coroutine();    // 코루틴 미리 만들어 놓기
+
+        enemy = FindObjectOfType<EnemyBase>(); // 적 찾아오기 
     }
 
     private void OnEnable()
@@ -88,14 +96,26 @@ public class Player : StateBase
         //anim.SetTrigger("Skill1");
         GameObject obj = Instantiate(skill1);                   //skills 생성        
         float x = this.transform.position.x;
-        float y = this.transform.position.y;        
+        float y = this.transform.position.y;
+        if (playerH >= 0)
+        {
+            skill2.transform.localScale = new Vector3(1, 1, 0);       //우 누르면 우측에 생성
+
+                                                                      
+        }
+        else if (playerH < 0)
+        {
+            skill2.transform.localScale = new Vector3(-1, 1, 0);    //좌 누르면 좌측에 생성 
+        }
+        Debug.Log($"{playerH}");
         obj.transform.position = new Vector3(x, y, 0);   //skills 생성위치
-        StartCoroutine(Skill1Coroutine());
+        //StartCoroutine(Skill1Coroutine());
+
     }
 
     private void OffSkill1(InputAction.CallbackContext context)   // 키보드 A키
     {
-        StopCoroutine(Skill1Coroutine());
+        //StopCoroutine(Skill1Coroutine());
     }
 
     private void OnSkill2(InputAction.CallbackContext context)  // 키보드 S키
@@ -153,20 +173,33 @@ public class Player : StateBase
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
-            OnDamaged(collision.transform.position);
-        //Debug.Log("피격");        
+        if (HP > 0)
+        {
+            if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyAttack"))         // Enemy와 충돌시 HP 감소
+            {
+                OnDamaged(collision.transform.position);   // 무적
+            }             
+        }        
+        else if (HP < 0)// player 사망처리
+        {
+            isPlayerDead = true;
+            PlayerDie();
+        }
     }
 
+    /// <summary>
+    ///  무적 판정 처리 
+    /// </summary>
+    /// <param name="targetPos"></param>
     void OnDamaged(Vector2 targetPos)
     {
+        HP -= enemy.EnemyAttack();
+
+        //무적 처리 코드 
         gameObject.layer = 9;
-
         spriteRenderer.color = new Color(1, 1, 1, 0.1f);
-
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;
         rigid.AddForce(new Vector2(dirc,1),ForceMode2D.Impulse);
-
         Invoke("OffDamaged",3);
     }
 
@@ -241,15 +274,13 @@ public class Player : StateBase
 
     // --------------함수시작-----------
     //초기스탯
-    void InitStat()
+
+    protected override void InitStat()
     {
-        level = 1;
+        base.InitStat();
         EXP = 0;
         maxExp = 10;
-        HP = maxHp = 100.0f;
-        attackPoint = 1.0f;
-        defencePoint = 1.0f;
-        attackSpeed = 1.0f;
+        HP = maxHp = 100.0f;        
     }
 
     public void AddHP(float plus)
@@ -282,4 +313,23 @@ public class Player : StateBase
     {
         AddExp(getExp);
     }
+
+
+    
+
+    private void PlayerDie()
+    {
+        if (!isPlayerDead)
+        {
+            EXP = EXP - 50;   // player 사망시 경험치 감소
+            gameObject.SetActive(false);
+        }
+    }
+
+    protected void OnDamage()
+    {
+        
+    }
+
+
 }

@@ -35,7 +35,14 @@ public class StateBase : MonoBehaviour
     /// </summary>
     public float moveSpeed = 1.0f;
 
-    
+    protected virtual void InitStat()
+    {
+        level = 1;
+        maxHp = 100;
+        attackPoint = 1.0f;
+        defencePoint = 1.0f;
+        attackSpeed = 1.0f;
+    }
 
 
 }

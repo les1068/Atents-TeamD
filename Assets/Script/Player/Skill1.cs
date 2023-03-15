@@ -6,9 +6,9 @@ using UnityEngine.InputSystem;
 
 public class Skill1 : MonoBehaviour
 {
-    Player player;
-    
+    Player player;    
     bool doingAttack;
+    Transform skilltrans;
 
     void AttackStart()
     {
@@ -39,6 +39,8 @@ public class Skill1 : MonoBehaviour
 
     private void Awake()
     {
+        player = FindObjectOfType<Player>();
+        skilltrans = GetComponent<Transform>();
     //    Collider2D collider2D = GetComponentInChildren<Collider2D>();
     }
 
@@ -47,12 +49,19 @@ public class Skill1 : MonoBehaviour
         
     }
 
+    private void Update()
+    {
+        skilltrans.position = player.transform.position;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy") && doingAttack)
         {
-            Debug.Log($"공격이 {collision.gameObject.name}과 충돌");
+        //    Debug.Log($"공격이 {collision.gameObject.name}과 충돌");
         }
+
+        //플레이어의 공격력
     }
    
 }
