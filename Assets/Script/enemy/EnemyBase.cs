@@ -4,13 +4,52 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class EnemyBase : StateBase
+public class EnemyBase : PoolObject
 {
     public Rigidbody2D enemysTarget;
     protected Transform target;
     Rigidbody2D rigid;
     Player player;
-    
+
+    /// <summary>
+    /// 레
+    /// </summary>
+
+    public byte level;
+
+    /// <summary>
+    /// 기본 hp
+    /// </summary>    
+    public float maxHp;
+
+    /// <summary>
+    /// 가본 공격력 
+    /// </summary>
+    public float attackPoint;
+
+    /// <summary>
+    /// 기본 방어력 
+    /// </summary>
+    public float defencePoint;
+
+    /// <summary>
+    /// 공격속도.  공격 애니매이션 증폭에 사용 
+    /// </summary>
+    public float attackSpeed;
+
+    /// <summary>
+    /// 이동 속도 
+    /// </summary>
+    public float moveSpeed = 1.0f;
+
+    protected virtual void InitStat()
+    {
+        level = 1;
+        maxHp = 100;
+        attackPoint = 1.0f;
+        defencePoint = 1.0f;
+        attackSpeed = 1.0f;
+    }
 
     /// <summary>
     /// Enemy 사망시 player가 얻게 될 경험치
@@ -129,9 +168,5 @@ public class EnemyBase : StateBase
         EnemyHpText.text = "HP: " + currentHP.ToString();
     }
 
-    protected override void InitStat()
-    {
-        base.InitStat();
-        //HP = maxHp = 100.0f;
-    }
+    
 }
