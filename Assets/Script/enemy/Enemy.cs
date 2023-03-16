@@ -4,53 +4,37 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Enemy : StateBase
+public class Enemy : MonoBehaviour
 {
+    public float enemySpeed = 2.0f;
     public Rigidbody2D enemysTarget;
     protected Transform target;
+
+    bool isLive;
     Rigidbody2D rigid;
-    Player player;
-    
 
-    /// <summary>
-    /// Enemy 사망시 player가 얻게 될 경험치
-    /// </summary>
-    public int exp = 10;
-
-    /// <summary>
-    /// 살아 있으면 true 죽었으면 falase
-    /// </summary>
-    bool isLive = false;
-            
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        Collider2D collider2D = GetComponent<Collider2D>();        
+        Collider2D collider2D = GetComponent<Collider2D>();
+        
     }
-
-    private void OnEnable()
-    {
-        transform.localPosition = Vector3.zero;      // 위치 초기화
-    }
-
-    void Start()
-    {
-        player = FindObjectOfType<Player>();
-        target = player.transform;
-    }
-    
     private void FixedUpdate()
     {
         Vector2 dirVec = enemysTarget.position - rigid.position;   // 타겟포지션 - 나의 포지션
-        Vector2 nextVec = dirVec.normalized * moveSpeed * Time.fixedDeltaTime;
+        Vector2 nextVec = dirVec.normalized * enemySpeed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
         rigid.velocity = Vector2.zero;
     }
-
-    private void Update()
+    private void LateUpdate()
     {
-        EnemyAttack();
+
     }
+
+    /// <summary>
+    /// Enemy 최대 HP
+    /// </summary>
+    protected float maxHP = 100.0f;
 
     /// <summary>
     /// Enemy 현재 HP
@@ -64,19 +48,63 @@ public class Enemy : StateBase
 
     public TMP_Text EnemyHpText;
 
+    /// <summary>
+    /// Enemy 사망시 player가 얻게 될 경험치
+    /// </summary>
+    protected float exp = 30.0f;
+
+    /// <summary>
+    /// Enemy 공격력
+    /// </summary>
+    protected float attackDamage = 10.0f;
+
+    public float GetAttackDamage()
+    {
+        return attackDamage;
+    }
+
+    /// <summary>
+    /// Enemy 방어력
+    /// </summary>
+    protected float EnemyDefence = 20.0f;
+
+    /// <summary>
+    /// Enemy 이동속도
+    /// </summary>
+    protected float moveSpeed = 10.0f;
+
+    /// <summary>
+    /// Enemy 공격 속도
+    /// </summary>
+    protected float enemyAttackSpeed = 8.0f;
+
+    /// <summary>
+    /// Enemy 생존시 flase, 사망시 true
+    /// </summary>
+    bool isEnemyDead = false;
 
     /// <summary>
     /// Enemy HP 델리게이트
     /// </summary>
     public Action<int> onChangeEnemyHP;
 
-    
+    Player player;
 
-    
+    void Start()
+    {
+        player = FindObjectOfType<Player>();
+        target = player.transform;
+    }
 
-    
+    private void OnEnable()
+    {
+        transform.localPosition = Vector3.zero;      // 위치 초기화
+    }
 
-    
+    private void Update()
+    {
+        EnemyAttack();
+    }
 
     private void EnemyAttack()
     {
@@ -97,19 +125,15 @@ public class Enemy : StateBase
         // Enemy 죽이면, player 경험치 증가
         else if (currentHP < 1)
         {
-            isLive = false;
+            isEnemyDead = true;
             EnemyDie();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-        
     {
         if (GetComponent<Collider2D>().CompareTag("Skill"))
         {
-            float takenDamage = player.attackPoint - (defencePoint * 0.5f);
-            GameObject skill = collision.gameObject;
-            
             Debug.Log(" 아프다 !");
         }
         
@@ -118,7 +142,7 @@ public class Enemy : StateBase
 
     void EnemyDie()
     {
-        if (!isLive)
+        if (!isEnemyDead)
         {
             player.AddExp((int)exp);    // playerStat의 exp는 int. Enemy의 exp는 float. player에 exp 추가
             gameObject.SetActive(false);    // Enemy 비활성화

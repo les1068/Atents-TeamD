@@ -19,6 +19,7 @@ public class Radar : MonoBehaviour
         {
             //Debug.Log($"큐에 들어감 - 대상 트리거 : {collision.gameObject.name}");
             targetList.Enqueue(collision.gameObject);
+
         }
     }
 
@@ -27,7 +28,8 @@ public class Radar : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy") && targetList.Count < maxTargetCount)
         {
             //Debug.Log($"큐에서 나감 - 대상 트리거 : {collision.gameObject.name}");
-            targetList.Dequeue();            
+            targetList.Dequeue();
+            
         }
     }
 

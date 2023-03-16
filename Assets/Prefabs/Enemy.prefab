@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3673097552442205935
 Transform:
   m_ObjectHideFlags: 0
@@ -47,14 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa041ca539eafec419c0e1beb8ad0ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
-  maxHp: 100
-  attackPoint: 10
-  defencePoint: 10
-  attackSpeed: 1
-  moveSpeed: 1
+  enemySpeed: 5
   enemysTarget: {fileID: 0}
-  exp: 10
   EnemyHpText: {fileID: 0}
 --- !u!212 &3673097552442205932
 SpriteRenderer:
@@ -94,8 +88,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -529427847
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.9811321, g: 0, b: 0, a: 1}
@@ -144,4 +138,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 5
+  m_Constraints: 4
