@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6308975075052577732}
   - component: {fileID: 8316142609828272432}
-  - component: {fileID: 5819714587005955666}
+  - component: {fileID: 6264691551377759966}
   m_Layer: 8
   m_Name: Rage
   m_TagString: Skill
@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49205028022875703}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.2, y: 0, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8114879070448774081}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0, g: 0.04913031, b: 0.990566, a: 0.4745098}
+  m_Color: {r: 0.99215686, g: 0.8382253, b: 0, a: 0.4745098}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &5819714587005955666
+--- !u!70 &6264691551377759966
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,8 +110,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8114879070448774081}
-  - component: {fileID: 9016108399641727923}
-  - component: {fileID: 5730684929821104821}
+  - component: {fileID: 7983577833579834546}
+  - component: {fileID: 1083981790925882060}
   m_Layer: 8
   m_Name: Skill1
   m_TagString: Skill
@@ -135,7 +135,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &9016108399641727923
+--- !u!50 &7983577833579834546
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -156,7 +156,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5730684929821104821
+--- !u!114 &1083981790925882060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4564241149494531938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45906e6b737d7475496cc9e230a8c4db, type: 3}
+  m_Script: {fileID: 11500000, guid: c114ad0a1cb654f2f914ea66008f3f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillValue: 1
