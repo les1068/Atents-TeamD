@@ -1,18 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PoolObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Action onDisable;
+    protected virtual void OnDisable()
     {
-        
+        onDisable?.Invoke();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected IEnumerator LifeOver(float delay = 0.0f)
     {
-        
+        yield return new WaitForSeconds(delay);
+        this.gameObject.SetActive(false);
     }
 }
