@@ -69,7 +69,7 @@ public class EnemyBase : PoolObject
 
     private void OnEnable()
     {
-        transform.localPosition = Vector3.zero;      // 위치 초기화
+        //transform.localPosition = Vector3.zero;      // 위치 초기화
     }
 
     void Start()
@@ -122,6 +122,11 @@ public class EnemyBase : PoolObject
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(GetComponent<Collider2D>().CompareTag("Skill"))
+        {
+            Debug.Log(" 아프다 !");
+        }
+        
         if (currentHP != 0)
         {
             // Player 충돌시 Enemy HP 감소
@@ -138,19 +143,7 @@ public class EnemyBase : PoolObject
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-        
-    {
-        if (GetComponent<Collider2D>().CompareTag("Skill"))
-        {
-            float takenDamage = player.attackPoint - (defencePoint * 0.5f);
-            GameObject skill = collision.gameObject;
-            
-            Debug.Log(" 아프다 !");
-
-        }
-        //
-    }
+    
 
 
     void EnemyDie()

@@ -23,7 +23,7 @@ public class PlayerAttack : MonoBehaviour
 
 
     Player player = FindObjectOfType<Player>();
-    Enemy enemy = FindObjectOfType<Enemy>();
+    EnemyBase enemy = FindObjectOfType<EnemyBase>();
     Skill1 skill1 = FindObjectOfType<Skill1>();
 
     private void OnEnable()

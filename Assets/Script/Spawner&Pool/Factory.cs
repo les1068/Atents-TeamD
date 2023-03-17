@@ -44,5 +44,5 @@ public class Factory : Singleton<Factory>
         //skillPool?.Initialize();
         //skillPool?.Initialize();
     }
-    public Enemy GetEnemy() => enemyPool?.GetObject();
+    public EnemyBase GetEnemy() => enemyPool?.GetObject();
 }
