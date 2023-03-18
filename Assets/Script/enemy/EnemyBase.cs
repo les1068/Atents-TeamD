@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class EnemyBase : PoolObject
 {
@@ -10,9 +11,22 @@ public class EnemyBase : PoolObject
     protected Transform target;
     Rigidbody2D rigid;
     Player player;
-
+    
+    public Player TargetPlayer
+    {
+        protected get => player;
+        set
+        {
+            if(player == null)
+            {
+                player = value;
+            }
+        }
+    }
+    
+    [Header("상태관련----------------------")]
     /// <summary>
-    /// 레
+    /// 레벨
     /// </summary>
 
     public byte level;
@@ -60,24 +74,25 @@ public class EnemyBase : PoolObject
     /// 살아 있으면 true 죽었으면 falase
     /// </summary>
     bool isLive = false;
-            
+    float liveTime = 5;
+    float baseY;
+
     private void Awake()
     {
+       
         rigid = GetComponent<Rigidbody2D>();
         Collider2D collider2D = GetComponent<Collider2D>();        
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
-        //transform.localPosition = Vector3.zero;      // 위치 초기화
-    }
-
-    void Start()
-    {
+        
         player = FindObjectOfType<Player>();
         target = player.transform;
+        StartCoroutine(LifeOver(liveTime));
+
     }
-    
+
     private void FixedUpdate()
     {
         Vector2 dirVec = enemysTarget.position - rigid.position;   // 타겟포지션 - 나의 포지션
@@ -88,6 +103,9 @@ public class EnemyBase : PoolObject
 
     private void Update()
     {
+        transform.Translate(-Time.deltaTime*moveSpeed,0,0); //적 움직임 (현재 직선이동)
+        //rigid.AddForce(Time.deltaTime * moveSpeed * 0.3f * Vector2.left,ForceMode2D.Impulse); //움직임확인중 보니까 0,0,0으로 수렴하려고함_이유확인필요
+        //Debug.Log(transform.position);
         EnemyAttack();
     }
 
@@ -142,9 +160,6 @@ public class EnemyBase : PoolObject
             EnemyDie();
         }
     }
-
-    
-
 
     void EnemyDie()
     {

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4f113e81479b30042bddba11a9ac7c3d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - copper: {fileID: 2324257374267312680, guid: 3eeab4bd758722a4a8e08a10232e410f, type: 3}
+  - silver: {fileID: 2141928485227387593, guid: bdb49d558b463fa4baab900d312c834a, type: 3}
+  - gold: {fileID: 6608815567731184012, guid: 0dcd60886d89a0248a3e8a4ec64c31da, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

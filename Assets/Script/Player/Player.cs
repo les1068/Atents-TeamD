@@ -10,34 +10,32 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class Player : StateBase
 {
-    private bool isPlayerDead = false;
-    
-    public float MoveSpeed = 0.1f;
-    public float JumpPower = 10.0f;
-    public float jumpCount;
-
     SpriteRenderer spriteRenderer;
     PlayerInputAction inputActions;
     Animator anim;
     //Animator animSkill1;
     //Animator animSkill2;
-
     Rigidbody2D rigid;
     EnemyBase enemy;
 
     Vector3 inputDir = Vector3.zero;
     
     public Vector2 inputVec;
-    float playerH;                          //키 입력 방향 우측:1, 좌측 :-1
     protected bool isLeft = false;            //마지막 키 입력 방향 확인용 
-
+    float playerH;                          //키 입력 방향 우측:1, 좌측 :-1
+    [Header("스킬관련-------------------------------------")]
     public GameObject skill1;               // 스킬1 등록
     public GameObject skill2;               // 스킬2 등록
     public GameObject skill3;               // 스킬3 등록
-    
+
+    private bool isPlayerDead = false;
+    [Header("스탯관련-------------------------------------")]
+    public float MoveSpeed = 0.1f;
+    public float JumpPower = 10.0f;
+    public float jumpCount;
 
     //---------------------------------------------------------------------------------------------------
-    
+
     private void Awake()
     {
         inputActions = new PlayerInputAction();
@@ -51,7 +49,9 @@ public class Player : StateBase
     }
 
     private void Start()
-    {        
+    {
+        moveSpeed = MoveSpeed;
+
         //animSkill1 = skill1.GetComponent<Animator>();
         //animSkill2 = skill2.GetComponent<Animator>();
     }
@@ -191,7 +191,8 @@ public class Player : StateBase
             LevelUp();
         }
     }
-
+    /// <summary>
+    /// -----------------------무적/데미지관련----------------------------
     /// <summary>
     ///  무적 판정 처리 
     /// </summary>
@@ -200,14 +201,18 @@ public class Player : StateBase
     {
         HP -= enemy.EnemyAttack();
 
-        //무적 처리 코드 
-        gameObject.layer = 9;
-        spriteRenderer.color = new Color(1, 1, 1, 0.1f);
+        OnInvincibleMode();
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;
         rigid.AddForce(new Vector2(dirc,1),ForceMode2D.Impulse);
-        Invoke("OffDamaged",3);
     }
 
+    public void OnInvincibleMode()
+    {   //무적 처리 코드 
+        gameObject.layer = 9;
+        spriteRenderer.color = new Color(1, 1, 1, 0.1f);
+        Invoke("OffDamaged", 3);
+    }
+    
     void OffDamaged()
     {
         gameObject.layer = 7;
@@ -224,6 +229,7 @@ public class Player : StateBase
         {
             currentHp = value;
             onHPChange?.Invoke(currentHp);
+            Debug.Log($"현재 HP:{currentHp}");
         }
     }
 
@@ -235,6 +241,8 @@ public class Player : StateBase
         set
         {
             currentExp = value;
+            onEXPChange?.Invoke(currentExp);
+            Debug.Log($"Current Exp:{currentExp}");
         }
     }
     int getExp;                                 //얻은 경험치
@@ -246,10 +254,8 @@ public class Player : StateBase
     Action<float> onHPChange;
     // ---------------------------------
 
-
-    // --------------함수시작-----------
-    //초기스탯
-
+   
+    ///초기스탯
     protected override void InitStat()
     {
         base.InitStat();
@@ -261,13 +267,12 @@ public class Player : StateBase
     public void AddHP(float plus)
     {
         HP += plus;
-        Debug.Log($"���� HP:{HP}");
+
     }
 
     public void AddExp(int plus)
     {
         EXP += plus;
-        Debug.Log($"���� EXP:{currentExp}");
     }
     void LevelUp()                   // 레벨업
     {

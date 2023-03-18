@@ -100,7 +100,7 @@ public class Skill3 : MonoBehaviour
 
     public void OnSkill3(InputAction.CallbackContext context)   // 키보드 A키
     {
-        GameObject obj = Instantiate(bullet);
+        GameObject obj = Factory.Inst.GetObject(PoolObjectType.Bullet); //풀에서 Bullet빼서쓰는걸로 변경함
         float posX = transSkill.position.x;
         float posY = transSkill.position.y;
         if(isLeft)
