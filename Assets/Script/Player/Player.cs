@@ -11,7 +11,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class Player : StateBase
 {
     private bool isPlayerDead = false;
-
+    
     public float MoveSpeed = 0.1f;
     public float JumpPower = 10.0f;
     public float jumpCount;
@@ -19,54 +19,47 @@ public class Player : StateBase
     SpriteRenderer spriteRenderer;
     PlayerInputAction inputActions;
     Animator anim;
+    //Animator animSkill1;
+    //Animator animSkill2;
+
     Rigidbody2D rigid;
-
     EnemyBase enemy;
-        
-
-
-    IEnumerator skill1Coroutine;
 
     Vector3 inputDir = Vector3.zero;
     
     public Vector2 inputVec;
+    float playerH;                          //키 입력 방향 우측:1, 좌측 :-1
+    protected bool isLeft = false;            //마지막 키 입력 방향 확인용 
+
     public GameObject skill1;               // 스킬1 등록
     public GameObject skill2;               // 스킬2 등록
-    float skill1Interval = 1.5f;
-
-    IEnumerator Skill1Coroutine()
-    {
-        while (true)
-        {            
-            yield return new WaitForSeconds(skill1Interval);      // 연사 간격만큼 대기
-        }
-    }
-
-
-    float playerH;                          //키 입력 방향 우측:1, 좌측 :-1
+    public GameObject skill3;               // 스킬3 등록
+    
 
     //---------------------------------------------------------------------------------------------------
     
-
     private void Awake()
     {
         inputActions = new PlayerInputAction();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
+        
         InitStat();
 
-        skill1Coroutine = Skill1Coroutine();    // 코루틴 미리 만들어 놓기
-
         enemy = FindObjectOfType<EnemyBase>(); // 적 찾아오기 
+    }
+
+    private void Start()
+    {        
+        //animSkill1 = skill1.GetComponent<Animator>();
+        //animSkill2 = skill2.GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
         inputActions.Player.Enable();
-        inputActions.Player.Attack1.performed += OnSkill1;
-        inputActions.Player.Attack1.canceled += OffSkill1;
+        inputActions.Player.Attack1.performed += OnSkill1;        
         inputActions.Player.Attack2.performed += OnSkill2;
         inputActions.Player.Attack3.performed += OnSkill3;
         inputActions.Player.Move.performed += OnMoveInput;
@@ -78,8 +71,7 @@ public class Player : StateBase
         inputActions.Player.Move.canceled -= OnMoveInput;
         inputActions.Player.Move.performed -= OnMoveInput;
         inputActions.Player.Attack3.performed -= OnSkill3;
-        inputActions.Player.Attack2.performed -= OnSkill2;
-        inputActions.Player.Attack1.canceled += OffSkill1;
+        inputActions.Player.Attack2.performed -= OnSkill2;        
         inputActions.Player.Attack1.performed -= OnSkill1;
         inputActions.Player.Disable();
     }
@@ -87,66 +79,48 @@ public class Player : StateBase
     private void OnMoveInput(InputAction.CallbackContext context)
     {
         Vector2 dir = context.ReadValue<Vector2>();
-
         inputDir = dir;
+        playerH = dir.x;
+        if (playerH > 0)                                            // 마지막 키 입력 방향 확인용 
+        {
+            isLeft = false;
+        }
+        if(playerH < 0)
+        {
+            isLeft = true;
+        }
     }
 
     private void OnSkill1(InputAction.CallbackContext context)   // 키보드 A키
     {
-        //anim.SetTrigger("Skill1");
-        GameObject obj = Instantiate(skill1);                   //skills 생성        
-        float x = this.transform.position.x;
-        float y = this.transform.position.y;
-        if (playerH >= 0)
-        {
-            skill2.transform.localScale = new Vector3(1, 1, 0);       //우 누르면 우측에 생성
-
-                                                                      
-        }
-        else if (playerH < 0)
-        {
-            skill2.transform.localScale = new Vector3(-1, 1, 0);    //좌 누르면 좌측에 생성 
-        }
-        Debug.Log($"{playerH}");
-        obj.transform.position = new Vector3(x, y, 0);   //skills 생성위치
-        //StartCoroutine(Skill1Coroutine());
-
-    }
-
-    private void OffSkill1(InputAction.CallbackContext context)   // 키보드 A키
-    {
-        //StopCoroutine(Skill1Coroutine());
-    }
-
-    private void OnSkill2(InputAction.CallbackContext context)  // 키보드 S키
-    {
-        GameObject obj = Instantiate(skill2);                   //skills 생성
-        float x = this.transform.position.x;
-        float y = this.transform.position.y;
         
-        if (playerH >= 0)
-        {
-            skill2.transform.localScale = new Vector3(1,1,0);       //우 누르면 우측에 생성             
-        }
-        else if(playerH < 0)
-        {
-            skill2.transform.localScale = new Vector3(-1, 1, 0);    //좌 누르면 좌측에 생성 
-        }
-        obj.transform.position = new Vector3(x, y + 0.5f, 0);          //skills 생성위치
-                                                                       //Debug.Log("SkillS");
+    }
+
+    private void OnSkill2(InputAction.CallbackContext context)      // 키보드 S키
+    {
+        //skill2.gameObject.SetActive(true);
+        //animSkill2.SetBool("doingAttack2", true);
+        //animSkill2.SetTrigger("attack");
+        //if (!isLeft)
+        //{            
+        //    skill2.transform.localScale = new Vector3(1,1,1);       //마지막 이동 방향이 우측이면 우측에 생성
+        //}
+        //else
+        //{            
+        //    skill2.transform.localScale = new Vector3(-1, 1, 1);    //마지막 이동 방향이 좌측이면 좌측에 생성
+        //}
+        //Instantiate(skill2);                                        //skills 생성
+        //skill2.transform.position = this.transform.position;        //skills 생성위치
     }
 
     private void OnSkill3(InputAction.CallbackContext context)  // 키보드 D키
     {
-        Debug.Log("SkillD");
+        
     }
 
     private void FixedUpdate()  // 물리 연산 프레임마다 호출되는 생명주기 함수
-    {
-        playerH = Input.GetAxis("Horizontal");                  //키 입력 방향 우측:1, 좌측 :-1
-
-        float d = Input.GetAxisRaw("Horizontal");
-        rigid.AddForce(Vector2.right * d, ForceMode2D.Impulse);
+    {        
+        rigid.AddForce(Vector2.right * playerH, ForceMode2D.Impulse);
         if (rigid.velocity.x > MoveSpeed)
         {
             rigid.velocity = new Vector2(MoveSpeed, rigid.velocity.y);
@@ -184,6 +158,37 @@ public class Player : StateBase
         {
             isPlayerDead = true;
             PlayerDie();
+        }
+    }
+
+    private void Update()
+    {
+        if (Mathf.Abs(rigid.velocity.x) < 0.3)  // 애니메이션 
+        {
+            anim.SetBool("Walking", false);
+        }
+        else
+        {
+            anim.SetBool("Walking", true);
+        }
+
+        if (Input.GetButton("Horizontal"))
+        {
+            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        }
+        
+        transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
+
+        if (Input.GetButtonDown("Jump") && jumpCount < 2)
+        {
+            rigid.AddForce(Vector2.up * JumpPower * 2, ForceMode2D.Impulse);
+            jumpCount++;
+            anim.SetBool("Jump", true);
+        }
+
+        if (currentExp >= maxExp)
+        {
+            LevelUp();
         }
     }
 
@@ -241,36 +246,6 @@ public class Player : StateBase
     Action<float> onHPChange;
     // ---------------------------------
 
-    private void Update()
-    {
-        if (Mathf.Abs(rigid.velocity.x) < 0.3)  // 애니메이션 
-        {
-            anim.SetBool("Walking", false);
-        }
-        else
-        {
-            anim.SetBool("Walking", true);
-        }
-
-        if (Input.GetButton("Horizontal"))
-        {
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
-        }
-        
-        transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
-
-        if (Input.GetButtonDown("Jump") && jumpCount < 2)
-        {
-            rigid.AddForce(Vector2.up * JumpPower * 2, ForceMode2D.Impulse);
-            jumpCount++;
-            anim.SetBool("Jump", true);
-        }
-
-        if (currentExp >= maxExp)
-        {
-            LevelUp();
-        }
-    }
 
     // --------------함수시작-----------
     //초기스탯
@@ -313,9 +288,6 @@ public class Player : StateBase
     {
         AddExp(getExp);
     }
-
-
-    
 
     private void PlayerDie()
     {

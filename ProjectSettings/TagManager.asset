@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Skill
   - EnemyAttack
+  - Platform
   layers:
   - Default
   - TransparentFX
