@@ -198,7 +198,7 @@ public class Player : StateBase
     /// <param name="targetPos"></param>
     void OnDamaged(Vector2 targetPos)
     {
-        HP -= enemy.EnemyAttack();
+        //HP -= enemy.EnemyAttack();
 
         //무적 처리 코드 
         gameObject.layer = 9;

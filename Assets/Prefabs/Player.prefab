@@ -103,11 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3fb820c2b65660479415cf22b332325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
-  maxHp: 0
-  attackPoint: 0
-  defencePoint: 0
-  attackSpeed: 0
+  level: 1
+  maxHp: 100
+  attackPoint: 10
+  defencePoint: 10
+  attackSpeed: 1
   moveSpeed: 1
   MoveSpeed: 5
   JumpPower: 11
@@ -150,8 +150,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.032274306, y: 0.47194755}
-  m_Size: {x: 0.91058004, y: 0.91058004}
+  m_Offset: {x: 0, y: 0.5}
+  m_Size: {x: 1, y: 1}
   m_Direction: 0
 --- !u!95 &985039190
 Animator:
@@ -228,10 +228,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8316142609828272432, guid: 9443fa67701e044a481f5dc94404ea50, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9443fa67701e044a481f5dc94404ea50, type: 3}
 --- !u!4 &7053503454522539087 stripped
@@ -249,14 +245,6 @@ PrefabInstance:
     - target: {fileID: 7122660436482179754, guid: 6a2267a3d414f420cbb4d53b3cd265b0, type: 3}
       propertyPath: m_Name
       value: Skill3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7122660436482179754, guid: 6a2267a3d414f420cbb4d53b3cd265b0, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7122660436482179754, guid: 6a2267a3d414f420cbb4d53b3cd265b0, type: 3}
-      propertyPath: m_TagString
-      value: Skill
       objectReference: {fileID: 0}
     - target: {fileID: 8582862647507531194, guid: 6a2267a3d414f420cbb4d53b3cd265b0, type: 3}
       propertyPath: m_RootOrder

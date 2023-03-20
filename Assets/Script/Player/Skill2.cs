@@ -7,39 +7,30 @@ using UnityEngine.InputSystem;
 public class Skill2 : MonoBehaviour
 {
     PlayerInputAction inputActions;
-    Player player;
-    Transform transSkill;
-    Animator animSkill;
+    Transform tran_Skill;
+    Transform tran_SkillRange;
+    Animator anim_Skill;
     Vector3 inputDir = Vector3.zero;
-
-    //bool isLeft = false;
+    Collider2D coll_Skill;
 
     /// <summary>
     /// 스킬 데미지 계산용 변수
     /// </summary>
-    public float skillValue = 1.0f;
-
-    /// <summary>
-    /// 스킬 데미지 계산 후 변수 
-    /// </summary>
-    public float skillPower
-    {
-        get => skillPower;
-        set
-        {
-            skillPower = value * skillValue * player.attackPoint;
-        }
-    }
+    public float skillpoint = 1.0f;
+    public float skillSpeed = 1.0f;
 
     private void Awake()
     {
         inputActions = new PlayerInputAction();
-        animSkill = GetComponent<Animator>();
+        anim_Skill = GetComponent<Animator>();
+        tran_Skill = GetComponent<Transform>();
+        tran_SkillRange = tran_Skill.GetChild(0);
+        coll_Skill = tran_SkillRange.GetComponent<Collider2D>();
     }
 
     private void Start()
     {
-
+        anim_Skill.SetFloat("SkillSpeed", skillSpeed);
     }
 
     private void OnEnable()
@@ -61,38 +52,32 @@ public class Skill2 : MonoBehaviour
     private void OnMoveInput(InputAction.CallbackContext context)
     {
         Vector2 dir = context.ReadValue<Vector2>();
-        inputDir = dir;
+        inputDir = dir;                                                         // 마지막 이동 위치 확인용 
 
-        if (dir.x > 0)                                            // 마지막 이동 위치 확인용 
+        if (dir.x > 0)
         {
-            //isLeft = false;
-            animSkill.SetBool("isLeft", false);
+            anim_Skill.SetBool("isLeft", false);
         }
         if (dir.x < 0)
         {
-            //isLeft = true;
-            animSkill.SetBool("isLeft", true);
+            anim_Skill.SetBool("isLeft", true);
         }
     }
 
-    public void OnSkill2(InputAction.CallbackContext context)   // 키보드 A키
+    public void OnSkill2(InputAction.CallbackContext context)                   // 키보드 S키
     {
-        animSkill.SetTrigger("attack");
+        anim_Skill.SetTrigger("attack");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy"))    
         {
-            //Debug.Log($"공격이 {collision.gameObject.name}과 충돌");
+            Debug.Log("skill2");
         }
     }
-
+    
     private void Update()
     {
     }
-
-
-
-
 }

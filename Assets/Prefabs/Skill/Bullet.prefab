@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2090780591462392078}
   m_Layer: 8
   m_Name: Bullet
-  m_TagString: Skill
+  m_TagString: Skill3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,4 +136,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252e5e862cefc4d48963b22495cdeeab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 10
