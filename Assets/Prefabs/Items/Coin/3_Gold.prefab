@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -7115778492686972831}
   - component: {fileID: 3437682302111223545}
   - component: {fileID: -4078125902528897517}
-  m_Layer: 3
+  m_Layer: 12
   m_Name: 3_Gold
   m_TagString: Item
   m_Icon: {fileID: 0}

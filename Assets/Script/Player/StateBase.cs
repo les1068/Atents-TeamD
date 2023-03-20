@@ -31,9 +31,9 @@ public class StateBase : MonoBehaviour
     public float attackSpeed;
     
     /// <summary>
-    /// 이동 속
+    /// 이동 속도
     /// </summary>
-    public float moveSpeed = 1.0f;
+    protected float moveSpeed = 1.0f;
 
     protected virtual void InitStat()
     {

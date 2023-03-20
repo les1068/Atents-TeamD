@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class Skill3 : MonoBehaviour
+public class Skill3 : PoolObject
 {
     PlayerInputAction inputActions;
     Player player;
@@ -73,12 +73,14 @@ public class Skill3 : MonoBehaviour
         inputActions.Player.Attack3.performed += OnSkill3;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        inputActions.Player.Attack3.performed -= OnSkill3;
         inputActions.Player.Move.performed -= OnMoveInput;
         inputActions.Player.Move.canceled -= OnMoveInput;
         inputActions.Player.Disable();
+        inputActions.Player.Attack3.performed -= OnSkill3;
+        base.OnDisable();
+
     }
 
     private void OnMoveInput(InputAction.CallbackContext context)
