@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 
 public class Singleton<T> : MonoBehaviour where T : Component
 {
@@ -23,7 +24,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
             if (instance == null)
             {
                 T obj = FindObjectOfType<T>();
-                if (obj != null)
+                if (obj == null)
                 {
                     GameObject gameObj = new GameObject();
                     gameObj.name = typeof(T).Name;
@@ -57,11 +58,17 @@ public class Singleton<T> : MonoBehaviour where T : Component
 
     private void OnEnable()
     {
-        //SceneManager.sceneLoaded += onScreenLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
     private void OnDisable()
     {
-        //SceneManager.sceneLoaded -= OnScreenLoaded;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        PreInitialize();
+        Initialize();
     }
     protected virtual void PreInitialize()
     {
@@ -75,5 +82,9 @@ public class Singleton<T> : MonoBehaviour where T : Component
     protected virtual void Initialize()
     {
 
+    }
+
+    protected virtual void ResetData()
+    { 
     }
 }

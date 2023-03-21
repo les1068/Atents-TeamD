@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class Skill3 : MonoBehaviour
+public class Skill3 : PoolObject
 {
     PlayerInputAction inputActions;
     Transform tran_Skill;
@@ -61,13 +61,16 @@ public class Skill3 : MonoBehaviour
         inputActions.Player.Attack3.canceled += OffSkill3;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         inputActions.Player.Attack3.canceled -= OffSkill3;
         inputActions.Player.Attack3.performed -= OnSkill3;
-        inputActions.Player.Move.performed -= OnMoveInput;
         inputActions.Player.Move.canceled -= OnMoveInput;
+        inputActions.Player.Move.performed -= OnMoveInput;
         inputActions.Player.Disable();
+        
+        base.OnDisable();
+
     }
 
     private void OnMoveInput(InputAction.CallbackContext context)
@@ -83,6 +86,22 @@ public class Skill3 : MonoBehaviour
         {
             isLeft = true;        
         }
+    }
+
+    public void OnSkill3(InputAction.CallbackContext context)   // 키보드 A키
+    {
+        GameObject obj = Factory.Inst.GetObject(PoolObjectType.Bullet); //풀에서 Bullet빼서쓰는걸로 변경함
+        float posX = transSkill.position.x;
+        float posY = transSkill.position.y;
+        if(isLeft)
+        {
+            obj.transform.position = new Vector2(posX - 1, posY);
+        }
+        else
+        {
+            obj.transform.position = new Vector2(posX + 1, posY);
+        }
+        
     }
 
     /// <summary>

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ObjectPool<T> : MonoBehaviour where T : PoolObject
 {
-    //ArrayList listA;    // 리스트에 다 넣을 수 있다.    // 박싱 언박싱이 발생하므로 사용하지 말 것
-    //List<int> list;     // 리스트에 int만 넣을 수 있다. // 제네릭 타입을 사용하는 것이 좋다.
-
     /// <summary>
     /// 풀에 생성해 놓을 오브젝트의 프리팹
     /// </summary>
@@ -15,7 +12,7 @@ public class ObjectPool<T> : MonoBehaviour where T : PoolObject
     /// <summary>
     /// 풀의 크기. 처음에 생성하는 오브젝트의 갯수. 갯수는 2^n으로 잡는것이 좋다.
     /// </summary>
-    public int poolSize = 64;
+    public int poolSize = 32;
 
     /// <summary>
     /// 풀이 생성한 모든 오브젝트가 들어있는 배열
@@ -25,7 +22,7 @@ public class ObjectPool<T> : MonoBehaviour where T : PoolObject
     /// <summary>
     /// 사용 가능한 오브젝트들이 들어있는 큐
     /// </summary>
-    Queue<T> readyQueue;
+    protected Queue<T> readyQueue;
 
     /// <summary>
     /// 처음 만들어졌을 때 한번 실행될 코드(초기화 코드)
@@ -129,4 +126,5 @@ public class ObjectPool<T> : MonoBehaviour where T : PoolObject
         pool = newPool;         // 새 풀을 풀로 설정
         poolSize = newSize;     // 사이즈로 새 풀 크기로 설정
     }
+
 }

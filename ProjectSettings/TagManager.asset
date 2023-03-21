@@ -24,7 +24,7 @@ TagManager:
   - PlayerDamaged
   - Platform
   - BackGruond
-  - 
+  - Item
   - 
   - 
   - 
@@ -56,6 +56,9 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 3765539449
+    locked: 0
+  - name: Item
+    uniqueID: 3092632647
     locked: 0
   - name: Default
     uniqueID: 0

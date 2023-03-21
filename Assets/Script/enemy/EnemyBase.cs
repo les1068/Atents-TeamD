@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class EnemyBase : PoolObject
 {
@@ -20,8 +21,21 @@ public class EnemyBase : PoolObject
     public Rigidbody2D rigi_Target;
     Collider2D coll_Target;
 
+    public Player TargetPlayer
+    {
+        protected get => player;
+        set
+        {
+            if(player == null)
+            {
+                player = value;
+            }
+        }
+    }
+    
+    [Header("상태관련----------------------")]
     /// <summary>
-    /// 레
+    /// 레벨
     /// </summary>
     public byte level;
 
@@ -84,28 +98,44 @@ public class EnemyBase : PoolObject
         spri_Enemy = GetComponent<SpriteRenderer>();
         anim_Enemy = GetComponent<Animator>();
         
-    }
 
-    private void OnEnable()
-    {
-        //transform.localPosition = Vector3.zero;      // 위치 초기화
-    }
+    /// <summary>
+    /// Enemy 사망시 player가 얻게 될 경험치
+    /// </summary>
+    public int exp = 10;
 
-    void Start()
+    /// <summary>
+    /// 살아 있으면 true 죽었으면 falase
+    /// </summary>
+    bool isLive = false;
+    float liveTime = 5;
+    float baseY;
+
+  
+
+
+    void OnEnable()
     {
        
     }
     
     protected virtual void FixedUpdate()
-    {
+        
+        player = FindObjectOfType<Player>();
+        target = player.transform;
         Vector2 dirVec = rigi_Target.position - rigi_Enemy.position;   // 타겟포지션 - 나의 포지션
         Vector2 nextVec = dirVec.normalized * moveSpeed * Time.fixedDeltaTime;
         nextVec.y = 0;
         rigi_Enemy.MovePosition(rigi_Enemy.position + nextVec);        
+        StartCoroutine(LifeOver(liveTime));
+
     }
 
     protected virtual void Update()
     {
+        transform.Translate(-Time.deltaTime*moveSpeed,0,0); //적 움직임 (현재 직선이동)
+        //rigid.AddForce(Time.deltaTime * moveSpeed * 0.3f * Vector2.left,ForceMode2D.Impulse); //움직임확인중 보니까 0,0,0으로 수렴하려고함_이유확인필요
+        //Debug.Log(transform.position);
         EnemyAttack();
     }
 
