@@ -57,14 +57,15 @@ public class EnemyBase : PoolObject
     public int exp = 10;
 
     /// <summary>
-    /// 살아 있으면 true 죽었으면 falase
+    /// 살아 있으면 false 죽었으면 true
     /// </summary>
-    bool isLive = false;
+    //bool isDead = false;
             
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        Collider2D collider2D = GetComponent<Collider2D>();        
+        Collider2D collider2D = GetComponent<Collider2D>();
+        currentHP = maxHp;
     }
 
     private void OnEnable()
@@ -119,46 +120,35 @@ public class EnemyBase : PoolObject
     }
 
 
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(GetComponent<Collider2D>().CompareTag("Skill"))
-        {
-            Debug.Log(" 아프다 !");
-        }
-        
-        if (currentHP != 0)
+        if (currentHP > 0)
         {
             // Player 충돌시 Enemy HP 감소
-            /*if (collision.gameObject.CompareTag("PlayerAttack"))
+            if (collision.gameObject.CompareTag("Skill"))
             {
                 onDamageEnemy();
-            }*/
+                //Debug.Log($"Player HP: {player.HP}, Enemy HP: {currentHP}");
+            }
         }
         // Enemy 죽이면, player 경험치 증가
         else if (currentHP < 1)
         {
-            isLive = false;
             EnemyDie();
         }
     }
 
-    
-
-
     void EnemyDie()
     {
-        if (!isLive)
-        {
-            player.AddExp((int)exp);    // playerStat의 exp는 int. Enemy의 exp는 float. player에 exp 추가
-            gameObject.SetActive(false);    // Enemy 비활성화
-        }
+        player.AddExp(exp);    // player에 exp 추가 
+        gameObject.SetActive(false);    // Enemy 비활성화
+        //Debug.Log($"Player HP: {player.EXP}");
     }
 
     private void onDamageEnemy()
     {
-        currentHP = currentHP - player.EXP;     // player Attack 접근 불가. 임의로 EXP 입력
-        EnemyHpText.text = "HP: " + currentHP.ToString();
+        currentHP -= player.attackPoint;
+        //EnemyHpText.text = "HP: " + currentHP.ToString();
     }
 
     
