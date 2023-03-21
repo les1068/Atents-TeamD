@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New Sprite Atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: -676278951, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 919393384, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 232870053, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 1460889837, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -693329551, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -2102669263, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -430204693, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -445400723, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 1502410387, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 237489962, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 336633488, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -694763410, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 1957726373, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 290845778, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -2140497527, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1137763437, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -2092946217, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 1691441987, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1197846708, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -437401678, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 990076344, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -746718791, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1401178302, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1601895957, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1930042538, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -495683292, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1768322859, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -589272849, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 1939329393, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 1964846355, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 1096496909, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 2069843951, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1907782654, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1450908291, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -939013873, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -98537051, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 779948810, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1023940641, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1989320500, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: -1915269293, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  - {fileID: 1556568114, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - jump5
+  - jump4
+  - die1
+  - jump1
+  - die3
+  - die2
+  - jump3
+  - die5
+  - jump2
+  - die4
+  - die7
+  - die6
+  - idle2
+  - idle1
+  - walk10
+  - sliding1
+  - turn2
+  - turn3
+  - sliding2
+  - turn1
+  - turn4
+  - turn5
+  - mujuk2
+  - mujuk1
+  - walk1
+  - walk2
+  - walk3
+  - walk4
+  - walk5
+  - walk6
+  - walk7
+  - walk8
+  - walk9
+  - run8
+  - run2
+  - run3
+  - run1
+  - run6
+  - run7
+  - run4
+  - run5
+  m_RenderDataMap: {}
+  m_Tag: New Sprite Atlas
+  m_IsVariant: 0
