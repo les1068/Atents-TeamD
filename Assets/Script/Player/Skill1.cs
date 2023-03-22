@@ -8,30 +8,41 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class Skill1 : MonoBehaviour
 {
     PlayerInputAction inputActions;
-    Transform tran_Skill;
-    Transform tran_SkillRange;
-    Animator anim_Skill;
+    Player player;
+    Transform transSkill;
+    Animator animSkill;
     Vector3 inputDir = Vector3.zero;
-    Collider2D coll_Skill;
-            
+    EnemyBase enemy;
+
+    //bool isLeft = false;
+        
     /// <summary>
     /// 스킬 데미지 계산용 변수
     /// </summary>
-    public float skillpoint = 1.0f;
-    public float skillSpeed = 1.0f;
+    public float skillValue = 1.0f;
+
+    /// <summary>
+    /// 스킬 데미지 계산 후 변수 
+    /// </summary>
+    public float skillPower
+    {
+        get => skillPower;
+        set
+        {
+            skillPower = value * skillValue * player.attackPoint;
+        }
+    }
 
     private void Awake()
     {
         inputActions = new PlayerInputAction();
-        anim_Skill = GetComponent<Animator>();
-        tran_Skill = GetComponent<Transform>();
-        tran_SkillRange = tran_Skill.GetChild(0);
-        coll_Skill = tran_SkillRange.GetComponent<Collider2D>();
+        animSkill = GetComponent<Animator>();
+        enemy = FindObjectOfType<EnemyBase>(); // 적 찾아오기 
     }
 
     private void Start()
     {
-        anim_Skill.SetFloat("SkillSpeed", skillSpeed);
+
     }
 
     private void OnEnable()
@@ -53,32 +64,33 @@ public class Skill1 : MonoBehaviour
     private void OnMoveInput(InputAction.CallbackContext context)
     {
         Vector2 dir = context.ReadValue<Vector2>();
-        inputDir = dir;                                                         // 마지막 이동 위치 확인용 
-
-        if (dir.x > 0)                                            
-        {            
-            anim_Skill.SetBool("isLeft", false);
+        inputDir = dir;
+        
+        if (dir.x > 0)                                            // 마지막 이동 위치 확인용 
+        {
+            //isLeft = false;
+            animSkill.SetBool("isLeft", false);
         }
         if (dir.x < 0)
-        {         
-            anim_Skill.SetBool("isLeft", true);
+        {
+            //isLeft = true;
+            animSkill.SetBool("isLeft", true);
         }
     }
 
-    public void OnSkill1(InputAction.CallbackContext context)                   // 키보드 A키
+    public void OnSkill1(InputAction.CallbackContext context)   // 키보드 A키
     {        
-        anim_Skill.SetTrigger("attack");
+        animSkill.SetTrigger("attack");
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(coll_Skill.enabled && collision.gameObject.CompareTag("Enemy"))      // 적이고 스킬 range의 coll이 enable이면 
-        {                                                                       // range의 coll을 disable 시켜라
-            coll_Skill.enabled = false;                                         // 생각대로 작동안함 ㅠ ㅠ 
-            //Debug.Log($"{coll_Skill.isActiveAndEnabled}");                      // 확인용 디버그 
-        }        
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+
+        }
     }
-    
+
     private void Update()
     {
     }

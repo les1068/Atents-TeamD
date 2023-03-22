@@ -8,9 +8,7 @@ TagManager:
   - Skill
   - EnemyAttack
   - Platform
-  - Skill1
-  - Skill2
-  - Skill3
+  - Item
   layers:
   - Default
   - TransparentFX

@@ -8,19 +8,10 @@ using UnityEngine.InputSystem;
 public class Skill3 : PoolObject
 {
     PlayerInputAction inputActions;
-    Transform tran_Skill;
-    Transform tran_SkillRange;
-    Animator anim_Skill;
+    Player player;
+    Transform transSkill;
+    Animator animSkill;
     Vector3 inputDir = Vector3.zero;
-    Collider2D coll_Skill;
-
-    /// <summary>
-    /// 스킬 데미지 계산용 변수
-    /// </summary>
-    
-    public float skillSpeed = 1.0f;
-    
-    bool isFire = false;
 
     /// <summary>
     /// 발사할 총알 프리팹
@@ -37,19 +28,41 @@ public class Skill3 : PoolObject
     /// </summary>
     IEnumerator skillCoroutine;
 
+    /// <summary>
+    /// 총알 발사 시간 간격만큼 기다리는 WaitForSeconds
+    /// </summary>
+    WaitForSeconds waitSkillInterval;
+        
     public bool isLeft = false;
+
+    /// <summary>
+    /// 스킬 데미지 계산용 변수
+    /// </summary>
+    public float skillValue = 1.0f;
+
+    /// <summary>
+    /// 스킬 데미지 계산 후 변수 
+    /// </summary>
+    public float skillPower
+    {
+        get => skillPower;
+        set
+        {
+            skillPower = value * skillValue * player.attackPoint;
+        }
+    }
 
     private void Awake()
     {
         inputActions = new PlayerInputAction();
-        anim_Skill = GetComponent<Animator>();
-        tran_Skill = GetComponent<Transform>();
-        skillCoroutine = SkillCoroutine();
+        animSkill = GetComponent<Animator>();
+        transSkill = GetComponent<Transform>();
+        skillCoroutine = skillLoop();
     }
 
     void Start()
     {
-        
+        waitSkillInterval = new WaitForSeconds(skillInterval);
     }
 
     private void OnEnable()
@@ -58,17 +71,14 @@ public class Skill3 : PoolObject
         inputActions.Player.Move.performed += OnMoveInput;
         inputActions.Player.Move.canceled += OnMoveInput;
         inputActions.Player.Attack3.performed += OnSkill3;
-        inputActions.Player.Attack3.canceled += OffSkill3;
     }
 
     protected override void OnDisable()
     {
-        inputActions.Player.Attack3.canceled -= OffSkill3;
-        inputActions.Player.Attack3.performed -= OnSkill3;
-        inputActions.Player.Move.canceled -= OnMoveInput;
         inputActions.Player.Move.performed -= OnMoveInput;
+        inputActions.Player.Move.canceled -= OnMoveInput;
         inputActions.Player.Disable();
-        
+        inputActions.Player.Attack3.performed -= OnSkill3;
         base.OnDisable();
 
     }
@@ -80,11 +90,13 @@ public class Skill3 : PoolObject
 
         if (dir.x > 0)                                            // 마지막 이동 위치 확인용 
         {
-            isLeft = false;        
+            isLeft = false;
+        
         }
         if (dir.x < 0)
         {
-            isLeft = true;        
+            isLeft = true;
+        
         }
     }
 
@@ -108,18 +120,12 @@ public class Skill3 : PoolObject
     /// 주기적으로 총알을 발사하는 코루틴
     /// </summary>
     /// <returns></returns>
-    IEnumerator SkillCoroutine()
+    IEnumerator skillLoop()
     {
         while (true)
         {
-            if(!isFire)
-            {
-                OnFire();
-                isFire = true;
-            }
-            
-            yield return new WaitForSeconds(skillInterval);
-            isFire = false;
+            OnFire();
+            yield return waitSkillInterval;
         }
     }
 
@@ -128,26 +134,5 @@ public class Skill3 : PoolObject
     /// </summary>
     protected virtual void OnFire()
     {
-        GameObject obj = Instantiate(bullet);
-        float posX = tran_Skill.position.x;
-        float posY = tran_Skill.position.y;
-        if (isLeft)
-        {
-            obj.transform.position = new Vector2(posX - 1, posY);
-        }
-        else
-        {
-            obj.transform.position = new Vector2(posX + 1, posY);
-        }        
-    }
-
-    public void OnSkill3(InputAction.CallbackContext context)   // 키보드 D
-    {
-        StartCoroutine(skillCoroutine);        
-    }
-
-    public void OffSkill3(InputAction.CallbackContext context)   // 키보드 D
-    {
-        StopCoroutine(skillCoroutine);     
     }
 }

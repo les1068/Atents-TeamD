@@ -199,7 +199,7 @@ public class Player : StateBase
     /// <param name="targetPos"></param>
     void OnDamaged(Vector2 targetPos)
     {
-        //HP -= enemy.EnemyAttack();
+        HP -= enemy.EnemyAttack();
 
         OnInvincibleMode();
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;
