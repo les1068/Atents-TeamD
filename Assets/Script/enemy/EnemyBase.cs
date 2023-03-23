@@ -7,6 +7,9 @@ using UnityEngine.SocialPlatforms;
 
 public class EnemyBase : PoolObject
 {
+    public Rigidbody2D enemysTarget;
+    protected Transform target;
+    Rigidbody2D rigid;
     Player player;
 
     Transform tran_Enemy;
@@ -21,6 +24,7 @@ public class EnemyBase : PoolObject
     public Rigidbody2D rigi_Target;
     Collider2D coll_Target;
 
+    
     public Player TargetPlayer
     {
         protected get => player;
@@ -37,20 +41,16 @@ public class EnemyBase : PoolObject
     /// <summary>
     /// 레벨
     /// </summary>
+
     public byte level;
 
     /// <summary>
-    /// 최대  hp
+    /// 기본 hp
     /// </summary>    
     public float maxHp;
 
     /// <summary>
-    /// Enemy 현재 HP
-    /// </summary>
-    float currentHP = 100.0f;
-
-    /// <summary>
-    /// 기본 공격력 
+    /// 가본 공격력 
     /// </summary>
     public float attackPoint;
 
@@ -67,17 +67,7 @@ public class EnemyBase : PoolObject
     /// <summary>
     /// 이동 속도 
     /// </summary>
-    public float moveSpeed;
-
-    /// <summary>
-    /// Enemy 사망시 player가 얻게 될 경험치
-    /// </summary>
-    public int exp;
-
-    /// <summary>
-    /// 살아 있으면 true 죽었으면 falase
-    /// </summary>
-    bool isLive = false;
+    public float moveSpeed = 1.0f;
 
     protected virtual void InitStat()
     {
@@ -86,8 +76,6 @@ public class EnemyBase : PoolObject
         attackPoint = 1.0f;
         defencePoint = 1.0f;
         attackSpeed = 1.0f;
-        moveSpeed = 1.0f;
-        exp = 10;
     }
 
     protected virtual void Awake()
@@ -124,7 +112,15 @@ public class EnemyBase : PoolObject
 
     }
 
-    protected virtual void Update()
+    private void FixedUpdate()
+    {
+        Vector2 dirVec = enemysTarget.position - rigid.position;   // 타겟포지션 - 나의 포지션
+        Vector2 nextVec = dirVec.normalized * moveSpeed * Time.fixedDeltaTime;
+        rigid.MovePosition(rigid.position + nextVec);
+        rigid.velocity = Vector2.zero;
+    }
+
+    private void Update()
     {
         transform.Translate(-Time.deltaTime*moveSpeed,0,0); //적 움직임 (현재 직선이동)
         //rigid.AddForce(Time.deltaTime * moveSpeed * 0.3f * Vector2.left,ForceMode2D.Impulse); //움직임확인중 보니까 0,0,0으로 수렴하려고함_이유확인필요
@@ -153,6 +149,7 @@ public class EnemyBase : PoolObject
 
     public TMP_Text EnemyHpText;
 
+
     /// <summary>
     /// Enemy HP 델리게이트
     /// </summary>
@@ -171,12 +168,14 @@ public class EnemyBase : PoolObject
 
     void EnemyDie()
     {
-        player.AddExp(exp);    // player에 exp 추가 
-        gameObject.SetActive(false);    // Enemy 비활성화
-        //Debug.Log($"Player HP: {player.EXP}");
+        if (!isLive)
+        {
+            player.AddExp((int)exp);    // playerStat의 exp는 int. Enemy의 exp는 float. player에 exp 추가
+            gameObject.SetActive(false);    // Enemy 비활성화
+        }
     }
 
-    public float GetEnemyHP()
+    private void onDamageEnemy()
     {
         currentHP -= player.attackPoint;
         //EnemyHpText.text = "HP: " + currentHP.ToString();

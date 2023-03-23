@@ -45,11 +45,6 @@ public class ItemBase : PoolObject
         itemscore = 1;
         itemexp = 1;
     }
-
-    protected virtual void Update()
-    {
-        transform.Translate(Time.deltaTime * Vector2.left * moveSpeed);
-    }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
