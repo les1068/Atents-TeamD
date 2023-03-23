@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6264691551377759966}
   m_Layer: 8
   m_Name: Range
-  m_TagString: Skill
+  m_TagString: Skill1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

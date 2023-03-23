@@ -8,12 +8,12 @@ using UnityEngine.SocialPlatforms;
 public class EnemyBase : PoolObject
 {
     Player player;
-    
+
     Transform tran_Enemy;
-    
+
     Rigidbody2D rigi_Enemy;
     Collider2D coll_Enemy;
-    
+
     SpriteRenderer spri_Enemy;
     Animator anim_Enemy;
 
@@ -26,13 +26,13 @@ public class EnemyBase : PoolObject
         protected get => player;
         set
         {
-            if(player == null)
+            if (player == null)
             {
                 player = value;
             }
         }
     }
-    
+
     [Header("상태관련----------------------")]
     /// <summary>
     /// 레벨
@@ -89,7 +89,7 @@ public class EnemyBase : PoolObject
         moveSpeed = 1.0f;
         exp = 10;
     }
-            
+
     protected virtual void Awake()
     {
         tran_Enemy = GetComponent<Transform>();
@@ -97,40 +97,25 @@ public class EnemyBase : PoolObject
         coll_Enemy = GetComponent<Collider2D>();
         spri_Enemy = GetComponent<SpriteRenderer>();
         anim_Enemy = GetComponent<Animator>();
-        
-
-    /// <summary>
-    /// Enemy 사망시 player가 얻게 될 경험치
-    /// </summary>
-    public int exp = 10;
-
-    /// <summary>
-    /// 살아 있으면 false 죽었으면 true
-    /// </summary>
-    bool isLive = false;
-    float liveTime = 5;
-    float baseY;
-    //bool isDead = false;
-            
-    private void Awake()
-    {
-        rigid = GetComponent<Rigidbody2D>();
-        Collider2D collider2D = GetComponent<Collider2D>();
         currentHP = maxHp;
     }
 
-  
+    float liveTime = 5;
+    float baseY;
+    //bool isDead = false;
+
+
 
 
     void OnEnable()
     {
-       
+
     }
-    
+
     protected virtual void FixedUpdate()
-        
+    { 
         player = FindObjectOfType<Player>();
-        target = player.transform;
+        tran_target = player.transform;
         Vector2 dirVec = rigi_Target.position - rigi_Enemy.position;   // 타겟포지션 - 나의 포지션
         Vector2 nextVec = dirVec.normalized * moveSpeed * Time.fixedDeltaTime;
         nextVec.y = 0;
@@ -147,29 +132,24 @@ public class EnemyBase : PoolObject
         EnemyAttack();
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (GetComponent<Collider2D>().CompareTag("Skill"))
-        {
-            Debug.Log(" 아프다 !");
-        }
-
-        if (currentHP != 0)
+        if (currentHP > 0)
         {
             // Player 충돌시 Enemy HP 감소
-            /*if (collision.gameObject.CompareTag("PlayerAttack"))
+            if (collision.gameObject.CompareTag("Skill"))
             {
-                onDamageEnemy();
-            }*/
+                GetEnemyHP();
+                //Debug.Log($"Player HP: {player.HP}, Enemy HP: {currentHP}");
+            }
         }
-
         // Enemy 죽이면, player 경험치 증가
         else if (currentHP < 1)
         {
-            //isLive = false;
-            //EnemyDie();
+            EnemyDie();
         }
     }
+   
 
     public TMP_Text EnemyHpText;
 
@@ -188,23 +168,6 @@ public class EnemyBase : PoolObject
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (currentHP > 0)
-        {
-            // Player 충돌시 Enemy HP 감소
-            if (collision.gameObject.CompareTag("Skill"))
-            {
-                onDamageEnemy();
-                //Debug.Log($"Player HP: {player.HP}, Enemy HP: {currentHP}");
-            }
-        }
-        // Enemy 죽이면, player 경험치 증가
-        else if (currentHP < 1)
-        {
-            EnemyDie();
-        }
-    }
 
     void EnemyDie()
     {
@@ -217,6 +180,7 @@ public class EnemyBase : PoolObject
     {
         currentHP -= player.attackPoint;
         //EnemyHpText.text = "HP: " + currentHP.ToString();
+        return currentHP;
     }
 
     
