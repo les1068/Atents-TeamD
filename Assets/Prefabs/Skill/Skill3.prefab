@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4104182710670738248}
   m_Layer: 8
   m_Name: Skill3
-  m_TagString: Skill
+  m_TagString: Skill3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 4572425172072054204, guid: 13a9446d865da42949d88ab8cac53f7f, type: 3}
-  skillInterval: 1
+  skillInterval: 2
   isLeft: 0
   skillValue: 1

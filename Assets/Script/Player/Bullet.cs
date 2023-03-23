@@ -18,9 +18,9 @@ public class Bullet : PoolObject
     
     private void Awake()
     {
-        rigidBullet = GetComponent<Rigidbody2D>();
-        transBullet = GetComponent<Transform>();
-        
+        rigi_Skill_Bullet = GetComponent<Rigidbody2D>();
+        tran_Skill_Bullet = GetComponent<Transform>();
+        skill3 = FindObjectOfType<Skill3>();
     }
 
     private void OnEnable()

@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 20
+  spritePixelsToUnits: 30
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -91,18 +91,6 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Server
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -2560,8 +2548,8 @@ TextureImporter:
         y: 577
         width: 21
         height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -17521,21 +17509,22 @@ TextureImporter:
       spritesheet2_657: 1636478780
       spritesheet2_453: 1902761257
       spritesheet2_543: -2107409000
-      greenland5: 718436524
+      spritesheet2_465: -1918881232
       spritesheet2_676: 1958864651
       spritesheet2_46: -913800370
-      spritesheet2_435: 1506519547
-      greenland7: 967465624
       spritesheet2_205: 1167472387
+      spritesheet2_435: 1506519547
+      spritesheet2_380: -402194105
       spritesheet2_740: -1863731872
       spritesheet2_170: 1207365557
-      spritesheet2_380: -402194105
-      spritesheet2_465: -1918881232
+      spritesheet2_728: 358542693
+      greenland5: 718436524
+      greenland7: 967465624
+      spritesheet2_703: 1899809189
       spritesheet2_633: -1768908522
       spritesheet2_762: -601862223
       spritesheet2_107: -1245773384
       spritesheet2_719: 115752509
-      spritesheet2_728: 358542693
       spritesheet2_360: -798516291
       spritesheet2_93: -1142146407
       spritesheet2_505: 1684777089
@@ -17559,7 +17548,6 @@ TextureImporter:
       spritesheet2_406: 2044480032
       spritesheet2_547: -794075507
       spritesheet2_491: 563600293
-      spritesheet2_703: 1899809189
       spritesheet2_818: 746176017
       spritesheet2_335: -618011398
       spritesheet2_611: -344250468
@@ -17729,9 +17717,9 @@ TextureImporter:
       spritesheet2_244: -719117644
       spritesheet2_318: -1891089470
       spritesheet2_220: -1674880740
-      spritesheet2_348: -1481205945
       spritesheet2_144: 1329707677
       spritesheet2_440: -522176461
+      spritesheet2_348: -1481205945
       spritesheet2_473: -570767560
       spritesheet2_544: -1094169551
       spritesheet2_203: 1496231305

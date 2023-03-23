@@ -39,8 +39,8 @@ public class StateBase : MonoBehaviour
     {
         level = 1;
         maxHp = 100;
-        attackPoint = 1.0f;
-        defencePoint = 1.0f;
+        attackPoint = 10.0f;
+        defencePoint = 10.0f;
         attackSpeed = 1.0f;
     }
 

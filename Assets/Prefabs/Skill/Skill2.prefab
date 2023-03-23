@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 943757421572376294}
   m_Layer: 8
   m_Name: Skill2
-  m_TagString: Skill
+  m_TagString: Skill2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,7 +146,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 4564241149494531938}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -169,7 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45906e6b737d7475496cc9e230a8c4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillValue: 1
+  skillpoint: 1
+  skillSpeed: 1
 --- !u!95 &943757421572376294
 Animator:
   serializedVersion: 4
