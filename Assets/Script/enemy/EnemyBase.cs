@@ -98,12 +98,12 @@ public class EnemyBase : PoolObject
         Vector2 dirVec = enemysTarget.position - rigid.position;   // 타겟포지션 - 나의 포지션
         Vector2 nextVec = dirVec.normalized * moveSpeed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
-        rigid.velocity = Vector2.zero;
+        //rigid.velocity = Vector2.zero;
     }
 
     private void Update()
     {
-        transform.Translate(-Time.deltaTime*moveSpeed,0,0); //적 움직임 (현재 직선이동)
+        //transform.Translate(-Time.deltaTime*moveSpeed,0,0); //적 움직임 (현재 직선이동)
         //rigid.AddForce(Time.deltaTime * moveSpeed * 0.3f * Vector2.left,ForceMode2D.Impulse); //움직임확인중 보니까 0,0,0으로 수렴하려고함_이유확인필요
         //Debug.Log(transform.position);
         EnemyAttack();
