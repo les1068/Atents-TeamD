@@ -21,8 +21,7 @@ public class Player : StateBase
     Vector3 inputDir = Vector3.zero;
     
     public Vector2 inputVec;
-    protected bool isLeft = false;            //마지막 키 입력 방향 확인용
-    
+    protected bool isLeft = false;            //마지막 키 입력 방향 확인용 
     float playerH;                          //키 입력 방향 우측:1, 좌측 :-1
     [Header("스킬관련-------------------------------------")]
     public GameObject skill1;               // 스킬1 등록
@@ -86,7 +85,7 @@ public class Player : StateBase
         {
             isLeft = false;
         }
-        if (playerH < 0)
+        if(playerH < 0)
         {
             isLeft = true;
         }
@@ -99,7 +98,19 @@ public class Player : StateBase
 
     private void OnSkill2(InputAction.CallbackContext context)      // 키보드 S키
     {
-
+        //skill2.gameObject.SetActive(true);
+        //animSkill2.SetBool("doingAttack2", true);
+        //animSkill2.SetTrigger("attack");
+        //if (!isLeft)
+        //{            
+        //    skill2.transform.localScale = new Vector3(1,1,1);       //마지막 이동 방향이 우측이면 우측에 생성
+        //}
+        //else
+        //{            
+        //    skill2.transform.localScale = new Vector3(-1, 1, 1);    //마지막 이동 방향이 좌측이면 좌측에 생성
+        //}
+        //Instantiate(skill2);                                        //skills 생성
+        //skill2.transform.position = this.transform.position;        //skills 생성위치
     }
 
     private void OnSkill3(InputAction.CallbackContext context)  // 키보드 D키
@@ -180,33 +191,30 @@ public class Player : StateBase
             LevelUp();
         }
     }
-
-    
     /// <summary>
     /// -----------------------무적/데미지관련----------------------------
     /// <summary>
     ///  무적 판정 처리 
     /// </summary>
-    /// <param name="targetPos">충돌 체크시 위치</param>
+    /// <param name="targetPos"></param>
     void OnDamaged(Vector2 targetPos)
     {
         //HP -= enemy.EnemyAttack();
-        
+
         OnInvincibleMode();
-        float dirc = transform.position.x - targetPos.x > 0 ? 0 : 1;        
-        rigid.AddForce(new Vector2(dirc,1) * 20, ForceMode2D.Impulse);
+        int dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;
+        rigid.AddForce(new Vector2(dirc,1),ForceMode2D.Impulse);
     }
 
     public void OnInvincibleMode()
-    {   //무적 처리 코드
-
+    {   //무적 처리 코드 
         gameObject.layer = 9;
         spriteRenderer.color = new Color(1, 1, 1, 0.1f);
         Invoke("OffDamaged", 3);
     }
     
     void OffDamaged()
-    {        
+    {
         gameObject.layer = 7;
         spriteRenderer.color = new Color(1, 1, 1, 10);
     }
