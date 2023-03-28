@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GetExp : MonoBehaviour
 {
-    PlayerStat playerstat;
+    Player playerstat;
 
     //얻은 경험치
     int getExp;

@@ -76,7 +76,7 @@ public class Factory : Singleton<Factory>
     }
 
 
-    public Enemy GetEnemy() => enemypool?.GetObject();
+    public Enemy_Boxboxer GetEnemy() => enemypool?.GetObject();
     public Bullet GetBullet() => bulletpool?.GetObject();
     public Effect GetHitEffect() => hitpool?.GetObject();
     public ItemStar GetStar() => starpool?.GetObject();

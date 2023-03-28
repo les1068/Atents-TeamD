@@ -16,7 +16,8 @@ public class Player : StateBase
     //Animator animSkill1;
     //Animator animSkill2;
     Rigidbody2D rigid;
-    EnemyBase enemy;
+
+    Enemy_Boxboxer enemy;
 
     Vector3 inputDir = Vector3.zero;
     
@@ -46,7 +47,7 @@ public class Player : StateBase
         
         InitStat();
 
-        enemy = FindObjectOfType<EnemyBase>(); // 적 찾아오기 
+        enemy = FindObjectOfType<Enemy_Boxboxer>(); // 적 찾아오기 
     }
 
     private void Start()
