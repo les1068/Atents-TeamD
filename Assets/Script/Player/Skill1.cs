@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Skill1 : MonoBehaviour
-{    
+{
     PlayerInputAction inputActions;
     Transform tran_Skill;
     Transform tran_SkillRange;
@@ -20,11 +20,8 @@ public class Skill1 : MonoBehaviour
     public float skillpoint = 1.0f;
     public float skillSpeed = 1.0f;
 
-    float enemy_DefencePoint;
-    float enemy_currentHP;
-
     private void Awake()
-    {        
+    {
         inputActions = new PlayerInputAction();
         anim_Skill = GetComponent<Animator>();
         tran_Skill = GetComponent<Transform>();
@@ -70,14 +67,15 @@ public class Skill1 : MonoBehaviour
 
     public void OnSkill1(InputAction.CallbackContext context)                   // 키보드 A키
     {        
-        anim_Skill.SetTrigger("attack");        
+        anim_Skill.SetTrigger("attack");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(coll_Skill.enabled && collision.gameObject.CompareTag("Enemy"))      // 적이고 스킬 range의 coll이 enable이면 
         {                                                                       // range의 coll을 disable 시켜라
-            coll_Skill.enabled = false;                                         // 생각대로 작동안함 ㅠ ㅠ             
+            coll_Skill.enabled = false;                                         // 생각대로 작동안함 ㅠ ㅠ 
+            //Debug.Log($"{coll_Skill.isActiveAndEnabled}");                      // 확인용 디버그 
         }        
     }
     

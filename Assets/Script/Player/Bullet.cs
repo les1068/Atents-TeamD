@@ -7,7 +7,7 @@ public class Bullet : PoolObject
     Skill3 skill3;
     Transform tran_Skill_Bullet;
     Rigidbody2D rigi_Skill_Bullet;
-    public float speed = 10.0f;
+    public float speed = 1.0f;
     public float skillpoint = 1.0f;
 
   
@@ -23,7 +23,7 @@ public class Bullet : PoolObject
         skill3 = FindObjectOfType<Skill3>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         if(!skill3.isLeft)
         {
@@ -32,20 +32,21 @@ public class Bullet : PoolObject
         else
         {
             rigi_Skill_Bullet.velocity = speed * Vector3.left;
-        }        
+        }
+        
+        Destroy(gameObject, 5.0f);
     }
-
-    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Platform"))
-        {                    
+        {            
+        
             //스킬맞았을 때 이펙트발동
             OnHitEffect(collision);
             //Debug.Log($"공격이 {collision.gameObject.name}과 충돌");
-            gameObject.SetActive(false);
-            //Destroy(gameObject, 0.5f);            
+            Destroy(gameObject, 0.5f);
+            
         }
     }
 
@@ -53,6 +54,7 @@ public class Bullet : PoolObject
     {
         GameObject obj = Factory.Inst.GetObject(PoolObjectType.Hit);
         obj.transform.position = collision.contacts[0].point;
+
     }
 
 }
