@@ -24,6 +24,8 @@ public class EnemyBase : PoolObject
     public Rigidbody2D rigi_Target;
     Collider2D coll_Target;
 
+
+
     
     public Player TargetPlayer
     {
@@ -48,6 +50,9 @@ public class EnemyBase : PoolObject
     /// 기본 hp
     /// </summary>    
     public float maxHp;
+    float currentHP;
+    bool isLive;
+    int exp;
 
     /// <summary>
     /// 가본 공격력 
@@ -112,13 +117,7 @@ public class EnemyBase : PoolObject
 
     }
 
-    private void FixedUpdate()
-    {
-        Vector2 dirVec = enemysTarget.position - rigid.position;   // 타겟포지션 - 나의 포지션
-        Vector2 nextVec = dirVec.normalized * moveSpeed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
-        rigid.velocity = Vector2.zero;
-    }
+   
 
     private void Update()
     {
@@ -135,7 +134,7 @@ public class EnemyBase : PoolObject
             // Player 충돌시 Enemy HP 감소
             if (collision.gameObject.CompareTag("Skill"))
             {
-                GetEnemyHP();
+               //GetEnemyHP();
                 //Debug.Log($"Player HP: {player.HP}, Enemy HP: {currentHP}");
             }
         }
@@ -179,7 +178,7 @@ public class EnemyBase : PoolObject
     {
         currentHP -= player.attackPoint;
         //EnemyHpText.text = "HP: " + currentHP.ToString();
-        return currentHP;
+        //return currentHP;
     }
 
     

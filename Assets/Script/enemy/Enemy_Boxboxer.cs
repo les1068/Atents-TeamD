@@ -72,7 +72,7 @@ public class Enemy_Boxboxer : PoolObject
     public int exp;
 
     /// <summary>
-    /// 살아 있으면 true 죽었으면 falase
+    /// 맞고 있으면 true 아니면 falase
     /// </summary>
     public bool isHit = false;
 
@@ -80,6 +80,11 @@ public class Enemy_Boxboxer : PoolObject
     /// 살아 있으면 true 죽었으면 falase
     /// </summary>
     bool isLive = true;
+
+    /// <summary>
+    /// 공격중이면 true 아니면 falase
+    /// </summary>
+    bool isAttack = false;
 
     /// <summary>
     /// 데미지 계산용 player SkillPoint
@@ -189,7 +194,7 @@ public class Enemy_Boxboxer : PoolObject
         if (collision.gameObject.layer == 7)                                    //player layer가 triger에 머물 시  
         {
             dirVec = tran_Target.position - tran_Enemy.position;                //타겟과의 거리를 구하여 
-            if (dirVec.x < skill_Range)                                         //기준 거리보다 가까우면  
+            if (dirVec.x < skill_Range && !isAttack)                            //기준 거리보다 가깝고 공격중이 아니면  
             {                
                 anim_Enemy.SetTrigger("Attack_Skill1");                         //공격 에니메이션 트리거 발동
                                                                                 //추후 랜덤함수 로 스킬 랜덤하게 나가게 구현
