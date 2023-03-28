@@ -6,152 +6,279 @@ using UnityEngine;
 
 public class Enemy : PoolObject
 {
-    public float enemySpeed = 2.0f;
-    public Rigidbody2D enemysTarget;
-    protected Transform target;
+    Player player;
+    Skill1 skill1;
+    Skill2 skill2;
+    Bullet bullet;
+    Transform tran_Enemy;
+    Rigidbody2D rigi_Enemy;
+    Collider2D coll_Enemy;
+    SpriteRenderer spri_Enemy;
+    Animator anim_Enemy;
 
-    bool isLive;
-    Rigidbody2D rigid;
+    Collider2D coll_Enemy_PlayerChecker;        
 
-    private void Awake()
-    {
-        rigid = GetComponent<Rigidbody2D>();
-        Collider2D collider2D = GetComponent<Collider2D>();
-        
-    }
-    private void FixedUpdate()
-    {
-        Vector2 dirVec = enemysTarget.position - rigid.position;   // 타겟포지션 - 나의 포지션
-        Vector2 nextVec = dirVec.normalized * enemySpeed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
-        rigid.velocity = Vector2.zero;
-    }
-    private void LateUpdate()
-    {
+    Transform tran_Target;
+    //Rigidbody2D rigi_Target;
+    //Collider2D coll_Target;
+    GameObject obj;                                                             //collision.gameObject 줄여쓰기 위해 ..
 
-    }
+    Vector2 dirVec;
+    Vector2 nextVec;
 
     /// <summary>
-    /// Enemy 최대 HP
+    /// 레벨
     /// </summary>
-    protected float maxHP = 100.0f;
+    public byte level;
+
+    /// <summary>
+    /// 최대hp
+    /// </summary>    
+    public float maxHp;
 
     /// <summary>
     /// Enemy 현재 HP
     /// </summary>
-    protected float currentHP = 100.0f;
-
-    public float GetEnemyHP()
-    {
-        return currentHP;
-    }
-
-    public TMP_Text EnemyHpText;
-
-    /// <summary>
-    /// Enemy 사망시 player가 얻게 될 경험치
-    /// </summary>
-    protected float exp = 30.0f;
-
-    /// <summary>
-    /// Enemy 공격력
-    /// </summary>
-    protected float attackDamage = 10.0f;
-
-    public float GetAttackDamage()
-    {
-        return attackDamage;
-    }
-
-    /// <summary>
-    /// Enemy 방어력
-    /// </summary>
-    protected float EnemyDefence = 20.0f;
-
-    /// <summary>
-    /// Enemy 이동속도
-    /// </summary>
-    protected float moveSpeed = 10.0f;
-
-    /// <summary>
-    /// Enemy 공격 속도
-    /// </summary>
-    protected float enemyAttackSpeed = 8.0f;
-
-    /// <summary>
-    /// Enemy 생존시 flase, 사망시 true
-    /// </summary>
-    bool isEnemyDead = false;
+    float currentHP;
 
     /// <summary>
     /// Enemy HP 델리게이트
     /// </summary>
     public Action<int> onChangeEnemyHP;
 
-    Player player;
+    /// <summary>
+    /// 기본 공격력 
+    /// </summary>
+    public float attackPoint;
 
-    void Start()
+    /// <summary>
+    /// 기본 방어력 
+    /// </summary>
+    public float defencePoint;
+
+    /// <summary>
+    /// 공격속도.  공격 애니매이션 증폭에 사용 
+    /// </summary>
+    public float attackSpeed;
+
+    /// <summary>
+    /// 이동 속도 
+    /// </summary>
+    public float moveSpeed;
+
+    /// <summary>
+    /// Enemy 사망시 player가 얻게 될 경험치
+    /// </summary>
+    public int exp;
+
+    /// <summary>
+    /// 맞고 있으면 true 아니면 falase
+    /// </summary>
+    public bool isHit = false;
+
+    /// <summary>
+    /// 살아 있으면 true 죽었으면 falase
+    /// </summary>
+    bool isLive = true;
+
+    /// <summary>
+    /// 공격중이면 true 아니면 falase
+    /// </summary>
+    bool isAttack = false;
+
+    /// <summary>
+    /// 데미지 계산용 player SkillPoint
+    /// </summary>
+    float pSkillPoint;
+
+    /// <summary>
+    /// enemy가 공격으로 넘어가기 위한 기준 거리 
+    /// </summary>
+    public float skill_Range = 2.0f;
+
+    /// <summary>
+    /// enemy hp 바(UI)
+    /// </summary>
+    public TMP_Text EnemyHpText;
+
+    /// <summary>
+    /// 스텟 초기화용
+    /// </summary>
+    protected virtual void InitStat()
     {
+        level = 1;
+        maxHp = 100;
+        attackPoint = 10.0f;
+        defencePoint = 10.0f;
+        attackSpeed = 1.0f;
+        moveSpeed = 1.0f;
+        exp = 10;
+    }
+
+    protected virtual void Awake()
+    {
+        tran_Enemy = GetComponent<Transform>();
+        rigi_Enemy = GetComponent<Rigidbody2D>();
+        coll_Enemy = GetComponent<Collider2D>();        
+        spri_Enemy = GetComponent<SpriteRenderer>();
+        anim_Enemy = GetComponent<Animator>();
         player = FindObjectOfType<Player>();
-        target = player.transform;
+
+        coll_Enemy_PlayerChecker = GetComponentInChildren<CircleCollider2D>();
     }
 
     private void OnEnable()
     {
-        transform.localPosition = Vector3.zero;      // 위치 초기화
+        //InitStat();                                                           //초기화
+        isHit = false;
+        isLive = true;
+        currentHP = maxHp;
+        tran_Target = null;
     }
 
-    private void Update()
+    void Start()
     {
-        EnemyAttack();
+
     }
 
-    private void EnemyAttack()
+    protected virtual void FixedUpdate()
     {
-        // 플레이어 방향으로 공격하는 함수 만들기
-        //transform.localPosition += Time.deltaTime * enemyAttackSpeed * -transform.right;    // 왼쪽으로 이동
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (currentHP != 0)
+        if(tran_Target != null && isLive)                                       //살아 있고 coll_Enemy_PlayerChecker의 트리거 안에 들어온 적이 있으면 
         {
-            // Player 충돌시 Enemy HP 감소
-            /*if (collision.gameObject.CompareTag("PlayerAttack"))
+            dirVec = tran_Target.position - tran_Enemy.position;                //타겟을 보는 방향을 구하여 
+            spri_Enemy.flipX = (dirVec.x > 0) ? true : false;                   //스프라이트 플립으로 방향 전환             
+            nextVec = dirVec.normalized * moveSpeed * Time.fixedDeltaTime;      //가야할 방향 및 속도 결정 
+            nextVec.y = 0;                                                      //y값은 0으로 고정(날아다니는 적의 경우  주석처리)
+            if(!isHit)                                                          //맞으면 잠시 정지 
             {
-                onDamageEnemy();
-            }*/
+                rigi_Enemy.MovePosition(rigi_Enemy.position + nextVec);         //내위치에서 가야할 방향 속도로 이동 
+            }         
         }
-        // Enemy 죽이면, player 경험치 증가
-        else if (currentHP < 1)
-        {
-            isEnemyDead = true;
-            EnemyDie();
-        }
+    }
+
+    void Update()
+    {
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (GetComponent<Collider2D>().CompareTag("Skill"))
+        if (collision.gameObject.layer == 8)                                    //skill layer의 tirger와 충돌 시 
         {
-            Debug.Log(" 아프다 !");
+            obj = collision.gameObject;
+            if (collision.CompareTag("Skill1"))                                 //어떤 스킬인지 확인하여 
+            {
+                pSkillPoint = obj.GetComponentInParent<Skill1>().skillpoint;    // 해당 스킬의 skillpoint 를 받아옴 
+            }
+            else if (collision.CompareTag("Skill2"))
+            {                
+                pSkillPoint = obj.GetComponentInParent<Skill2>().skillpoint;
+            }
+            else if (collision.CompareTag("Skill3"))
+            {
+                pSkillPoint = obj.GetComponent<Bullet>().skillpoint;
+            }
+            Hit_Enemy();                                                        //맞는 처리
         }
+        else if (collision.gameObject.layer == 7)                               //player layer가 triger와 충돌 시  
+        {
+            obj = collision.gameObject;
+            tran_Target = obj.transform;                                        //타겟으로 설정                                         
+            anim_Enemy.SetBool("isWalk", true);                                 //걷는 에니메이션 참으로 변경
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        isHit = false;
+        if (collision.gameObject.layer == 7)                                    //player layer가 triger에 머물 시  
+        {
+            dirVec = tran_Target.position - tran_Enemy.position;                //타겟과의 거리를 구하여 
+            if (dirVec.x < skill_Range && !isAttack)                            //기준 거리보다 가깝고 공격중이 아니면  
+            {                
+                anim_Enemy.SetTrigger("Attack_Skill1");                         //공격 에니메이션 트리거 발동
+                                                                                //추후 랜덤함수 로 스킬 랜덤하게 나가게 구현
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isHit = false;
+        if (collision.gameObject.layer == 7)                                    //player layer가 triger에서 나가면   
+        {
+            tran_Target = null;                                                 //타겟을 null로 변경
+            anim_Enemy.SetBool("isWalk", false);                                //걷는 애니메이션 거짓으로 변경 
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.layer == 8)                                     //skill layer의 collision 과 충돌 시 
+        {
+            obj = collision.gameObject;                                         //triger와 동일한 구조 
+            if (obj.CompareTag("Skill1"))
+            {
+                pSkillPoint = obj.GetComponentInParent<Skill1>().skillpoint;
+            }
+            else if (obj.CompareTag("Skill2"))
+            {
+                pSkillPoint = obj.GetComponentInParent<Skill2>().skillpoint;
+            }
+            else if (obj.CompareTag("Skill3"))
+            {
+                pSkillPoint = obj.GetComponent<Bullet>().skillpoint;
+            }
+            Hit_Enemy();
+        }
+    }
+    
+    /// <summary>
+    /// enemy 가 target에게 데미지 주는 함수
+    /// </summary>
+    /// <returns></returns>
+    public float Attack_Enemy()
+    {
+        return attackPoint;
+    }
+
+    /// <summary>
+    /// 맞았을떄 데미지 및 애니메이션 처리 함수 
+    /// </summary>
+    private void Hit_Enemy()
+    {
+        isHit = true;
+        float pAttackPoint = player.attackPoint;                                //플레이어 공격점수 가져오기 
+        float skillPower = pSkillPoint * pAttackPoint;                          //맞은 스킬의 기술점수 * 공격점수 = 기술 힘 
+        float damage = skillPower - (defencePoint * 0.3f);                      //데미지 = 기술힘 - 방어점수의30%
+
+        currentHP -= (damage > 0) ?  damage : 1.0f;                             //데미지 최소값 확보
+
+        if (isLive)                                                             //죽었는데 계속 때리면 맞는 경우가 발생하여 
+        {
+            anim_Enemy.SetTrigger("isHit");                                     //맞는 에니메이션 트리거 발동
+
+            if (currentHP <= 0)
+            {
+                anim_Enemy.SetTrigger("isDie");                                 //죽는 에니메이션 트리거 발동 
+            }
+        }        
+        Debug.Log($"{currentHP}");                                              //UI 붙으면 삭제 
+    }
+
+    /// <summary>
+    /// 죽었을 떄 오브젝트 풀로 되돌리고 경험치 및 점수 주는 함수 
+    /// </summary>
+    void Die_Enemy()
+    {
+        isLive = false;
+        gameObject.SetActive(false);                                            // Enemy 비활성화
         
+        //player.AddExp((int)exp);                                              // player에 exp 추가
     }
 
-
-    void EnemyDie()
+    public float GetEnemyHP()
     {
-        if (!isEnemyDead)
-        {
-            player.AddExp((int)exp);    // playerStat의 exp는 int. Enemy의 exp는 float. player에 exp 추가
-            gameObject.SetActive(false);    // Enemy 비활성화
-        }
-    }
-
-    private void onDamageEnemy()
-    {
-        currentHP = currentHP - player.EXP;     // player Attack 접근 불가. 임의로 EXP 입력
-        EnemyHpText.text = "HP: " + currentHP.ToString();
+        return currentHP;
     }
 }
