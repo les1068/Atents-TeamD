@@ -78,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1359386427
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 290845778, guid: cb8a4f47026bd4d32aa3d3322c365d44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -108,14 +108,13 @@ MonoBehaviour:
   attackPoint: 10
   defencePoint: 10
   attackSpeed: 1
-  moveSpeed: 1
-  MoveSpeed: 5
-  JumpPower: 11
-  jumpCount: 2
   inputVec: {x: 0, y: 0}
   skill1: {fileID: 4564241149494531938, guid: 9443fa67701e044a481f5dc94404ea50, type: 3}
   skill2: {fileID: 4564241149494531938, guid: a19ad645f08db48778a81252fbf5d125, type: 3}
   skill3: {fileID: 7122660436482179754, guid: 6a2267a3d414f420cbb4d53b3cd265b0, type: 3}
+  MoveSpeed: 5
+  JumpPower: 11
+  jumpCount: 2
 --- !u!50 &3313352767453639687
 Rigidbody2D:
   serializedVersion: 4
