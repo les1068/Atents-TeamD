@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class Player : StateBase
@@ -13,14 +14,18 @@ public class Player : StateBase
     SpriteRenderer spriteRenderer;
     PlayerInputAction inputActions;
     Animator anim;
+    LandBase landbase;
     //Animator animSkill1;
     //Animator animSkill2;
     Rigidbody2D rigid;
+    //EnemyBase enemy;
+    // -------------------------------------연주 수정
+    bool canFallDown=false;
+    float dirY;
+    CapsuleCollider2D playercollider;
+    //-----------------------------------------
+    Vector3 inputDir;
 
-    Enemy_Boxboxer enemy;
-
-    Vector3 inputDir = Vector3.zero;
-    
     public Vector2 inputVec;
     protected bool isLeft = false;            //마지막 키 입력 방향 확인용 
     float playerH;                          //키 입력 방향 우측:1, 좌측 :-1
@@ -33,7 +38,7 @@ public class Player : StateBase
     [Header("스탯관련-------------------------------------")]
     public float MoveSpeed = 0.1f;
     public float JumpPower = 10.0f;
-    public float jumpCount;
+    int jumpCount;
 
     //---------------------------------------------------------------------------------------------------
 
@@ -43,16 +48,16 @@ public class Player : StateBase
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        
+        landbase = FindObjectOfType<LandBase>();
+        playercollider = GetComponent<CapsuleCollider2D>();
         InitStat();
 
-        enemy = FindObjectOfType<Enemy_Boxboxer>(); // 적 찾아오기 
+        //enemy = FindObjectOfType<EnemyBase>(); // 적 찾아오기 
     }
 
     private void Start()
     {
         moveSpeed = MoveSpeed;
-
         //animSkill1 = skill1.GetComponent<Animator>();
         //animSkill2 = skill2.GetComponent<Animator>();
     }
@@ -60,7 +65,7 @@ public class Player : StateBase
     private void OnEnable()
     {
         inputActions.Player.Enable();
-        inputActions.Player.Attack1.performed += OnSkill1;        
+        inputActions.Player.Attack1.performed += OnSkill1;
         inputActions.Player.Attack2.performed += OnSkill2;
         inputActions.Player.Attack3.performed += OnSkill3;
         inputActions.Player.Move.performed += OnMoveInput;
@@ -72,7 +77,7 @@ public class Player : StateBase
         inputActions.Player.Move.canceled -= OnMoveInput;
         inputActions.Player.Move.performed -= OnMoveInput;
         inputActions.Player.Attack3.performed -= OnSkill3;
-        inputActions.Player.Attack2.performed -= OnSkill2;        
+        inputActions.Player.Attack2.performed -= OnSkill2;
         inputActions.Player.Attack1.performed -= OnSkill1;
         inputActions.Player.Disable();
     }
@@ -80,13 +85,16 @@ public class Player : StateBase
     private void OnMoveInput(InputAction.CallbackContext context)
     {
         Vector2 dir = context.ReadValue<Vector2>();
+
         inputDir = dir;
         playerH = dir.x;
+        dirY = dir.y;
+        
         if (playerH > 0)                                            // 마지막 키 입력 방향 확인용 
         {
             isLeft = false;
         }
-        if(playerH < 0)
+        if (playerH < 0)
         {
             isLeft = true;
         }
@@ -94,7 +102,7 @@ public class Player : StateBase
 
     private void OnSkill1(InputAction.CallbackContext context)   // 키보드 A키
     {
-        
+
     }
 
     private void OnSkill2(InputAction.CallbackContext context)      // 키보드 S키
@@ -116,35 +124,45 @@ public class Player : StateBase
 
     private void OnSkill3(InputAction.CallbackContext context)  // 키보드 D키
     {
-        
+
     }
 
     private void FixedUpdate()  // 물리 연산 프레임마다 호출되는 생명주기 함수
-    {        
+    {
         rigid.AddForce(Vector2.right * playerH, ForceMode2D.Impulse);
         if (rigid.velocity.x > MoveSpeed)
         {
             rigid.velocity = new Vector2(MoveSpeed, rigid.velocity.y);
         }
+
+
         else if (rigid.velocity.x < MoveSpeed * (-1))
         {
             rigid.velocity = new Vector2(MoveSpeed * (-1), rigid.velocity.y);
-        }
 
-        if (rigid.velocity.y < 0)
-        {
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
-            if (rayHit.collider != null)
+
+            if (rigid.velocity.y <= 0)
             {
-                if (rayHit.distance < 0.5f)
+                Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+                RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
+                if (rayHit.collider != null)
                 {
-                    jumpCount = 0;
+                    if (rayHit.distance < 0.5f)
+                    {
+                        anim.SetBool("Jump", false);
+                        jumpCount = 0;
+                    }
                 }
-                anim.SetBool("Jump", false);
             }
         }
+        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+        if(canFallDown &&  dirY < 0 ) // && 스페이스바눌를때)
+        {
+            OnFallDown();
+        }
+        //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -153,14 +171,53 @@ public class Player : StateBase
             if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyAttack"))         // Enemy와 충돌시 HP 감소
             {
                 OnDamaged(collision.transform.position);   // 무적
-            }             
-        }        
+            }
+            else if (collision.gameObject.CompareTag("Platform"))    //부딪힌 태그가 Platform이면
+            {
+                if (collision.gameObject.GetComponent<LandBase>())
+                {
+                    
+                    canFallDown = true;
+                }
+                else
+                {
+                    
+                    canFallDown = false;
+                }
+                
+                jumpCount = 0;
+
+            }
+        }
         else if (HP < 0)// player 사망처리
         {
             isPlayerDead = true;
             PlayerDie();
         }
     }
+
+    /// <summary>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    /// Land에서 떨어질 때 실행되는 함수
+    /// </summary>
+    private void OnFallDown()
+    {
+        anim.SetBool("Jump", false);
+        anim.SetBool("Walking", false);
+        StartCoroutine(Falling());
+    }
+    /// <summary>
+    /// Land에서 내려갈때 플레이어의 Collider 활성화/비활성화
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator Falling()
+    {
+        playercollider.enabled = false;
+        Debug.Log("collider.enabled = false");
+        yield return new WaitForSeconds(0.1f);
+        playercollider.enabled = true;
+        canFallDown= false;
+    }
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
     private void Update()
     {
@@ -177,9 +234,8 @@ public class Player : StateBase
         {
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
-        
-        transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
 
+      
         if (Input.GetButtonDown("Jump") && jumpCount < 2)
         {
             rigid.AddForce(Vector2.up * JumpPower * 2, ForceMode2D.Impulse);
@@ -204,7 +260,7 @@ public class Player : StateBase
 
         OnInvincibleMode();
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;
-        rigid.AddForce(new Vector2(dirc,1),ForceMode2D.Impulse);
+        rigid.AddForce(new Vector2(dirc, 1), ForceMode2D.Impulse);
     }
 
     public void OnInvincibleMode()
@@ -213,7 +269,7 @@ public class Player : StateBase
         spriteRenderer.color = new Color(1, 1, 1, 0.1f);
         Invoke("OffDamaged", 3);
     }
-    
+
     void OffDamaged()
     {
         gameObject.layer = 7;
@@ -230,7 +286,6 @@ public class Player : StateBase
         {
             currentHp = value;
             onHPChange?.Invoke(currentHp);
-            Debug.Log($"현재 HP:{currentHp}");
         }
     }
 
@@ -243,26 +298,26 @@ public class Player : StateBase
         {
             currentExp = value;
             onEXPChange?.Invoke(currentExp);
-            Debug.Log($"Current Exp:{currentExp}");
+            //Debug.Log($"Current Exp:{currentExp}");
         }
     }
     int getExp;                                 //얻은 경험치
 
-    
+
 
     //-----------------------------------------------------------------------------------------------------------
     // ----------- delegate-----------
     Action<float> onHPChange;
     // ---------------------------------
 
-   
+
     ///초기스탯
     protected override void InitStat()
     {
         base.InitStat();
         EXP = 0;
         maxExp = 10;
-        HP = maxHp = 100.0f;        
+        HP = maxHp = 100.0f;
     }
 
     public void AddHP(float plus)
@@ -306,8 +361,6 @@ public class Player : StateBase
 
     protected void OnDamage()
     {
-        
+
     }
-
-
 }

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class TestPool : TestBase
 {
-    public EnemyPool pool1;
+//public EnemyPool pool1;
     public BulletPool pool2;
     public HitEffectPool pool3;
     public Coin1Pool pool4;
@@ -13,19 +13,19 @@ public class TestPool : TestBase
 
     Transform[] spawnTransforms;
 
-    private void Start()
+   /* private void Start()
     {
         spawnTransforms = new Transform[transform.childCount];
         for(int i=0; i<transform.childCount;i++)
         {
             spawnTransforms[i] = transform.GetChild(i);
         }
-    }
-    protected override void Test1(InputAction.CallbackContext _)
+    }*/
+/*    protected override void Test1(InputAction.CallbackContext _)
     {
         PoolObject obj = pool1.GetObject();
         obj.transform.position = spawnTransforms[0].position;
-    }
+    }*/
     protected override void Test2(InputAction.CallbackContext _)
     {
         PoolObject obj = pool2.GetObject();
