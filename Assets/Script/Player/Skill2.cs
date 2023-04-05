@@ -18,6 +18,21 @@ public class Skill2 : MonoBehaviour
     /// </summary>
     public float skillpoint = 1.0f;
     public float skillSpeed = 1.0f;
+    public float skillCoolTime = 1.0f;
+    public int skillComboMax = 3;
+    private int skillCombo;
+    public int SkillCombo
+    {
+        get
+        {
+            return skillCombo;
+        }
+        set
+        {
+            skillCombo = Mathf.Clamp(value, 0, skillComboMax);
+        }
+    }
+    bool isOnSkill = false;
 
     private void Awake()
     {
@@ -31,6 +46,7 @@ public class Skill2 : MonoBehaviour
     private void Start()
     {
         anim_Skill.SetFloat("SkillSpeed", skillSpeed);
+        SkillCombo = 0;
     }
 
     private void OnEnable()
@@ -66,7 +82,10 @@ public class Skill2 : MonoBehaviour
 
     public void OnSkill2(InputAction.CallbackContext context)                   // 키보드 S키
     {
-        anim_Skill.SetTrigger("attack");
+        if (!isOnSkill)
+        {
+            StartCoroutine(IEOnSkill());
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -79,5 +98,22 @@ public class Skill2 : MonoBehaviour
     
     private void Update()
     {
+    }
+
+    IEnumerator IEOnSkill()
+    {
+        SkillCombo++;
+     
+        isOnSkill = true;
+        anim_Skill.SetTrigger("attack");
+        if (SkillCombo == skillComboMax)
+        {
+            yield return new WaitForSeconds(skillCoolTime);
+            StopCoroutine(IEOnSkill());
+            SkillCombo = 0;
+     
+        }
+        isOnSkill = false;
+     
     }
 }

@@ -7,10 +7,13 @@ public class Bullet : PoolObject
     Skill3 skill3;
     Transform tran_Skill_Bullet;
     Rigidbody2D rigi_Skill_Bullet;
-    public float speed = 10.0f;
+    public float speed = 7.5f;
     public float skillpoint = 1.0f;
+    Vector3 rightVec;
+    Vector3 leftVec;
 
-  
+
+
     /// <summary>
     /// 피격효과 effect 종류
     /// </summary>
@@ -21,17 +24,20 @@ public class Bullet : PoolObject
         rigi_Skill_Bullet = GetComponent<Rigidbody2D>();
         tran_Skill_Bullet = GetComponent<Transform>();
         skill3 = FindObjectOfType<Skill3>();
+        rightVec = new Vector3(1, 1, 0);
+        leftVec = new Vector3(-1, 1, 0);
+
     }
 
     private void OnEnable()
     {
-        if(!skill3.isLeft)
+        if(!skill3.IsLeft)
         {
-            rigi_Skill_Bullet.velocity = speed * Vector3.right;
+            rigi_Skill_Bullet.velocity = speed * rightVec;
         }
         else
         {
-            rigi_Skill_Bullet.velocity = speed * Vector3.left;
+            rigi_Skill_Bullet.velocity = speed * leftVec;
         }        
     }
 

@@ -101,6 +101,30 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -17509,22 +17533,21 @@ TextureImporter:
       spritesheet2_657: 1636478780
       spritesheet2_453: 1902761257
       spritesheet2_543: -2107409000
-      spritesheet2_465: -1918881232
+      greenland5: 718436524
       spritesheet2_676: 1958864651
       spritesheet2_46: -913800370
-      spritesheet2_205: 1167472387
       spritesheet2_435: 1506519547
-      spritesheet2_380: -402194105
+      greenland7: 967465624
+      spritesheet2_205: 1167472387
       spritesheet2_740: -1863731872
       spritesheet2_170: 1207365557
-      spritesheet2_728: 358542693
-      greenland5: 718436524
-      greenland7: 967465624
-      spritesheet2_703: 1899809189
+      spritesheet2_380: -402194105
+      spritesheet2_465: -1918881232
       spritesheet2_633: -1768908522
       spritesheet2_762: -601862223
       spritesheet2_107: -1245773384
       spritesheet2_719: 115752509
+      spritesheet2_728: 358542693
       spritesheet2_360: -798516291
       spritesheet2_93: -1142146407
       spritesheet2_505: 1684777089
@@ -17533,9 +17556,10 @@ TextureImporter:
       spritesheet2_262: 1702034060
       spritesheet2_482: -863002272
       spritesheet2_727: -1794354089
+      spritesheet2_703: 1899809189
       spritesheet2_65: 1408408547
-      spritesheet2_77: 909116909
       spritesheet2_138: -986708596
+      spritesheet2_77: 909116909
       spritesheet2_598: 970735922
       spritesheet2_83: -176448192
       spritesheet2_819: -1403548654
