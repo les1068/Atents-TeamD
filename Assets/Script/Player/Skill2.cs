@@ -73,7 +73,7 @@ public class Skill2 : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))    
         {
-            Debug.Log("skill2");
+            //Debug.Log("skill2");
         }
     }
     

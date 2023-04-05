@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 4355957890969977578}
   - component: {fileID: 6851131358952895895}
   - component: {fileID: 5453754323069460544}
-  - component: {fileID: -5471761346459522506}
+  - component: {fileID: 3882931346440744658}
   m_Layer: 10
   m_Name: Land2
   m_TagString: Platform
@@ -438,7 +438,7 @@ PolygonCollider2D:
       - {x: 0.41503984, y: 0.6952205}
       - {x: 0.9752404, y: 0.6952206}
       - {x: 1.7145711, y: 0.6964723}
---- !u!114 &-5471761346459522506
+--- !u!114 &3882931346440744658
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
