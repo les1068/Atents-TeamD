@@ -84,7 +84,7 @@ public class Skill1 : MonoBehaviour
 
     public void OnSkill1(InputAction.CallbackContext context)                   // 키보드 A키
     {
-        Debug.Log($"{SkillCombo}");
+        //Debug.Log($"{SkillCombo}");
         if (!isOnSkill)
         {
             StartCoroutine(IEOnSkill());
