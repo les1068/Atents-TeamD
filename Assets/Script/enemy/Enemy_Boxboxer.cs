@@ -23,6 +23,8 @@ public class Enemy_Boxboxer : PoolObject
     //Collider2D coll_Target;
     GameObject obj;                                                             //collision.gameObject 줄여쓰기 위해 ..
 
+    Spawner spawner;
+
     Vector2 dirVec;
     Vector2 nextVec;
 
@@ -134,11 +136,12 @@ public class Enemy_Boxboxer : PoolObject
         isLive = true;
         currentHP = maxHp;
         tran_Target = null;
+        StartCoroutine(IEMove());
     }
 
     void Start()
     {
-
+        spawner = FindObjectOfType<Spawner>();
     }
 
     protected virtual void FixedUpdate()
@@ -232,7 +235,8 @@ public class Enemy_Boxboxer : PoolObject
             Hit_Enemy();
         }
     }
-    
+
+
     /// <summary>
     /// enemy 가 target에게 데미지 주는 함수
     /// </summary>
@@ -282,4 +286,22 @@ public class Enemy_Boxboxer : PoolObject
     {
         return currentHP;
     }
+
+    IEnumerator IEMove()
+    {
+        float time = 0f;
+        if(spawner != null)
+        {
+            while(time > spawner.interval)
+            {
+                nextVec = Vector2.left * (moveSpeed * 0.5f) * Time.deltaTime;
+                
+                rigi_Enemy.MovePosition(rigi_Enemy.position + nextVec);
+                anim_Enemy.SetBool("isWalk", true);                                 //걷는 에니메이션 참으로 변경
+                yield return null;
+            }
+            
+        }
+    }
+
 }

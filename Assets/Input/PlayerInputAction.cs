@@ -62,6 +62,15 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc86c2c1-cf22-4b58-8367-4e07e5fc300b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -150,6 +159,17 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyBoard"",
                     ""action"": ""Attack3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""62bce918-f27e-46c8-bbbe-e8e2c997be61"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""esc"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -284,6 +304,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         m_Player_Attack1 = m_Player.FindAction("Attack1", throwIfNotFound: true);
         m_Player_Attack2 = m_Player.FindAction("Attack2", throwIfNotFound: true);
         m_Player_Attack3 = m_Player.FindAction("Attack3", throwIfNotFound: true);
+        m_Player_esc = m_Player.FindAction("esc", throwIfNotFound: true);
         // Test
         m_Test = asset.FindActionMap("Test", throwIfNotFound: true);
         m_Test_Test1 = m_Test.FindAction("Test1", throwIfNotFound: true);
@@ -354,6 +375,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack1;
     private readonly InputAction m_Player_Attack2;
     private readonly InputAction m_Player_Attack3;
+    private readonly InputAction m_Player_esc;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -362,6 +384,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         public InputAction @Attack1 => m_Wrapper.m_Player_Attack1;
         public InputAction @Attack2 => m_Wrapper.m_Player_Attack2;
         public InputAction @Attack3 => m_Wrapper.m_Player_Attack3;
+        public InputAction @esc => m_Wrapper.m_Player_esc;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -383,6 +406,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                 @Attack3.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack3;
                 @Attack3.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack3;
                 @Attack3.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack3;
+                @esc.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
+                @esc.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
+                @esc.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -399,6 +425,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                 @Attack3.started += instance.OnAttack3;
                 @Attack3.performed += instance.OnAttack3;
                 @Attack3.canceled += instance.OnAttack3;
+                @esc.started += instance.OnEsc;
+                @esc.performed += instance.OnEsc;
+                @esc.canceled += instance.OnEsc;
             }
         }
     }
@@ -483,6 +512,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         void OnAttack1(InputAction.CallbackContext context);
         void OnAttack2(InputAction.CallbackContext context);
         void OnAttack3(InputAction.CallbackContext context);
+        void OnEsc(InputAction.CallbackContext context);
     }
     public interface ITestActions
     {

@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class Player : StateBase
@@ -18,6 +19,8 @@ public class Player : StateBase
     Rigidbody2D rigid;
 
     Enemy_Boxboxer enemy;
+
+    Pause pause;
 
     Vector3 inputDir = Vector3.zero;
     
@@ -47,7 +50,9 @@ public class Player : StateBase
         
         InitStat();
 
-        enemy = FindObjectOfType<Enemy_Boxboxer>(); // 적 찾아오기 
+        enemy = FindObjectOfType<Enemy_Boxboxer>(); // 적 찾아오기
+
+        pause = FindObjectOfType<Pause>();
     }
 
     private void Start()
@@ -64,6 +69,7 @@ public class Player : StateBase
         inputActions.Player.Attack1.performed += OnSkill1;        
         inputActions.Player.Attack2.performed += OnSkill2;
         inputActions.Player.Attack3.performed += OnSkill3;
+        inputActions.Player.esc.performed += OnESC;
         inputActions.Player.Move.performed += OnMoveInput;
         inputActions.Player.Move.canceled += OnMoveInput;
     }
@@ -72,6 +78,7 @@ public class Player : StateBase
     {
         inputActions.Player.Move.canceled -= OnMoveInput;
         inputActions.Player.Move.performed -= OnMoveInput;
+        inputActions.Player.esc.performed -= OnESC;
         inputActions.Player.Attack3.performed -= OnSkill3;
         inputActions.Player.Attack2.performed -= OnSkill2;        
         inputActions.Player.Attack1.performed -= OnSkill1;
@@ -106,6 +113,11 @@ public class Player : StateBase
     private void OnSkill3(InputAction.CallbackContext context)  // 키보드 D키
     {
         
+    }
+
+    private void OnESC(InputAction.CallbackContext context)
+    {
+        pause.OnPause();
     }
 
     private void FixedUpdate()  // 물리 연산 프레임마다 호출되는 생명주기 함수
