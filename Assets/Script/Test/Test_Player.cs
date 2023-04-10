@@ -1,0 +1,273 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using TreeEditor;
+using Unity.VisualScripting;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEngine.EventSystems.EventTrigger;
+
+public class Test_Player : StateBase
+{
+    SpriteRenderer spriteRenderer;
+    PlayerInputAction inputActions;
+    Animator anim;
+    //Animator animSkill1;
+    //Animator animSkill2;
+    Rigidbody2D rigid;
+
+    Enemy_Boxboxer enemy;
+
+    Vector3 inputDir = Vector3.zero;
+    
+    public Vector2 inputVec;
+    protected bool isLeft = false;            //마지막 키 입력 방향 확인용
+    
+    float playerH;                          //키 입력 방향 우측:1, 좌측 :-1
+    [Header("스킬관련-------------------------------------")]
+    public GameObject skill1;               // 스킬1 등록
+    public GameObject skill2;               // 스킬2 등록
+    public GameObject skill3;               // 스킬3 등록
+
+    private bool isPlayerDead = false;
+    [Header("스탯관련-------------------------------------")]
+    public float MoveSpeed = 0.1f;
+    public float JumpPower = 10.0f;
+    public float jumpCount;
+
+    //---------------------------------------------------------------------------------------------------
+
+
+    private void Awake()
+    {
+        inputActions = new PlayerInputAction();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        
+        InitStat();
+
+        enemy = FindObjectOfType<Enemy_Boxboxer>(); // 적 찾아오기 
+    }
+
+    private void Start()
+    {
+        moveSpeed = MoveSpeed;
+
+        currentHp = HP;
+        
+
+        //animSkill1 = skill1.GetComponent<Animator>();
+        //animSkill2 = skill2.GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Player.Enable();
+        inputActions.Player.Attack1.performed += OnSkill1;        
+        inputActions.Player.Attack2.performed += OnSkill2;
+        inputActions.Player.Attack3.performed += OnSkill3;
+        inputActions.Player.Move.performed += OnMoveInput;
+        inputActions.Player.Move.canceled += OnMoveInput;
+
+        onHPChange += OnDamage;
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Player.Move.canceled -= OnMoveInput;
+        inputActions.Player.Move.performed -= OnMoveInput;
+        inputActions.Player.Attack3.performed -= OnSkill3;
+        inputActions.Player.Attack2.performed -= OnSkill2;        
+        inputActions.Player.Attack1.performed -= OnSkill1;
+        inputActions.Player.Disable();
+
+        onHPChange -= OnDamage;
+    }
+
+    private void OnMoveInput(InputAction.CallbackContext context)
+    {
+        Vector2 dir = context.ReadValue<Vector2>();
+        inputDir = dir;
+        playerH = dir.x;
+        if (playerH > 0)                                            // 마지막 키 입력 방향 확인용 
+        {
+            isLeft = false;
+        }
+        if (playerH < 0)
+        {
+            isLeft = true;
+        }
+    }
+
+    private void OnSkill1(InputAction.CallbackContext context)   // 키보드 A키
+    {
+        
+    }
+
+    private void OnSkill2(InputAction.CallbackContext context)      // 키보드 S키
+    {
+
+    }
+
+    private void OnSkill3(InputAction.CallbackContext context)  // 키보드 D키
+    {
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (HP > 0)
+        {
+            if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyAttack"))         // Enemy와 충돌시 HP 감소
+            {
+                OnDamage(enemy.attackPoint);
+            }             
+        }        
+        else if (HP < 0)// player 사망처리
+        {
+            isPlayerDead = true;
+            PlayerDie();
+        }
+    }
+
+    private void Update()
+    {
+        if (Mathf.Abs(rigid.velocity.x) < 0.3)  // 애니메이션 
+        {
+            anim.SetBool("Walking", false);
+        }
+        else
+        {
+            anim.SetBool("Walking", true);
+        }
+
+        if (Input.GetButton("Horizontal"))
+        {
+            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        }
+        
+        transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
+
+        if (Input.GetButtonDown("Jump") && jumpCount < 2)
+        {
+            rigid.AddForce(Vector2.up * JumpPower * 2, ForceMode2D.Impulse);
+            jumpCount++;
+            anim.SetBool("Jump", true);
+        }
+
+        if (currentExp >= maxExp)
+        {
+            LevelUp();
+        }
+    }
+
+    protected int Level;
+
+    protected float currentHp;                            //Hp 관련 (+ 프로퍼티)
+    public float HP
+    {
+        get => currentHp;
+        set
+        {
+            if(!isPlayerDead)
+            {
+                currentHp = value;
+            }
+            if (currentHp <= 0)
+            {
+                isPlayerDead = true;
+                PlayerDie();
+            }
+            onHPChange?.Invoke(enemy.attackPoint);
+            Debug.Log($"현재 HP:{currentHp}");
+        }
+    }
+
+    protected int maxExp;                         //Exp 경험치 + (프로퍼티)
+    protected int currentExp;
+    public int EXP
+    {
+        get => currentExp;
+        set
+        {
+            currentExp = value;
+            //onEXPChange?.Invoke(currentExp);
+            Debug.Log($"Current Exp:{currentExp}");
+        }
+    }
+    int getExp;                                 //얻은 경험치
+
+    //-----------------------------------------------------------------------------------------------------------
+    // ----------- delegate-----------
+    public Action<float> onHPChange;
+    // ---------------------------------
+   
+    ///초기스탯
+    protected override void InitStat()
+    {
+        base.InitStat();
+        EXP = 0;
+        maxExp = 10;
+        HP = maxHp = 100.0f;        
+    }
+
+    public void AddHP(float plus)
+    {
+        HP += plus;
+    }
+
+    public void AddExp(int plus)
+    {
+        EXP += plus;
+    }
+
+    void LevelUp()                   // 레벨업
+    {
+        EXP -= maxExp;
+        Level += 1;                  //레벨업시 어떻게 변화할지는 의논필요
+        maxHp *= 1.2f;
+        HP = maxHp;
+        maxExp *= 2;                //부드러운 경험치 bar를 위해 float으로 변경해야할지?        
+        attackPoint *= 1.2f;
+        defencePoint *= 1.2f;
+        attackSpeed *= 1.2f;
+    }
+
+    //--------------delegate-----------------
+    public Action<int> onEXPChange;
+    //---------------------------------------
+    void GetEXP()
+    {
+        AddExp(getExp);
+    }
+
+    private void PlayerDie()
+    {
+        if (isPlayerDead)
+        {
+            EXP = EXP - 50;   // player 사망시 경험치 감소
+            gameObject.SetActive(false);
+        }
+    }
+
+    protected void OnDamage(float enemyattack)
+    {
+        enemyattack = enemy.attackPoint;
+
+        if (HP > 0)
+        {
+            currentHp -= enemyattack;
+            Debug.Log($"Player HP : {currentHp} / {enemy.attackPoint}");
+        }
+        else if (HP < 0)
+        {
+            isPlayerDead = true;
+            PlayerDie();
+        }
+        
+        
+    }
+
+}
