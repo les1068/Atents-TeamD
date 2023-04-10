@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007830f184d6e174e8442e76108c8c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objType: 5
+  objType: 4
   interval: 3
   minY: -2.2
   maxY: 2.5

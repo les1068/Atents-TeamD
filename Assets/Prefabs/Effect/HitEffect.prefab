@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5765844338251006250}
   - component: {fileID: 7933946098277173119}
   - component: {fileID: 3870870435480269034}
-  - component: {fileID: 4426823545367368993}
+  - component: {fileID: 385989884912809977}
   m_Layer: 8
   m_Name: HitEffect
   m_TagString: Untagged
@@ -106,7 +106,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4426823545367368993
+--- !u!114 &385989884912809977
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +115,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3752667827826174148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c29737756a49e0d43807298294176560, type: 3}
+  m_Script: {fileID: 11500000, guid: 35c34ab8de69e4e49ada678c3e617d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 3752667827826174148}

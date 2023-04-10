@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1564921172053528993}
   - component: {fileID: 5220147626016040570}
   - component: {fileID: 2287823666906631270}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Land4
   m_TagString: Platform
   m_Icon: {fileID: 0}
@@ -784,7 +784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1241404544805835792, guid: 904f4ceb2cca6e240b1a35c3a0381fa3, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1241404544805835792, guid: 904f4ceb2cca6e240b1a35c3a0381fa3, type: 3}
       propertyPath: m_TagString
@@ -854,7 +854,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1241404544805835792, guid: 904f4ceb2cca6e240b1a35c3a0381fa3, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1241404544805835792, guid: 904f4ceb2cca6e240b1a35c3a0381fa3, type: 3}
       propertyPath: m_TagString
@@ -921,6 +921,10 @@ PrefabInstance:
     - target: {fileID: 7358772292713555692, guid: 68031f873bd6f5f40845d497c793d7db, type: 3}
       propertyPath: m_Name
       value: Sign_Arrow_right
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358772292713555692, guid: 68031f873bd6f5f40845d497c793d7db, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8710349443987741256, guid: 68031f873bd6f5f40845d497c793d7db, type: 3}
       propertyPath: m_RootOrder
