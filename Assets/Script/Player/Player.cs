@@ -14,11 +14,7 @@ public class Player : StateBase
     SpriteRenderer spriteRenderer;
     PlayerInputAction inputActions;
     Animator anim;
-    //Animator animSkill1;
-    //Animator animSkill2;
     Rigidbody2D rigid;
-
-    Enemy_Boxboxer enemy;
 
     Pause pause;
 
@@ -56,8 +52,6 @@ public class Player : StateBase
         playercollider = GetComponent<CapsuleCollider2D>();
         InitStat();
 
-        enemy = FindObjectOfType<Enemy_Boxboxer>(); // 적 찾아오기
-
         pause = FindObjectOfType<Pause>();
     }
 
@@ -65,8 +59,6 @@ public class Player : StateBase
     {
         moveSpeed = MoveSpeed;
 
-        //animSkill1 = skill1.GetComponent<Animator>();
-        //animSkill2 = skill2.GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -187,13 +179,19 @@ public class Player : StateBase
     {
         if (HP > 0)
         {
-            if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyAttack"))         // Enemy와 충돌시 HP 감소
-            {
-                OnDamaged(collision.transform.position);   // 무적
+            if (collision.gameObject.CompareTag("EnemyAttack"))                 // Enemy와 충돌시 HP 감소
+            {                
+                FindObjectOfType<Enemy_Batafire>();
+                //collision.transform.gameObject.name
+
             }
-            else if (collision.gameObject.CompareTag("Platform"))    //부딪힌 태그가 Platform이면
+            else if (collision.gameObject.CompareTag("Enemy"))                  // Enemy와 충돌시 HP 감소)
             {
-                if (collision.gameObject.GetComponent<LandBase>() != null ) //LandBase를 가졌다면,
+                OnDamaged(collision.transform.position);                        // 무적
+            }
+            else if (collision.gameObject.CompareTag("Platform"))                //부딪힌 태그가 Platform이면
+            {
+                if (collision.gameObject.GetComponent<LandBase>() != null )     //LandBase를 가졌다면,
                 {
                     canFallDown = true;
                     //Debug.Log("canFallDown(true)");
@@ -263,7 +261,7 @@ public class Player : StateBase
     /// <param name="targetPos">충돌 체크시 위치</param>
     void OnDamaged(Vector2 targetPos)
     {
-        //HP -= enemy.EnemyAttack();
+        HP--;
         
         OnInvincibleMode();
         float dirc = transform.position.x - targetPos.x > 0 ? 0 : 1;        
@@ -292,6 +290,24 @@ public class Player : StateBase
         get => currentHp;
         set
         {
+            if (!isPlayerDead)
+            {
+                currentHp = value;
+            }
+            if (currentHp <= 0)
+            {
+                isPlayerDead = true;
+                PlayerDie();
+            }
+            onHPChange?.Invoke(attackPoint);
+            Debug.Log($"현재 HP:{currentHp}");
+        }
+    }
+    /*public float HP
+    {
+        get => currentHp;
+        set
+        {
             currentHp = value;
             onHPChange?.Invoke(currentHp);
             Debug.Log($"현재 HP:{HP}");
@@ -304,7 +320,7 @@ public class Player : StateBase
                 currentHp = maxHp;
             }
         }
-    }
+    }*/
 
     protected int maxExp;                         //Exp 경험치 + (프로퍼티)
     protected int currentExp;
@@ -376,9 +392,22 @@ public class Player : StateBase
         }
     }
 
-    protected void OnDamage()
+    protected void OnDamage(float enemyattack)
     {
-        
+        enemyattack = attackPoint;
+
+        if (HP > 0)
+        {
+            currentHp -= enemyattack;
+            Debug.Log($"Player HP : {currentHp} / {attackPoint}");
+        }
+        else if (HP < 0)
+        {
+            isPlayerDead = true;
+            PlayerDie();
+        }
+
+
     }
 
 
