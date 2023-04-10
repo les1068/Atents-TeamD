@@ -5,8 +5,7 @@ using UnityEngine;
 
 public enum PoolObjectType
 {
-    Enemy =0,
-    Bullet,
+    Bullet=0,
     Hit,
     ItemStar,
     CoinCopper,

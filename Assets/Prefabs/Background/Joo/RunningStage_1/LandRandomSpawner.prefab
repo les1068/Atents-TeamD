@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6545558333555547899}
-  - component: {fileID: 6545558333555547898}
+  - component: {fileID: 1859339975}
   m_Layer: 0
   m_Name: LandRandomSpawner
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6545558333555547898
+--- !u!114 &1859339975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6545558333555547897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa4ba228c1a097c409a8d1bf3ec5a46c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6609907301d7b4d4caa9a37d972f4676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   objType: 0
-  interval: 5
+  interval: 3
   minY: -2.2
   maxY: 2.5
