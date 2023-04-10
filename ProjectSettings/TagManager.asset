@@ -11,6 +11,10 @@ TagManager:
   - Skill1
   - Skill2
   - Skill3
+  - Item
+  - Enemy_Batafire
+  - Enemy_BoxBoxer
+  - Enemy_Boxy
   layers:
   - Default
   - TransparentFX

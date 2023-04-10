@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: -5530115024657744467}
   m_Layer: 6
   m_Name: Enemy_Batafire
-  m_TagString: Enemy
+  m_TagString: Enemy_Batafire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,6 +83,7 @@ Transform:
   m_Children:
   - {fileID: 5861335835478743942}
   - {fileID: 6213244175611196221}
+  - {fileID: 250143087355875149}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -209,16 +210,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   maxHp: 10
-  attackPoint: 10
+  attackPoint: 20
   defencePoint: 5
   attackSpeed: 1
   moveSpeed: 6
-  exp: 10
+  exp: 7
   isHit: 0
   skill_Range: 1
   EnemyHpText: {fileID: 0}
   amplitude: 0.1
   frequency: 5
+--- !u!1 &3965733626439669152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 250143087355875149}
+  - component: {fileID: 7713641131595784996}
+  m_Layer: 6
+  m_Name: Enemy_Attack
+  m_TagString: EnemyAttack
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &250143087355875149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3965733626439669152}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3673097552442205935}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &7713641131595784996
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3965733626439669152}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.2}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &6398147249948914707
 GameObject:
   m_ObjectHideFlags: 0

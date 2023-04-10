@@ -240,13 +240,16 @@ public class Enemy_Batafire : PoolObject
         isHit = false;
         if (collision.gameObject.layer == 7)                                    //player layer가 triger에 머물 시  
         {
+            obj = collision.gameObject;
+            tran_Target = obj.transform;                                        //타겟으로 설정                                         
             dirVec = tran_Target.position - tran_Enemy.position;                //타겟과의 거리를 구하여 
             if (dirVec.x < skill_Range && !isAttack)                            //기준 거리보다 가깝고 공격중이 아니면  
             {                
                 anim_Enemy.SetTrigger("Attack_Skill1");                         //공격 에니메이션 트리거 발동
-                                                                                //추후 랜덤함수 로 스킬 랜덤하게 나가게 구현
+                isAttack = true;                                                                //추후 랜덤함수 로 스킬 랜덤하게 나가게 구현
             }
         }
+        isAttack = false;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -324,7 +327,7 @@ public class Enemy_Batafire : PoolObject
         isLive = false;
         gameObject.SetActive(false);                                            // Enemy 비활성화
         
-        //player.AddExp((int)exp);                                              // player에 exp 추가
+        player.AddExp((int)exp);                                              // player에 exp 추가
     }
 
     public float GetEnemyHP()
