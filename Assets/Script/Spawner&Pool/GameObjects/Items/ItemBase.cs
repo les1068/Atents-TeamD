@@ -17,7 +17,6 @@ public class ItemBase : PoolObject
         set
         {
             itemscore = value;
-            //Debug.Log($"score : {itemscore}");
         }
     }
     int itemexp; //경험치
@@ -27,7 +26,6 @@ public class ItemBase : PoolObject
         set
         {
             itemexp = value;
-            //Debug.Log($"score : {itemexp}");
         }
     }
     float frequency; //빈도수
@@ -42,8 +40,8 @@ public class ItemBase : PoolObject
 
     protected virtual void OnEnable()
     {
-        itemscore = 1;
-        itemexp = 1;
+        itemScore = 1;
+        itemExp = 1;
     }
 
     protected virtual void Update()
@@ -54,7 +52,7 @@ public class ItemBase : PoolObject
     {
         if(collision.CompareTag("Player"))
         {  
-            player.AddExp(itemexp);
+            collision.gameObject.GetComponent<Player>().AddExp(itemExp);
             StartCoroutine(LifeOver());
         }
     }

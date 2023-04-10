@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class Coin3Gold : ItemBase
+public class Coin3Gold : CoinBase
 {
     [Header("Coin_Gold")]   //금코인 관련 정보
     public GameObject gold;
@@ -16,8 +16,10 @@ public class Coin3Gold : ItemBase
 
     protected override void OnEnable()
     {
-        itemScore = goldscore;
-        itemExp = goldexp;
+        coinscore = goldscore;
+        coinexp = goldexp;
+
+        base.OnEnable();
     }
 }
   

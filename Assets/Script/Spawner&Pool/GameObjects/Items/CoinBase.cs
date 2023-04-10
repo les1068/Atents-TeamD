@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class CoinBase : ItemBase
 {
-    Animator anim;
-    int coinscore;
-    int coinexp;
+    protected int coinscore;
+    protected int coinexp;
 
 
     protected override void OnEnable()
@@ -15,7 +14,7 @@ public class CoinBase : ItemBase
         itemExp = coinexp;
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {

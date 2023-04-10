@@ -10,13 +10,14 @@ public class Coin2Silver : CoinBase
 {
     [Header("Coin2_Silver")] //은코인 관련정보
     public GameObject silver;
-    public int silverscore = 1;
-    public int silverexp = 1;
+    public int silverscore = 3;
+    public int silverexp = 3;
 
     protected override void OnEnable()
     {
-        itemScore = silverscore;
-        itemExp = silverexp;
+        coinscore = silverscore;
+        coinexp = silverexp;
+        base.OnEnable();
     }
 
 

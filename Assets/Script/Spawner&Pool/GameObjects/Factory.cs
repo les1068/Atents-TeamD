@@ -15,7 +15,7 @@ public enum PoolObjectType
 }
 public class Factory : Singleton<Factory>
 {
-    EnemyPool enemypool;
+
     BulletPool bulletpool;
     HitEffectPool hitpool;
     StarPool starpool;
@@ -25,7 +25,6 @@ public class Factory : Singleton<Factory>
 
     protected override void PreInitialize()
     {
-        enemypool = GetComponentInChildren<EnemyPool>();
         bulletpool = GetComponentInChildren<BulletPool>();
         hitpool= GetComponentInChildren<HitEffectPool>();
         starpool= GetComponentInChildren<StarPool>();
@@ -36,7 +35,7 @@ public class Factory : Singleton<Factory>
 
     protected override void Initialize()
     {
-        enemypool?.Initialize();
+
         bulletpool?.Initialize();
         hitpool?.Initialize();
         starpool?.Initialize();
@@ -50,9 +49,6 @@ public class Factory : Singleton<Factory>
         GameObject result = null;
         switch (type)
         {
-            case PoolObjectType.Enemy:
-                result = GetEnemy().gameObject;
-                break;
             case PoolObjectType.Bullet:
                 result = GetBullet().gameObject;
                 break;
@@ -74,9 +70,6 @@ public class Factory : Singleton<Factory>
         }
         return result;
     }
-
-
-    public Enemy_Boxboxer GetEnemy() => enemypool?.GetObject();
     public Bullet GetBullet() => bulletpool?.GetObject();
     public Effect GetHitEffect() => hitpool?.GetObject();
     public ItemStar GetStar() => starpool?.GetObject();

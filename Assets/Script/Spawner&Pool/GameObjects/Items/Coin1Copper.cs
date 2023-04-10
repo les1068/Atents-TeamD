@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class Coin1Copper : ItemBase
+public class Coin1Copper : CoinBase
 {
     [Header("Coin1_Copper")] //동코인 관련정보
     public GameObject copper;
@@ -15,8 +15,9 @@ public class Coin1Copper : ItemBase
 
     protected override void OnEnable()
     {
-        itemScore = copperscore;
-        itemExp = copperexp;
+        coinscore = copperscore;
+        coinexp = copperexp;
+        base.OnEnable();
     } 
 }
   

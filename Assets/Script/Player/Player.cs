@@ -26,7 +26,13 @@ public class Player : StateBase
     
     public Vector2 inputVec;
     protected bool isLeft = false;            //마지막 키 입력 방향 확인용
-    
+
+    // -------------------------------------연주 수정
+    bool canFallDown = false;
+    float dirY;
+    CapsuleCollider2D playercollider;
+    //-----------------------------------------
+
     float playerH;                          //키 입력 방향 우측:1, 좌측 :-1
     [Header("스킬관련-------------------------------------")]
     public GameObject skill1;               // 스킬1 등록
@@ -47,7 +53,7 @@ public class Player : StateBase
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        
+        playercollider = GetComponent<CapsuleCollider2D>();
         InitStat();
 
         enemy = FindObjectOfType<Enemy_Boxboxer>(); // 적 찾아오기
@@ -90,6 +96,7 @@ public class Player : StateBase
         Vector2 dir = context.ReadValue<Vector2>();
         inputDir = dir;
         playerH = dir.x;
+        dirY = dir.y;
         if (playerH > 0)                                            // 마지막 키 입력 방향 확인용 
         {
             isLeft = false;
@@ -145,7 +152,36 @@ public class Player : StateBase
                 anim.SetBool("Jump", false);
             }
         }
+        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+        if (canFallDown && dirY < 0) // 아래로 내려가기
+        {
+            
+            OnFallDown();
+        }
     }
+    /// <summary>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    /// Land에서 떨어질 때 실행되는 함수
+    /// </summary>
+    private void OnFallDown()
+    {
+        anim.SetBool("Jump", false);
+        anim.SetBool("Walking", false);
+        StartCoroutine(Falling());
+    }
+    /// <summary>
+    /// Land에서 내려갈때 플레이어의 Collider 활성화/비활성화
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator Falling()
+    {
+        playercollider.enabled = false;
+        Debug.Log("collider.enabled = false");
+        yield return new WaitForSeconds(0.3f);
+        playercollider.enabled = true;
+        canFallDown = false;
+    }
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -154,12 +190,36 @@ public class Player : StateBase
             if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyAttack"))         // Enemy와 충돌시 HP 감소
             {
                 OnDamaged(collision.transform.position);   // 무적
-            }             
+            }
+            else if (collision.gameObject.CompareTag("Platform"))    //부딪힌 태그가 Platform이면
+            {
+                if (collision.gameObject.GetComponent<LandBase>() != null ) //LandBase를 가졌다면,
+                {
+                    canFallDown = true;
+                    //Debug.Log("canFallDown(true)");
+                }
+                else
+                {
+                    canFallDown = false;
+                    //Debug.Log("canFallDown(false)");
+                }
+                canFallDown = false;
+                jumpCount = 0;
+
+            }
         }        
         else if (HP < 0)// player 사망처리
         {
             isPlayerDead = true;
             PlayerDie();
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<LandBase>() != null)
+        {
+            canFallDown = false;
+          
         }
     }
 
@@ -234,7 +294,15 @@ public class Player : StateBase
         {
             currentHp = value;
             onHPChange?.Invoke(currentHp);
-            Debug.Log($"현재 HP:{currentHp}");
+            Debug.Log($"현재 HP:{HP}");
+            if(HP<0)
+            {
+                PlayerDie();
+            }
+            else if(HP>maxHp)
+            {
+                currentHp = maxHp;
+            }
         }
     }
 
