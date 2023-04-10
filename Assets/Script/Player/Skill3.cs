@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -17,9 +18,25 @@ public class Skill3 : PoolObject
     /// <summary>
     /// 스킬 데미지 계산용 변수
     /// </summary>
-    
+
     public float skillSpeed = 1.0f;
-    public float skillCoolTime = 1.0f;
+
+    public float skillCoolTimeMAx = 1.0f;
+    private float skillCoolTime = 0;
+    public float SkillCoolTime
+    {
+        get
+        {
+            return skillCoolTime;
+        }
+        set
+        {
+            skillCoolTime = value;
+            onSkillCoolTimeChange?.Invoke(skillCoolTime / skillCoolTimeMAx);
+        }
+    }
+    public Action<float> onSkillCoolTimeChange;
+
     public int skillComboMax = 3;
     private int skillCombo;
     public int SkillCombo
@@ -31,8 +48,11 @@ public class Skill3 : PoolObject
         set
         {
             skillCombo = Mathf.Clamp(value, 0, skillComboMax);
+            onSkillComboChange?.Invoke(skillCombo);
         }
     }
+    public Action<int> onSkillComboChange;
+
     bool isOnSkill = false;
 
     /// <summary>
@@ -57,12 +77,12 @@ public class Skill3 : PoolObject
     {
         inputActions = new PlayerInputAction();
         anim_Skill = GetComponent<Animator>();
-        tran_Skill = GetComponent<Transform>();        
+        tran_Skill = GetComponent<Transform>();
     }
 
     void Start()
     {
-        SkillCombo = 0;
+        SkillCombo = skillComboMax;
     }
 
     private void OnEnable()
@@ -70,16 +90,16 @@ public class Skill3 : PoolObject
         inputActions.Player.Enable();
         inputActions.Player.Move.performed += OnMoveInput;
         inputActions.Player.Move.canceled += OnMoveInput;
-        inputActions.Player.Attack3.performed += OnSkill3;     
+        inputActions.Player.Attack3.performed += OnSkill3;
     }
 
     protected override void OnDisable()
-    {     
+    {
         inputActions.Player.Attack3.performed -= OnSkill3;
         inputActions.Player.Move.canceled -= OnMoveInput;
         inputActions.Player.Move.performed -= OnMoveInput;
         inputActions.Player.Disable();
-        
+
         base.OnDisable();
     }
 
@@ -90,11 +110,11 @@ public class Skill3 : PoolObject
 
         if (dir.x > 0)                                            // 마지막 이동 위치 확인용 
         {
-            isLeft = false;        
+            isLeft = false;
         }
         if (dir.x < 0)
         {
-            isLeft = true;        
+            isLeft = true;
         }
     }
 
@@ -106,21 +126,28 @@ public class Skill3 : PoolObject
         }
     }
 
+    private void Update()
+    {
+        if (SkillCombo == 0)
+        {
+            SkillCoolTime += Time.deltaTime;
+        }
+    }
+
     IEnumerator IEOnSkill()
     {
-        SkillCombo++;
-        
+        SkillCombo--;
         isOnSkill = true;
         OnFire();
-        if (SkillCombo == skillComboMax)
+        if (SkillCombo == 0)
         {
-            yield return new WaitForSeconds(skillCoolTime);
+            yield return new WaitForSeconds(skillCoolTimeMAx);
             StopCoroutine(IEOnSkill());
-            SkillCombo = 0;
-        
+            SkillCombo = skillComboMax;
+            SkillCoolTime = 0;
         }
         isOnSkill = false;
-        
+
     }
 
     /// <summary>
@@ -139,7 +166,7 @@ public class Skill3 : PoolObject
         {
             obj.transform.position = new Vector2(posX + 1, posY);
         }
-    }   
+    }
 
-    
+
 }

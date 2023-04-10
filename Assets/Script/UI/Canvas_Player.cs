@@ -51,13 +51,13 @@ public class Canvas_Player : MonoBehaviour
         imag_Skill2.fillAmount = 1;
         imag_Skill3.fillAmount = 1;
 
-       /* skill1.onSkillComboChange += Refresh_Skill1Combo;
+        skill1.onSkillComboChange += Refresh_Skill1Combo;
         skill2.onSkillComboChange += Refresh_Skill2Combo;
         skill3.onSkillComboChange += Refresh_Skill3Combo;
 
         skill1.onSkillCoolTimeChange += Refresh_Skill1CoolTime;
         skill2.onSkillCoolTimeChange += Refresh_Skill2CoolTime;
-        skill3.onSkillCoolTimeChange += Refresh_Skill3CoolTime;*/
+        skill3.onSkillCoolTimeChange += Refresh_Skill3CoolTime;
 
         //player.Score += Refresh_Score;
         //player.Exp += Refresh_Exp;
