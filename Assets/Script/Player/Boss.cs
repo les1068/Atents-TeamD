@@ -6,6 +6,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Random = UnityEngine.Random;
+
 public class Boss : PoolObject
 {
 
@@ -30,6 +32,14 @@ public class Boss : PoolObject
     Vector2 dirVec;
     Vector2 nextVec;
 
+    public GameObject monsterPrefab; // 소환할 몬스터 프리팹
+    private float summonInterval = 3f; // 3초마다 몬스터 소환
+    private Vector3 summonPosition; // 몬스터 소환 위치
+
+    /// <summary>
+    /// 보스죽을때 이펙트 프리팹
+    /// </summary>
+    public GameObject bossexplosionEffectPrefab;
 
     /// <summary>
     /// 보스최대hp
@@ -133,6 +143,7 @@ public class Boss : PoolObject
 
     void Start()
     {
+        InvokeRepeating("SummonMonster", 3.0f, summonInterval); // SummonMonster() 함수를 3초 대기 후 summonInterval마다 호출
         currentHealth = maxHealth;
 
         // Canvas에서 Slider 오브젝트를 찾습니다.
@@ -142,7 +153,11 @@ public class Boss : PoolObject
         slider.maxValue = maxHealth;  // Slider의 maxValue를 maxHealth로 설정합니다.
         slider.value = maxHealth;  // Slider의 value를 maxHealth로 초기화합니다.
     }
-
+    private void SummonMonster() // 몬스터를 생성할 위치 계산
+    {
+        // 몬스터 생성
+        Instantiate(monsterPrefab, summonPosition, Quaternion.identity);
+    }
     protected virtual void FixedUpdate()
     {
         
@@ -150,6 +165,7 @@ public class Boss : PoolObject
 
     void Update()
     {
+
         slider.value = currentHealth;
         //slider.value = currentHealth/maxHealth;
         
@@ -250,11 +266,13 @@ public class Boss : PoolObject
 
         if (isLive)                                                             //죽었는데 계속 때리면 맞는 경우가 발생하여 
         {
-            anim_Enemy.SetTrigger("isHit");                                     //맞는 에니메이션 트리거 발동
+           // anim_Enemy.SetTrigger("isHit");                                     //맞는 에니메이션 트리거 발동
 
             if (currentHealth <= 0)
             {
-                anim_Enemy.SetTrigger("isDie");                                 //죽는 에니메이션 트리거 발동 
+                //anim_Enemy.SetTrigger("isDie");                                 //죽는 에니메이션 트리거 발동 
+                //Debug.Log("죽음");
+                Die_Enemy();
             }
         }
         Debug.Log($"{currentHealth}");                                              //UI 붙으면 삭제 
@@ -268,9 +286,20 @@ public class Boss : PoolObject
         isLive = false;
         gameObject.SetActive(false);                                            // Enemy 비활성화
 
+        // 보스가 죽으면 이펙트를 생성합니다.
+        GameObject explosionEffect1 = Instantiate(bossexplosionEffectPrefab,
+                transform.position + Random.insideUnitSphere * 3f, Quaternion.identity);
+        Destroy(explosionEffect1, 2f);
+        InvokeRepeating("CreateExplosionEffect", 0.5f, 0.5f);  // 0.5초마다 호출하여 이펙트를 생성합니다
+
         //player.AddExp((int)exp);                                              // player에 exp 추가
     }
-
+    void CreateExplosionEffect()  // 이펙트 호출 되는 함수
+    {
+        GameObject explosionEffect = Instantiate(bossexplosionEffectPrefab, 
+            transform.position + Random.insideUnitSphere * 3f, Quaternion.identity);
+        Destroy(explosionEffect, 2f);
+    }
     public float GetEnemyHP()
     {
         return currentHealth;
