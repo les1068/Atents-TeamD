@@ -89,6 +89,8 @@ public class Enemy_Boxboxer : PoolObject
     /// </summary>
     bool isAttack = false;
 
+    bool isEnable = false;
+
     /// <summary>
     /// 데미지 계산용 player SkillPoint
     /// </summary>
@@ -103,6 +105,8 @@ public class Enemy_Boxboxer : PoolObject
     /// enemy hp 바(UI)
     /// </summary>
     public TMP_Text EnemyHpText;
+
+    
 
     /// <summary>
     /// 스텟 초기화용
@@ -139,7 +143,8 @@ public class Enemy_Boxboxer : PoolObject
         isLive = true;
         currentHP = maxHp;
         tran_Target = null;
-        StartCoroutine(IEMove());
+        isEnable = true;
+        //StartCoroutine(IEMove());
     }
 
     void Start()
@@ -160,10 +165,19 @@ public class Enemy_Boxboxer : PoolObject
                 rigi_Enemy.MovePosition(rigi_Enemy.position + nextVec);         //내위치에서 가야할 방향 속도로 이동 
             }         
         }
+        else if(isEnable)
+        {
+            float forceRange;
+            forceRange = UnityEngine.Random.Range(600.0f, 1400.0f);
+            
+            rigi_Enemy.AddForce(new Vector2(-1, 1) * forceRange, ForceMode2D.Force);
+            isEnable = false;
+        }
     }
-
+    
     void Update()
     {
+        
         
     }
 
@@ -295,7 +309,7 @@ public class Enemy_Boxboxer : PoolObject
         return currentHP;
     }
 
-    IEnumerator IEMove()
+    /*IEnumerator IEMove()
     {
         float time = 0f;
         if(spawner != null)
@@ -310,6 +324,6 @@ public class Enemy_Boxboxer : PoolObject
             }
             
         }
-    }
+    }*/
 
 }

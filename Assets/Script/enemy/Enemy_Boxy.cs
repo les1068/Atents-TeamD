@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -88,6 +89,7 @@ public class Enemy_Boxy : PoolObject
     /// </summary>
     bool isAttack = false;
 
+    bool isEnable = false;
     /// <summary>
     /// 데미지 계산용 player SkillPoint
     /// </summary>
@@ -142,6 +144,7 @@ public class Enemy_Boxy : PoolObject
         isLive = true;
         currentHP = maxHp;
         tran_Target = null;
+        isEnable = true;
     }
 
     void Start()
@@ -161,7 +164,15 @@ public class Enemy_Boxy : PoolObject
             {
                 //rigi_Enemy.MovePosition(rigi_Enemy.position + nextVec);         //내위치에서 가야할 방향 속도로 이동 
             }         
-        }        
+        }
+        else if (isEnable)
+        {
+            float forceRange;
+            forceRange = UnityEngine.Random.Range(600.0f, 1400.0f);
+
+            rigi_Enemy.AddForce(new Vector2(-1, 1) * forceRange, ForceMode2D.Force);
+            isEnable = false;
+        }
     }
 
     void Update()
