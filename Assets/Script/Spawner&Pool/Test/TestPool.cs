@@ -5,11 +5,10 @@ using UnityEngine.InputSystem;
 
 public class TestPool : TestBase
 {
-    public EnemyPool pool1;
-    public BulletPool pool2;
-    public HitEffectPool pool3;
-    public Coin1Pool pool4;
-    public StarPool pool5;
+    public BulletPool pool1;
+    public HitEffectPool pool2;
+    public Coin1Pool pool3;
+    public StarPool pool4;
 
     Transform[] spawnTransforms;
 
@@ -40,11 +39,6 @@ public class TestPool : TestBase
     {
         PoolObject obj = pool4.GetObject();
         obj.transform.position = spawnTransforms[3].position;
-    }
-    protected override void Test5(InputAction.CallbackContext _)
-    {
-        PoolObject obj = pool5.GetObject();
-        obj.transform.position = spawnTransforms[4].position;
     }
 }
     
