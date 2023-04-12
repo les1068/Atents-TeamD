@@ -25,10 +25,7 @@ public class Skill1 : MonoBehaviour
     private float skillCoolTime = 0;
     public float SkillCoolTime
     {
-        get
-        {
-            return skillCoolTime;
-        }
+        get => skillCoolTime;        
         set
         {
             skillCoolTime = value;
@@ -41,14 +38,11 @@ public class Skill1 : MonoBehaviour
     private int skillCombo;
     public int SkillCombo
     {
-        get
-        {
-            return skillCombo;
-        }
+        get => skillCombo;        
         set
         {
-            skillCombo = Mathf.Clamp(value, 0, skillComboMax);
-            onSkillComboChange?.Invoke(skillCombo);
+            skillCombo = Mathf.Clamp(value, 0, skillComboMax);            
+            onSkillComboChange?.Invoke(skillCombo);            
         }
     }
     public Action<int> onSkillComboChange;
@@ -103,20 +97,19 @@ public class Skill1 : MonoBehaviour
 
     public void OnSkill1(InputAction.CallbackContext context)                   // 키보드 A키
     {
-        if (!isOnSkill)
+        if (!isOnSkill && SkillCombo != 0)
         {
-            StartCoroutine(IEOnSkill());
-            skillCombo--;
+            StartCoroutine(IEOnSkill());            
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (coll_Skill.enabled && collision.gameObject.CompareTag("Enemy"))      // 적이고 스킬 range의 coll이 enable이면 
-        {                                                                       // range의 coll을 disable 시켜라
-            coll_Skill.enabled = false;                                         // 생각대로 작동안함 ㅠ ㅠ             
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("skill1");
         }
-    }
+    }*/
 
     private void Update()
     {
@@ -126,29 +119,15 @@ public class Skill1 : MonoBehaviour
         }
     }
 
+    public void SkillComboDown()
+    {
+        SkillCombo--; 
+    }
+
     IEnumerator IEOnSkill()
     {
-        //skillCombo--;
+        
         isOnSkill = true;
-
-        switch (SkillCombo)
-        {
-            case 3:
-                anim_Skill.SetTrigger("attack");
-                break;
-
-            case 2:
-                anim_Skill.SetTrigger("Combo1");
-                break;
-
-            case 1:
-                anim_Skill.SetTrigger("Combo2");
-                break;
-
-            default:
-                anim_Skill.SetTrigger("attack");
-                break;
-        }
 
         if (SkillCombo == 0)
         {
@@ -157,7 +136,27 @@ public class Skill1 : MonoBehaviour
             SkillCombo = skillComboMax;
             SkillCoolTime = 0;
         }
+        else
+        {
+            switch (SkillCombo)
+            {
+                case 3:
+                    anim_Skill.SetTrigger("attack");
+                    break;
 
+                case 2:
+                    anim_Skill.SetTrigger("Combo1");
+                    break;
+
+                case 1:
+                    anim_Skill.SetTrigger("Combo2");
+                    break;
+
+                default:
+                    anim_Skill.SetTrigger("attack");
+                    break;
+            }            
+        }
         isOnSkill = false;
     }
 }

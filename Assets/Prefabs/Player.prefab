@@ -105,8 +105,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   maxHp: 100
-  attackPoint: 10
-  defencePoint: 10
+  attackPoint: 15
+  defencePoint: 11
   attackSpeed: 1
   inputVec: {x: 0, y: 0}
   skill1: {fileID: 4564241149494531938, guid: 9443fa67701e044a481f5dc94404ea50, type: 3}

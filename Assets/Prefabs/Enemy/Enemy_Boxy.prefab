@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   maxHp: 30
-  attackPoint: 10
+  attackPoint: 7
   defencePoint: 2
   attackSpeed: 1
   moveSpeed: 0

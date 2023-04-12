@@ -24,10 +24,7 @@ public class Skill2 : MonoBehaviour
     private float skillCoolTime = 0;
     public float SkillCoolTime
     {
-        get
-        {
-            return skillCoolTime;
-        }
+        get => skillCoolTime;        
         set
         {
             skillCoolTime = value;
@@ -40,10 +37,7 @@ public class Skill2 : MonoBehaviour
     private int skillCombo;
     public int SkillCombo
     {
-        get
-        {
-            return skillCombo;
-        }
+        get => skillCombo;        
         set
         {
             skillCombo = Mathf.Clamp(value, 0, skillComboMax);
@@ -102,19 +96,19 @@ public class Skill2 : MonoBehaviour
 
     public void OnSkill2(InputAction.CallbackContext context)                   // 키보드 S키
     {
-        if (!isOnSkill)
+        if (!isOnSkill && SkillCombo != 0)
         {
             StartCoroutine(IEOnSkill());
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            //Debug.Log("skill2");
+            Debug.Log("skill2");
         }
-    }
+    }*/
 
     private void Update()
     {
@@ -124,10 +118,13 @@ public class Skill2 : MonoBehaviour
         }
     }
 
-    IEnumerator IEOnSkill()
+    public void SkillComboDown()
     {
         SkillCombo--;
+    }
 
+    IEnumerator IEOnSkill()
+    {
         isOnSkill = true;
         anim_Skill.SetTrigger("attack");
         if (SkillCombo == 0)
