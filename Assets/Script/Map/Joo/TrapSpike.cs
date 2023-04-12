@@ -8,7 +8,7 @@ public class TrapSpike : TrapBase
 
     protected override void OnEnable()
     {
-        damage = 5.0f;
+        Damage = 5.0f;
         base.OnEnable();
     }
 }
