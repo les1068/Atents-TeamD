@@ -171,6 +171,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillpoint: 1
   skillSpeed: 2
+  skillCoolTimeMAx: 1
+  skillComboMax: 3
 --- !u!95 &127344361246709466
 Animator:
   serializedVersion: 4
