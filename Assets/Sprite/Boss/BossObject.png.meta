@@ -123,7 +123,7 @@ TextureImporter:
         x: 24
         y: 30
         width: 678
-        height: 673
+        height: 86
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -494,6 +494,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: BossObject_0
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 117
+        width: 301
+        height: 583
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ba4facea6834f64e9bd620bf2568dbc
+      internalID: 655799083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -508,6 +529,7 @@ TextureImporter:
       BossObject_4: -423048130
       BossObject_6: -1260185636
       BossObject_9: -2102190531
+      BossObject_0: 655799083
       BossObject_8: 983771963
       BossObject_10: -405454343
       BossObject_12: -1634474910
