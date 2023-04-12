@@ -5,18 +5,16 @@ using UnityEngine;
 
 public class LandBase : PoolObject
 {
-    public float moveSpeed = 2;
+    public float moveSpeed = 4;
     Player player;
     Transform currentTransform;
     Vector2 moveDir;
     Vector2 moveDelta;
-    Transform targetTransform;
     Rigidbody2D rigid;
 
 
     private void Awake()
     {
-        targetTransform = FindObjectOfType<Player>().transform;
         rigid = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<Player>();
     }

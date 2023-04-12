@@ -5,24 +5,24 @@ using UnityEngine;
 public class RandomLandPool : MonoBehaviour
 {
     
-    public static TrackType TrackPicker()
+    public static LandType LandPicker()
     {
         float Rate = Random.Range(0.0f, 1.0f);
 
-        TrackType result;
+        LandType result;
         if (Rate < 0.25f)
         {
-            result = TrackType.Land1;
+            result = LandType.Land1;
         }
         else if (Rate < 0.5f)
         {
-            result = TrackType.Land2;
+            result = LandType.Land2;
         }
         else if (Rate < 0.75f)
         {
-            result = TrackType.Land3;
+            result = LandType.Land3;
         }
-        else result = TrackType.Land4;
+        else result = LandType.Land4;
 
 
         return result;

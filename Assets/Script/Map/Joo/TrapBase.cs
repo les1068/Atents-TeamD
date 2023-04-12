@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TrapBase: MonoBehaviour
 {
-    protected float damage=2.0f;
-    float Damage
-    {   get => damage;
+    float damage=2.0f;
+    protected float Damage
+    { get => damage;
         set { damage = value; }
     }
     Player player;
@@ -21,7 +21,7 @@ public class TrapBase: MonoBehaviour
         Damage = damage ;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
