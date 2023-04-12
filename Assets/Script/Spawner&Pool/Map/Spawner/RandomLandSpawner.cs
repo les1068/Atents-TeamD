@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class RandomLandSpawner : LandSpawner
 {
-
-    PlatformKillzone killerzone;
-
     protected override IEnumerator Spawn()
     {
         //Debug.Log(transform.position);
@@ -16,7 +13,7 @@ public class RandomLandSpawner : LandSpawner
         {
             yield return new WaitForSeconds(interval);
 
-            GameObject obj = LandFactory.Inst.GetObject(RandomLandPool.TrackPicker()) ;   // 랜덤오브젝트 스포너위치에서 생성              
+            GameObject obj = LandFactory.Inst.GetObject(RandomLandPool.LandPicker()) ;   // 랜덤오브젝트 스포너위치에서 생성              
             OnSpawn(obj);
         }
     }

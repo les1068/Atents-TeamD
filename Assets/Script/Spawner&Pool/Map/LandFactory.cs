@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TrackType
+public enum LandType
 {
     Land1 = 0,
     Land2,
@@ -39,24 +39,24 @@ public class LandFactory : Singleton<LandFactory>
        
     }
 
-    public GameObject GetObject(TrackType type)
+    public GameObject GetObject(LandType type)
     {
         GameObject result = null;
         switch (type)
         {
-            case TrackType.Land1:
+            case LandType.Land1:
                 result = GetLand1().gameObject;
                 break;
-            case TrackType.Land2:
+            case LandType.Land2:
                 result = GetLand2().gameObject;
                 break;
-            case TrackType.Land3:
+            case LandType.Land3:
                 result = GetLand3().gameObject;
                 break;
-            case TrackType.Land4:
+            case LandType.Land4:
                 result = GetLand4().gameObject;
                 break;
-            case TrackType.Land5:
+            case LandType.Land5:
                 result = GetLand5().gameObject;
                 break;
         }
