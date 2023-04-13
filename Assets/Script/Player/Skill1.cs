@@ -35,19 +35,19 @@ public class Skill1 : MonoBehaviour
     public Action<float> onSkillCoolTimeChange;
 
     public int skillComboMax = 4;
-    private int skillCombo;
+    private int skillCombo = 0;
     public int SkillCombo
     {
         get => skillCombo;        
         set
         {
             skillCombo = Mathf.Clamp(value, 0, skillComboMax);            
-            onSkillComboChange?.Invoke(skillCombo);            
+            onSkillComboChange?.Invoke(SkillCombo);            
         }
     }
     public Action<int> onSkillComboChange;
 
-    bool isOnSkill = false;
+    bool isOnSkill = false;    
 
     private void Awake()
     {
@@ -61,7 +61,7 @@ public class Skill1 : MonoBehaviour
     private void Start()
     {
         anim_Skill.SetFloat("SkillSpeed", skillSpeed);
-        SkillCombo = skillComboMax;
+        SkillCombo = skillComboMax;        
     }
 
     private void OnEnable()
@@ -89,7 +89,7 @@ public class Skill1 : MonoBehaviour
         {
             anim_Skill.SetBool("isLeft", false);
         }
-        if (dir.x < 0)
+        else if (dir.x < 0)
         {
             anim_Skill.SetBool("isLeft", true);
         }
@@ -97,47 +97,27 @@ public class Skill1 : MonoBehaviour
 
     public void OnSkill1(InputAction.CallbackContext context)                   // 키보드 A키
     {
-        if (!isOnSkill && SkillCombo != 0)
+        if (!isOnSkill && skillCoolTime == 0)
         {
             StartCoroutine(IEOnSkill());            
         }
     }
 
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("skill1");
-        }
-    }*/
-
     private void Update()
     {
-        if (SkillCombo == 0)
-        {
-            SkillCoolTime += Time.deltaTime;
-        }
+        
     }
 
     public void SkillComboDown()
-    {
-        SkillCombo--; 
+    {        
+        isOnSkill = false;
     }
 
     IEnumerator IEOnSkill()
     {
-        
-        isOnSkill = true;
-
-        if (SkillCombo == 0)
+        if (skillCombo > 0)
         {
-            yield return new WaitForSeconds(skillCoolTimeMAx);
-            StopCoroutine(IEOnSkill());
-            SkillCombo = skillComboMax;
-            SkillCoolTime = 0;
-        }
-        else
-        {
+            isOnSkill = true;            
             switch (SkillCombo)
             {
                 case 3:
@@ -155,8 +135,21 @@ public class Skill1 : MonoBehaviour
                 default:
                     anim_Skill.SetTrigger("attack");
                     break;
-            }            
+            }
+            SkillCombo--;
         }
-        isOnSkill = false;
+
+        if (skillCombo == 0)
+        {
+            while (skillCoolTime < skillCoolTimeMAx)
+            {
+                SkillCoolTime += Time.deltaTime;
+                yield return null;
+            }
+            SkillCombo = skillComboMax;
+            SkillCoolTime = 0;
+            StopCoroutine(IEOnSkill());
+        }
+        
     }
 }

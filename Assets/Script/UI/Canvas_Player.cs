@@ -51,6 +51,10 @@ public class Canvas_Player : MonoBehaviour
         imag_Skill2.fillAmount = 1;
         imag_Skill3.fillAmount = 1;
 
+        text_Skill1.text = skill1.skillComboMax.ToString();
+        text_Skill2.text = skill2.skillComboMax.ToString();
+        text_Skill3.text = skill3.skillComboMax.ToString();
+
         skill1.onSkillComboChange += Refresh_Skill1Combo;
         skill2.onSkillComboChange += Refresh_Skill2Combo;
         skill3.onSkillComboChange += Refresh_Skill3Combo;
@@ -93,14 +97,14 @@ public class Canvas_Player : MonoBehaviour
         text_Skill1.text = SkillCombo.ToString();        
     }
 
-    void Refresh_Skill2Combo(int skillCombo)
+    void Refresh_Skill2Combo(int SkillCombo)
     {
-        text_Skill2.text = skillCombo.ToString();
+        text_Skill2.text = SkillCombo.ToString();
     }
 
-    void Refresh_Skill3Combo(int skillCombo)
+    void Refresh_Skill3Combo(int SkillCombo)
     {
-        text_Skill3.text = skillCombo.ToString();
+        text_Skill3.text = SkillCombo.ToString();
     }
 
 

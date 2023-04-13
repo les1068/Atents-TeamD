@@ -99,7 +99,16 @@ public class Skill3 : PoolObject
         Vector2 dir = context.ReadValue<Vector2>();
         inputDir = dir;
 
-        isLeft = (dir.x > 0)? false : true;                                             // 마지막 이동 위치 확인용 ?        
+        if (dir.x > 0)                                            // 마지막 이동 위치 확인용 
+        {
+            isLeft = false;
+        }
+        if (dir.x < 0)
+        {
+            isLeft = true;
+        }
+
+
     }
 
     public void OnSkill3(InputAction.CallbackContext context)   // 키보드 A키
@@ -126,9 +135,9 @@ public class Skill3 : PoolObject
         if (SkillCombo == 0)
         {
             yield return new WaitForSeconds(skillCoolTimeMAx);
-            StopCoroutine(IEOnSkill());
             SkillCombo = skillComboMax;
             SkillCoolTime = 0;
+            StopCoroutine(IEOnSkill());
         }
         isOnSkill = false;
 
