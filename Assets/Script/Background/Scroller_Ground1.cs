@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Scroller_Ground1 : MonoBehaviour
 {
-    public float scrollingSpeed = 2.5f;  // 스크롤 이동 속도
+    public float scrollingSpeed = 4.0f;  // 스크롤 이동 속도
 
     Transform[] bgSlots = null;  // 배경 이미지가 두개 붙어있는 슬롯의 집합
 
@@ -38,5 +38,9 @@ public class Scroller_Ground1 : MonoBehaviour
     protected virtual void MoveRightEnd(int index)
     {
         bgSlots[index].Translate(slot_Width * bgSlots.Length * transform.right);
+       for(int i =0; i< transform.childCount; i++)
+        {
+            bgSlots[i].transform.GetChild(i).gameObject.SetActive(true);
+        }
     }
 }

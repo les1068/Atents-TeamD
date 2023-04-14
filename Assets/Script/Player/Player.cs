@@ -308,7 +308,7 @@ public class Player : StateBase
         {
             currentHp = value;
             onHPChange?.Invoke(currentHp);
-            //Debug.Log($"현재 HP:{HP}");
+            Debug.Log($"현재 HP:{HP}");
             if(HP<0)
             {
                 PlayerDie();

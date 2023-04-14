@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum PoolObjectType
 {
+    None=-1,
     Bullet=0,
     Hit,
     ItemStar,
@@ -48,6 +49,8 @@ public class Factory : Singleton<Factory>
         GameObject result = null;
         switch (type)
         {
+            case PoolObjectType.None:
+                break;
             case PoolObjectType.Bullet:
                 result = GetBullet().gameObject;
                 break;

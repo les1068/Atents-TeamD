@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3970746288656645073}
   - component: {fileID: 1021488877801534788}
   - component: {fileID: 214846130}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Box_wood
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1652367634768174201
 Transform:
@@ -125,3 +125,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exp: 5
+  itemspawnRatio: 0.4

@@ -23,7 +23,12 @@ public class RandomCoinPool : MonoBehaviour
         {
             result = PoolObjectType.CoinSilver;
         }
-        else result = PoolObjectType.CoinCopper;
+        else
+        {
+            result = PoolObjectType.None;
+            return RandomCoin();
+        }
+       
         return result;
     }
 
@@ -31,9 +36,11 @@ public class RandomCoinPool : MonoBehaviour
     {
         switch (type)
         {
-            case PoolObjectType.CoinCopper:
-                GetCopper();
+            case PoolObjectType.None:
                 break;
+            /*case PoolObjectType.CoinCopper:
+                GetCopper();
+                break;*/
             case PoolObjectType.CoinSilver:
                 GetSilver();
                 break;
@@ -45,7 +52,7 @@ public class RandomCoinPool : MonoBehaviour
         }
     }
 
-    private static void GetCopper() => Factory.Inst.GetCoin1();
+ /*   private static void GetCopper() => Factory.Inst.GetCoin1();*/
     private static void GetSilver() => Factory.Inst.GetCoin2();
     private static void GetGold() => Factory.Inst.GetCoin3();
 }

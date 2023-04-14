@@ -8,7 +8,7 @@ public class RandomLandSpawner : LandSpawner
     protected override IEnumerator Spawn()
     {
         //Debug.Log(transform.position);
-
+        
         while (true)
         {
             yield return new WaitForSeconds(interval);
@@ -32,7 +32,7 @@ public class RandomLandSpawner : LandSpawner
     private void OnDrawGizmos()
     {
         //스폰위치 확인용
-          Gizmos.color = Color.green;
+          Gizmos.color = Color.yellow;
           Vector3 from = transform.position+ Vector3.up * maxY;
           Vector3 to = transform.position+ Vector3.up * minY;
           Gizmos.DrawLine(from, to);

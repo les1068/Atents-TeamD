@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8788816827040371458}
   - component: {fileID: 157578952905696979}
   - component: {fileID: 3528564893293695372}
+  - component: {fileID: 4637730057054490701}
+  - component: {fileID: 3800218716470787660}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -105,3 +107,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4637730057054490701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5900584417960637436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f7784d3168df0488bc754218d2748c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageRatio: 0.6
+  pushForce: 20
+--- !u!70 &3800218716470787660
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5900584417960637436}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.35}
+  m_Size: {x: 0.56666666, y: 0.7}
+  m_Direction: 0

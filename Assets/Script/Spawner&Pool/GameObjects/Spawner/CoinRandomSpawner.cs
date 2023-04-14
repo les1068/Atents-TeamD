@@ -7,7 +7,7 @@ public class CoinRandomSpawner : Spawner
 { 
     private void OnEnable()
     {
-        interval = 0.5f;
+        interval = 5f;
     }
     protected override IEnumerator Spawn()
     {
@@ -16,7 +16,8 @@ public class CoinRandomSpawner : Spawner
         while (true)
         {
             yield return new WaitForSeconds(interval);
-            GameObject obj = Factory.Inst.GetObject(RandomCoinPool.RandomCoin());   // 오브젝트 스포너위치에서 생성                                           //Debug.Log(obj.transform.position);
+            GameObject obj = Factory.Inst.GetObject(RandomCoinPool.RandomCoin());   // 오브젝트 스포너위치에서 생성
+            //Debug.Log(obj.transform.position);
             obj.transform.position = transform.position;  // 스포너 위치로 이동
             float r = UnityEngine.Random.Range(minY, maxY);
             obj.transform.Translate(Vector3.up * r);
@@ -26,7 +27,7 @@ public class CoinRandomSpawner : Spawner
     private void OnDrawGizmos()
     {
         //스폰위치 확인용
-          Gizmos.color = Color.green;
+          Gizmos.color = Color.white;
           Vector3 from = transform.position+ Vector3.up * maxY;
           Vector3 to = transform.position+ Vector3.up * minY;
           Gizmos.DrawLine(from, to);

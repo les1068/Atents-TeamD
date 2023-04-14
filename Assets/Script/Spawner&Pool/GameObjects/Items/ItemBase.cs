@@ -7,7 +7,7 @@ public class ItemBase : PoolObject
 {
 
     Animator anim;
-    float moveSpeed = 2;
+    float moveSpeed = 4;
 
 
     int itemscore;  //점수
