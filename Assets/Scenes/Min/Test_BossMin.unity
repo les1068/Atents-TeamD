@@ -1454,9 +1454,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b975bc7ffc393594d80e2a45e3ab30ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 3673097552442205923, guid: 32343801bbdf5475492677406740ca79, type: 3}
   bossexplosionEffectPrefab: {fileID: 3752667827826174148, guid: 6aac6af20df024d43995963ebb27c069, type: 3}
-  maxHealth: 100
+  monsterPrefab: {fileID: 3673097552442205923, guid: 32343801bbdf5475492677406740ca79, type: 3}
+  spawnDistance: 5
+  maxHealth: 10
   attackPoint: 10
   defencePoint: 10
   attackSpeed: 1
