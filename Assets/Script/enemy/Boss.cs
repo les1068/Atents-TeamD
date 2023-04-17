@@ -167,6 +167,7 @@ public class Boss : PoolObject
         {
             // 폭발 이펙트를 생성하는 코루틴 함수를 실행
             StartCoroutine(Explode());
+            StopCoroutine(SpawnMonster());
         }
     }
     private IEnumerator Explode()
@@ -176,10 +177,10 @@ public class Boss : PoolObject
         {
             // 폭발 이펙트를 생성하고 보스의 위치에 배치
             GameObject explosionEffect1 = Instantiate(bossexplosionEffectPrefab, transform.position + Random.insideUnitSphere * 3f, Quaternion.identity);
-            // 0.5초간 대기
+            // 2초간 대기
             yield return new WaitForSeconds(2.0f);
+            gameObject.SetActive(false);
         }
-        gameObject.SetActive(false);    
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
