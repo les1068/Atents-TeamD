@@ -547,18 +547,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4733162670644287600, guid: b1b3b19a905bbca4ebd9f9c9dde8633f, type: 3}
-      propertyPath: maxY
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4733162670644287600, guid: b1b3b19a905bbca4ebd9f9c9dde8633f, type: 3}
-      propertyPath: minY
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4733162670644287600, guid: b1b3b19a905bbca4ebd9f9c9dde8633f, type: 3}
-      propertyPath: interval
-      value: 0.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1b3b19a905bbca4ebd9f9c9dde8633f, type: 3}
 --- !u!1 &821948396
@@ -896,10 +884,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Factory
       objectReference: {fileID: 0}
-    - target: {fileID: 7012985474780586642, guid: fdbb1c31f4e70e44c8f71ba3bc3a0181, type: 3}
-      propertyPath: poolSize
-      value: 128
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdbb1c31f4e70e44c8f71ba3bc3a0181, type: 3}
 --- !u!1001 &1130558706
@@ -909,10 +893,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6252891442462749357, guid: f4e6d69a8e5c2044d91c0413b6f31017, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 6252891442462749357, guid: f4e6d69a8e5c2044d91c0413b6f31017, type: 3}
       propertyPath: m_Name
       value: CoinRandomSpawner
@@ -1376,42 +1356,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 177719436178841448, guid: ea84603483983f748a0a59a51e5e9cd3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 177719437154568425, guid: ea84603483983f748a0a59a51e5e9cd3, type: 3}
-      propertyPath: m_Size.x
-      value: 7.0000277
-      objectReference: {fileID: 0}
-    - target: {fileID: 177719437154568425, guid: ea84603483983f748a0a59a51e5e9cd3, type: 3}
-      propertyPath: m_Offset.x
-      value: -2.4608755
-      objectReference: {fileID: 0}
-    - target: {fileID: 1446050626573761656, guid: ea84603483983f748a0a59a51e5e9cd3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2441261182994208763, guid: ea84603483983f748a0a59a51e5e9cd3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2622580691813895657, guid: ea84603483983f748a0a59a51e5e9cd3, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2622580691813895657, guid: ea84603483983f748a0a59a51e5e9cd3, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 8388932918271284223, guid: ea84603483983f748a0a59a51e5e9cd3, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8731467477411409442, guid: ea84603483983f748a0a59a51e5e9cd3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.93
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea84603483983f748a0a59a51e5e9cd3, type: 3}
 --- !u!1001 &3313352766471484755
@@ -1478,10 +1422,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 494670175, guid: 22f5a6521bbf23f4ca7b3c0999b7cc60, type: 3}
-      propertyPath: scrollingSpeed
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4839432466787875960, guid: 22f5a6521bbf23f4ca7b3c0999b7cc60, type: 3}
       propertyPath: m_Name
       value: RunningStage_Background1
@@ -1596,29 +1536,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1859339975, guid: ef2311d834011cc4aa40137c16ca03af, type: 3}
-      propertyPath: maxY
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1859339975, guid: ef2311d834011cc4aa40137c16ca03af, type: 3}
-      propertyPath: minY
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1859339975, guid: ef2311d834011cc4aa40137c16ca03af, type: 3}
-      propertyPath: interval
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6545558333555547897, guid: ef2311d834011cc4aa40137c16ca03af, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 6545558333555547897, guid: ef2311d834011cc4aa40137c16ca03af, type: 3}
       propertyPath: m_Name
       value: LandRandomSpawner
-      objectReference: {fileID: 0}
-    - target: {fileID: 6545558333555547897, guid: ef2311d834011cc4aa40137c16ca03af, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6545558333555547899, guid: ef2311d834011cc4aa40137c16ca03af, type: 3}
       propertyPath: m_RootOrder
@@ -1717,18 +1637,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6552695167479510353, guid: 28ca76cfe4b9d6b46ac73810f988913a, type: 3}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6552695167479510353, guid: 28ca76cfe4b9d6b46ac73810f988913a, type: 3}
-      propertyPath: m_Offset.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6552695167479510355, guid: 28ca76cfe4b9d6b46ac73810f988913a, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 6552695167479510355, guid: 28ca76cfe4b9d6b46ac73810f988913a, type: 3}
       propertyPath: m_Name
       value: PlatformKillZone
