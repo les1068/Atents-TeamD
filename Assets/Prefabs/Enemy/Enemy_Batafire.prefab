@@ -57,11 +57,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3673097552442205935}
+  - component: {fileID: -5530115024657744467}
   - component: {fileID: 3673097552442205932}
   - component: {fileID: 3673097552442205933}
   - component: {fileID: 3673097552442205922}
   - component: {fileID: -6464604570352619991}
-  - component: {fileID: -5530115024657744467}
   m_Layer: 6
   m_Name: Enemy_Batafire
   m_TagString: Enemy_Batafire
@@ -87,6 +87,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5530115024657744467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3673097552442205923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a28452554fb4f0fb37ab757eb50e3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 10
+  attackPoint: 10
+  defencePoint: 5
+  attackSpeed: 1
+  skill_Range: 1
+  moveSpeed: 6
+  exp: 7
+  amplitude: 0.1
+  frequency: 5
 --- !u!212 &3673097552442205932
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -196,30 +217,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-5530115024657744467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3673097552442205923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25a28452554fb4f0fb37ab757eb50e3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  level: 1
-  maxHp: 10
-  attackPoint: 10
-  defencePoint: 5
-  attackSpeed: 1
-  moveSpeed: 6
-  exp: 7
-  isHit: 0
-  skill_Range: 1
-  EnemyHpText: {fileID: 0}
-  amplitude: 0.1
-  frequency: 5
 --- !u!1 &3965733626439669152
 GameObject:
   m_ObjectHideFlags: 0
