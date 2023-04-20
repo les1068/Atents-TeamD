@@ -14,7 +14,8 @@ public class Player : StateBase
     Enemy_Batafire enemy_Batafire;
     Enemy_Boxboxer enemy_Boxboxer;
     Enemy_Boxy enemy_Boxy;
-    
+    BossAttack bossAttack;
+
     Pause pause;
 
     Vector3 inputDir = Vector3.zero;
@@ -52,17 +53,26 @@ public class Player : StateBase
         anim = GetComponent<Animator>();
         playercollider = GetComponent<CapsuleCollider2D>();
         InitStat();
+
+        
+
         pause = FindObjectOfType<Pause>();
     }
 
     private void Start()
     {
-        moveSpeed = MoveSpeed;                
+        moveSpeed = MoveSpeed;
+
+        //animSkill1 = skill1.GetComponent<Animator>();
+        //animSkill2 = skill2.GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
         inputActions.Player.Enable();
+        inputActions.Player.Attack1.performed += OnSkill1;        
+        inputActions.Player.Attack2.performed += OnSkill2;
+        inputActions.Player.Attack3.performed += OnSkill3;
         inputActions.Player.esc.performed += OnESC;
         inputActions.Player.Move.performed += OnMoveInput;
         inputActions.Player.Move.canceled += OnMoveInput;
@@ -73,6 +83,9 @@ public class Player : StateBase
         inputActions.Player.Move.canceled -= OnMoveInput;
         inputActions.Player.Move.performed -= OnMoveInput;
         inputActions.Player.esc.performed -= OnESC;
+        inputActions.Player.Attack3.performed -= OnSkill3;
+        inputActions.Player.Attack2.performed -= OnSkill2;        
+        inputActions.Player.Attack1.performed -= OnSkill1;
         inputActions.Player.Disable();
     }
 
@@ -90,6 +103,21 @@ public class Player : StateBase
         {
             isLeft = true;
         }
+    }
+
+    private void OnSkill1(InputAction.CallbackContext context)   // 키보드 A키
+    {
+        
+    }
+
+    private void OnSkill2(InputAction.CallbackContext context)      // 키보드 S키
+    {
+
+    }
+
+    private void OnSkill3(InputAction.CallbackContext context)  // 키보드 D키
+    {
+        
     }
 
     private void OnESC(InputAction.CallbackContext context)
@@ -122,15 +150,13 @@ public class Player : StateBase
                 anim.SetBool("Jump", false);
             }
         }
-
         // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
         if (canFallDown && dirY < 0) // 아래로 내려가기
-        {            
+        {
+            
             OnFallDown();
         }
     }
-
     /// <summary>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     /// Land에서 떨어질 때 실행되는 함수
     /// </summary>
@@ -140,7 +166,6 @@ public class Player : StateBase
         anim.SetBool("Walking", false);
         StartCoroutine(Falling());
     }
-
     /// <summary>
     /// Land에서 내려갈때 플레이어의 Collider 활성화/비활성화
     /// </summary>
@@ -153,9 +178,10 @@ public class Player : StateBase
         playercollider.enabled = true;
         canFallDown = false;
     }
-
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
     
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 6)                                    // 플레이어가 적과 충돌 시 
@@ -183,31 +209,38 @@ public class Player : StateBase
     {
         if (collision.gameObject.GetComponent<LandBase>() != null)
         {
-            canFallDown = false;          
+            canFallDown = false;
+          
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("EnemyAttack"))                 // 플레이어가 적에게 공격 당할 시 
-        {
+        {            
             if (collision.transform.parent.CompareTag("Enemy_BoxBoxer"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {                
                 enemy_Boxboxer = collision.transform.GetComponentInParent<Enemy_Boxboxer>();
-                enemyattack = enemy_Boxboxer.AttackPoint;
+                enemyattack = enemy_Boxboxer.attackPoint;
             }
             if (collision.transform.parent.CompareTag("Enemy_Batafire"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Batafire = collision.transform.GetComponentInParent<Enemy_Batafire>();
-                enemyattack = enemy_Batafire.AttackPoint;
+                enemyattack = enemy_Batafire.attackPoint;
             }
             if (collision.transform.parent.CompareTag("Enemy_Boxy"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Boxy = collision.transform.GetComponentInParent<Enemy_Boxy>();
-                enemyattack = enemy_Boxy.AttackPoint;
-            }            
+                enemyattack = enemy_Boxy.attackPoint;
+            }
+            if (collision.transform.parent.CompareTag("BossAttack"))              
+            {
+                bossAttack = collision.transform.GetComponentInParent<BossAttack>();
+                enemyattack = bossAttack.attackPoint;
+            }
             OnDamage(enemyattack);                                              // 대미지 처리 함수 
         }
+
     }
 
     private void Update()
@@ -240,7 +273,8 @@ public class Player : StateBase
             LevelUp();
         }
     }
-        
+
+    
     /// <summary>
     /// -----------------------무적/데미지관련----------------------------
     /// <summary>
@@ -306,6 +340,8 @@ public class Player : StateBase
     }
     int getExp;                                 //얻은 경험치
 
+    
+
     //-----------------------------------------------------------------------------------------------------------
     // ----------- delegate-----------
     Action<float> onHPChange;
@@ -324,6 +360,7 @@ public class Player : StateBase
     public void AddHP(float plus)
     {
         HP += plus;
+
     }
 
     public void AddExp(int plus)
@@ -360,7 +397,8 @@ public class Player : StateBase
     }
 
     protected void OnDamage(float enemyattack)
-    {        
+    {
+        
         if (HP > 0)
         {
             float damage = enemyattack - (defencePoint * 0.3f);                 //데미지 = 적 공격력 - 방어점수의30%                        
@@ -372,5 +410,9 @@ public class Player : StateBase
             isPlayerDead = true;
             PlayerDie();
         }
+
+
     }
+
+
 }

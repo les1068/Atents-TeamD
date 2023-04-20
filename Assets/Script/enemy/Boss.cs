@@ -36,14 +36,16 @@ public class Boss : PoolObject
     /// 보스죽을때 이펙트 프리팹
     /// </summary>
     public GameObject bossexplosionEffectPrefab;
-
+    public GameObject projectilePrefab;
     public GameObject monsterPrefab;  // 생성할 몬스터의 프리팹
     public float spawnDistance = 5.0f;  // 몬스터가 생성될 거리
+    public float SpawnInterval = 5.0f;
+
     /// <summary>
     /// 보스최대hp
     /// </summary>    
     public float maxHealth = 100.0f;
-
+    
     /// <summary>
     /// 보스 현재 HP
     /// </summary>
@@ -142,6 +144,7 @@ public class Boss : PoolObject
     void Start()
     {
         StartCoroutine(SpawnMonster());
+        StartCoroutine(SpawnAttack());
         currentHealth = maxHealth;
 
         // Canvas에서 Slider 오브젝트를 찾습니다.
@@ -151,7 +154,21 @@ public class Boss : PoolObject
         slider.maxValue = maxHealth;  // Slider의 maxValue를 maxHealth로 설정합니다.
         slider.value = maxHealth;  // Slider의 value를 maxHealth로 초기화합니다.
     }
-    
+    IEnumerator SpawnAttack()
+    {
+        while (true)
+        {
+            Vector3 spawnPosition = new Vector3(0f, -2f, 0f); // 보스 위치
+            Quaternion spawnRotation = Quaternion.identity; // 기본 회전값
+
+            // 보스 위치에서 왼쪽으로 이동하는 프로젝타일 생성
+            GameObject projectile = Instantiate(projectilePrefab, spawnPosition, spawnRotation);
+            Rigidbody2D projectileRigidbody = projectile.GetComponent<Rigidbody2D>();
+            projectileRigidbody.velocity = new Vector2(attackSpeed, 0f);
+
+            yield return new WaitForSeconds(SpawnInterval); // 프로젝타일 생성 주기
+        }
+    }
     protected virtual void FixedUpdate()
     {
 
@@ -168,6 +185,7 @@ public class Boss : PoolObject
             // 폭발 이펙트를 생성하는 코루틴 함수를 실행
             StartCoroutine(Explode());
             StopCoroutine(SpawnMonster());
+            StopCoroutine(SpawnAttack());
         }
     }
     private IEnumerator Explode()
