@@ -10,13 +10,13 @@ public class Coin1Copper : CoinBase
 {
     [Header("Coin1_Copper")] //동코인 관련정보
     public GameObject copper;
-    public int copperscore = 1;
-    public int copperexp = 1;
+    public int copperScore = 1;
+    public int copperExp = 1;
 
     protected override void OnEnable()
     {
-        coinscore = copperscore;
-        coinexp = copperexp;
+        coinScore = copperScore;
+        coinExp = copperExp;
         base.OnEnable();
     } 
 }

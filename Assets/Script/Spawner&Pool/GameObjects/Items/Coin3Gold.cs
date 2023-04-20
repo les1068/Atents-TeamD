@@ -10,14 +10,14 @@ public class Coin3Gold : CoinBase
 {
     [Header("Coin_Gold")]   //금코인 관련 정보
     public GameObject gold;
-    public int goldscore = 10;
-    public int goldexp = 7;
+    public int goldScore = 10;
+    public int goldExp = 7;
 
 
     protected override void OnEnable()
     {
-        coinscore = goldscore;
-        coinexp = goldexp;
+        coinScore = goldScore;
+        coinExp = goldExp;
 
         base.OnEnable();
     }

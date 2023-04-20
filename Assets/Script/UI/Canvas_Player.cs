@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Canvas_Player : MonoBehaviour
 {
@@ -20,8 +21,14 @@ public class Canvas_Player : MonoBehaviour
     Skill2 skill2;
     Skill3 skill3;
 
+    float currentScore = 0.0f;
+    int targetScore = 0;
+
+    float currentExp = 0.0f;
+    int targetExp = 0;
+
     private void Awake()
-    {        
+    {
         Transform tran_Skill1 = transform.GetChild(1);
         Transform tran_Skill2 = transform.GetChild(2);
         Transform tran_Skill3 = transform.GetChild(3);
@@ -33,11 +40,12 @@ public class Canvas_Player : MonoBehaviour
         text_Skill2 = tran_Skill2.GetComponentInChildren<TextMeshProUGUI>();
         text_Skill3 = tran_Skill3.GetComponentInChildren<TextMeshProUGUI>();
 
-        //Transform tran_Text = transform.GetChild(5);
-        //Transform tran_Score = tran_Text.GetChild(0);
-        //Transform tran_Exp = tran_Text.GetChild(1);
-        //text_Score = text_Score.GetComponent<TextMeshProUGUI>();
-        //text_Exp = text_Exp.GetComponent<TextMeshProUGUI>();
+        Transform tran_Text = transform.GetChild(5);
+        Transform tran_Score = tran_Text.GetChild(0);
+        Transform tran_Exp = tran_Text.GetChild(1);
+
+        text_Score = tran_Score.GetComponent<TextMeshProUGUI>();
+        text_Exp = tran_Exp.GetComponent<TextMeshProUGUI>();
     }
 
     private void Start()
@@ -63,18 +71,31 @@ public class Canvas_Player : MonoBehaviour
         skill2.onSkillCoolTimeChange += Refresh_Skill2CoolTime;
         skill3.onSkillCoolTimeChange += Refresh_Skill3CoolTime;
 
-        //player.Score += Refresh_Score;
-        //player.Exp += Refresh_Exp;
+        player = FindObjectOfType<Player>();
+
+        player.onScoreChange += Refresh_Score;
+        player.onEXPChange += Refresh_Exp;
+
+        text_Score.text = currentScore.ToString();
+        text_Exp.text = currentExp.ToString();
     }
 
-    void Refresh_Score(float Score)
+    private void Update()
     {
-        text_Score.text = Score.ToString();
+        text_Score.text = $"{currentScore}";
+        text_Score.text = $"{currentExp}";
     }
 
-    void Refresh_Exp(float Exp)
+    void Refresh_Score(int newScore)
     {
-        text_Exp.text = Exp.ToString();
+        //text_Score.text = Score.ToString();
+        targetScore = newScore;
+    }
+
+    void Refresh_Exp(int newExp)
+    {
+        //text_Exp.text = Exp.ToString();
+        targetScore = newExp;
     }
 
     void Refresh_Skill1CoolTime(float SkillCoolTime)
@@ -106,7 +127,4 @@ public class Canvas_Player : MonoBehaviour
     {
         text_Skill3.text = SkillCombo.ToString();
     }
-
-
-
 }

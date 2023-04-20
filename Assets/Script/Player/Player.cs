@@ -308,7 +308,7 @@ public class Player : StateBase
 
     //-----------------------------------------------------------------------------------------------------------
     // ----------- delegate-----------
-    Action<float> onHPChange;
+    public Action<float> onHPChange;
     // ---------------------------------
 
    
@@ -330,6 +330,7 @@ public class Player : StateBase
     {
         EXP += plus;
     }
+
     void LevelUp()                   // 레벨업
     {
         EXP -= maxExp;
@@ -343,7 +344,7 @@ public class Player : StateBase
     }
 
     //--------------delegate-----------------
-    Action<int> onEXPChange;
+    public Action<int> onEXPChange;
     //---------------------------------------
     void GetEXP()
     {
@@ -372,5 +373,21 @@ public class Player : StateBase
             isPlayerDead = true;
             PlayerDie();
         }
+    }
+
+    int score;
+    public Action<int> onScoreChange;
+    public int Score
+    {
+        get => score;
+        set
+        {
+            score = value;
+            onScoreChange?.Invoke(score);
+        }
+    }
+    public void AddScore(int plus)
+    {
+        Score += plus;
     }
 }
