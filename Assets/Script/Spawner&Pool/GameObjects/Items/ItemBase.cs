@@ -5,40 +5,33 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class ItemBase : PoolObject 
 {
-
+    protected Player player;
     Animator anim;
     float moveSpeed = 4;
 
-
     int itemscore;  //점수
-    protected int itemScore //점수프로퍼티
+    protected int ItemScore //점수프로퍼티
     {
         private get => itemscore;
         set
         {
             itemscore = value;
-<<<<<<< Updated upstream
-=======
             //player.AddScore(itemscore);
->>>>>>> Stashed changes
         }
     }
+
     int itemexp; //경험치
-    protected int itemExp //경험치 프로퍼티
+    protected int ItemExp //경험치 프로퍼티
     {
         private get => itemexp;
         set
         {
             itemexp = value;
-<<<<<<< Updated upstream
-=======
             //player.AddExp(itemexp);
->>>>>>> Stashed changes
         }
     }
+
     float frequency; //빈도수
-    protected Player player;
-    
 
     protected virtual void Awake()
     {
@@ -48,27 +41,22 @@ public class ItemBase : PoolObject
 
     protected virtual void OnEnable()
     {
-        itemScore = 1;
-        itemExp = 1;
+        ItemScore = 1;
+        ItemExp = 1;
     }
 
     protected virtual void Update()
     {
         transform.Translate(Time.deltaTime * Vector2.left * moveSpeed);
     }
+
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
         {  
-<<<<<<< Updated upstream
-            collision.gameObject.GetComponent<Player>().AddExp(itemExp);
-=======
             //collision.gameObject.GetComponent<Player>().AddExp(ItemExp);
             //collision.gameObject.GetComponent<Player>().AddExp(ItemScore);
->>>>>>> Stashed changes
             StartCoroutine(LifeOver());
         }
     }
-    
-
 }

@@ -11,8 +11,8 @@ public class ItemStar : ItemBase
 
     protected override void OnEnable()
     {
-        itemScore = Score;
-        itemExp = Exp;
+        ItemScore = Score;
+        ItemExp = Exp;
 
     }
     protected override void OnTriggerEnter2D(Collider2D collision)

@@ -42,7 +42,7 @@ public class Player : StateBase
     public float jumpCount;
 
     float enemyattack;
-
+    
     //---------------------------------------------------------------------------------------------------
 
     private void Awake()
@@ -126,11 +126,11 @@ public class Player : StateBase
         }
         // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
         if (canFallDown && dirY < 0) // 아래로 내려가기
-        {
-            
+        {            
             OnFallDown();
         }
     }
+
     /// <summary>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     /// Land에서 떨어질 때 실행되는 함수
     /// </summary>
@@ -140,6 +140,7 @@ public class Player : StateBase
         anim.SetBool("Walking", false);
         StartCoroutine(Falling());
     }
+
     /// <summary>
     /// Land에서 내려갈때 플레이어의 Collider 활성화/비활성화
     /// </summary>
@@ -153,8 +154,6 @@ public class Player : StateBase
         canFallDown = false;
     }
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -211,7 +210,7 @@ public class Player : StateBase
                 bossAttack = collision.transform.GetComponentInParent<BossAttack>();
                 enemyattack = bossAttack.attackPoint;
             }
-            OnDamage(enemyattack);                                              // 대미지 처리 함수 
+            OnDamage(enemyattack);                                              // 대미지 처리 함수            
         }
     }
 
@@ -245,7 +244,6 @@ public class Player : StateBase
             LevelUp();
         }
     }
-
     
     /// <summary>
     /// -----------------------무적/데미지관련----------------------------
@@ -281,11 +279,9 @@ public class Player : StateBase
     {
         base.InitStat();
         EXP = 0;
-        maxExp = 10;
-        HP = maxHp = 100.0f;
+        maxExp = 20;
+        HP = maxHp;
     }
-
-    protected int Level;
 
     public Action<float> onHPChange;
     protected float currentHp;                            //Hp 관련 (+ 프로퍼티)
@@ -295,7 +291,6 @@ public class Player : StateBase
         set
         {
             currentHp = value;
-            onHPChange?.Invoke(currentHp);
             //Debug.Log($"현재 HP:{HP}");
             if(HP<0)
             {
@@ -306,6 +301,7 @@ public class Player : StateBase
             {
                 currentHp = maxHp;
             }
+            onHPChange?.Invoke(currentHp);
         }
     }
 
@@ -323,65 +319,74 @@ public class Player : StateBase
         set
         {
             currentExp = value;
-            if(currentExp < 0)
-            {
-                currentExp = 0;
-            }
+            
             onEXPChange?.Invoke(currentExp);
-            //Debug.Log($"Current Exp:{currentExp}");
         }
     }
 
     public void AddExp(int plus)
     {
-        EXP += plus;
+        EXP += plus;        
     }
 
-    int score;
     public Action<int> onScoreChange;
+    int score;
     public int Score
     {
         get => score;
         set
         {
             score = value;
-            onScoreChange?.Invoke(score);
+            onScoreChange?.Invoke(Score);
         }
     }
 
     public void AddScore(int plus)
     {
         Score += plus;
-
     }
 
     void LevelUp()                   // 레벨업
     {
         EXP -= maxExp;
-        Level += 1;                  //레벨업시 어떻게 변화할지는 의논필요
+        level += 1;                  //레벨업시 어떻게 변화할지는 의논필요
         maxHp *= 1.2f;
         HP = maxHp;
         maxExp *= 2;                //부드러운 경험치 bar를 위해 float으로 변경해야할지?        
         attackPoint *= 1.2f;
         defencePoint *= 1.2f;
         attackSpeed *= 1.2f;
+        pause.OnLeveUp();
+    }
+    public Action<float> ondamage;
+    protected void OnDamage(float enemyattack)
+    {                
+        float damage = enemyattack - (defencePoint * 0.3f);                 //데미지 = 적 공격력 - 방어점수의30%
+        if(damage > 0)
+        {
+            AddHP(-damage);
+        }
+        else
+        {
+            AddHP(-1);
+        }
+        OnDamageText();
+        ondamage?.Invoke(damage);
+        //Debug.Log($"Player HP : {HP} : {damage} = {enemyattack} - {defencePoint} * 0.3f ");        
+    }
+
+    void OnDamageText()
+    {
+        GameObject obj = Factory.Inst.GetObject(PoolObjectType.DamageText);
+        obj.transform.position = this.transform.position;
     }
 
     private void PlayerDie()
     {
         if (!isPlayerDead)
         {
-            EXP = EXP - 50;   // player 사망시 경험치 감소
+            AddExp(-50);            
             pause.OnPause();
         }
-    }
-
-    protected void OnDamage(float enemyattack)
-    {        
-        
-        float damage = enemyattack - (defencePoint * 0.3f);                 //데미지 = 적 공격력 - 방어점수의30%                        
-        HP -= (damage > 0) ? damage : 1.0f;                          //데미지 최소값 확보
-        //Debug.Log($"Player HP : {HP} : {damage} = {enemyattack} - {defencePoint} * 0.3f ");
-        
     }
 }
