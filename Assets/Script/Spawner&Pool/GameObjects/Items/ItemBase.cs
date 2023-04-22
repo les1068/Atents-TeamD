@@ -17,6 +17,10 @@ public class ItemBase : PoolObject
         set
         {
             itemscore = value;
+<<<<<<< Updated upstream
+=======
+            //player.AddScore(itemscore);
+>>>>>>> Stashed changes
         }
     }
     int itemexp; //경험치
@@ -26,6 +30,10 @@ public class ItemBase : PoolObject
         set
         {
             itemexp = value;
+<<<<<<< Updated upstream
+=======
+            //player.AddExp(itemexp);
+>>>>>>> Stashed changes
         }
     }
     float frequency; //빈도수
@@ -52,7 +60,12 @@ public class ItemBase : PoolObject
     {
         if(collision.CompareTag("Player"))
         {  
+<<<<<<< Updated upstream
             collision.gameObject.GetComponent<Player>().AddExp(itemExp);
+=======
+            //collision.gameObject.GetComponent<Player>().AddExp(ItemExp);
+            //collision.gameObject.GetComponent<Player>().AddExp(ItemScore);
+>>>>>>> Stashed changes
             StartCoroutine(LifeOver());
         }
     }

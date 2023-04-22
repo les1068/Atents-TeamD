@@ -304,8 +304,18 @@ public class Player : StateBase
         spriteRenderer.color = new Color(1, 1, 1, 10);
     }
 
+    ///초기스탯
+    protected override void InitStat()
+    {
+        base.InitStat();
+        EXP = 0;
+        maxExp = 10;
+        HP = maxHp = 100.0f;
+    }
+
     protected int Level;
 
+    public Action<float> onHPChange;
     protected float currentHp;                            //Hp 관련 (+ 프로퍼티)
     public float HP
     {
@@ -314,7 +324,7 @@ public class Player : StateBase
         {
             currentHp = value;
             onHPChange?.Invoke(currentHp);
-            Debug.Log($"현재 HP:{HP}");
+            //Debug.Log($"현재 HP:{HP}");
             if(HP<0)
             {
                 PlayerDie();
@@ -326,6 +336,12 @@ public class Player : StateBase
         }
     }
 
+    public void AddHP(float plus)
+    {
+        HP += plus;
+    }
+
+    public Action<int> onEXPChange;
     protected int maxExp;                         //Exp 경험치 + (프로퍼티)
     protected int currentExp;
     public int EXP
@@ -335,38 +351,33 @@ public class Player : StateBase
         {
             currentExp = value;
             onEXPChange?.Invoke(currentExp);
-            Debug.Log($"Current Exp:{currentExp}");
+            //Debug.Log($"Current Exp:{currentExp}");
         }
-    }
-    int getExp;                                 //얻은 경험치
-
-    
-
-    //-----------------------------------------------------------------------------------------------------------
-    // ----------- delegate-----------
-    Action<float> onHPChange;
-    // ---------------------------------
-
-   
-    ///초기스탯
-    protected override void InitStat()
-    {
-        base.InitStat();
-        EXP = 0;
-        maxExp = 10;
-        HP = maxHp = 100.0f;        
-    }
-
-    public void AddHP(float plus)
-    {
-        HP += plus;
-
     }
 
     public void AddExp(int plus)
     {
         EXP += plus;
     }
+
+    int score;
+    public Action<int> onScoreChange;
+    public int Score
+    {
+        get => score;
+        set
+        {
+            score = value;
+            onScoreChange?.Invoke(score);
+        }
+    }
+
+    public void AddScore(int plus)
+    {
+        Score += plus;
+
+    }
+
     void LevelUp()                   // 레벨업
     {
         EXP -= maxExp;
@@ -377,14 +388,6 @@ public class Player : StateBase
         attackPoint *= 1.2f;
         defencePoint *= 1.2f;
         attackSpeed *= 1.2f;
-    }
-
-    //--------------delegate-----------------
-    Action<int> onEXPChange;
-    //---------------------------------------
-    void GetEXP()
-    {
-        AddExp(getExp);
     }
 
     private void PlayerDie()
@@ -403,7 +406,7 @@ public class Player : StateBase
         {
             float damage = enemyattack - (defencePoint * 0.3f);                 //데미지 = 적 공격력 - 방어점수의30%                        
             HP -= (damage > 0) ? damage : 1.0f;                          //데미지 최소값 확보
-            Debug.Log($"Player HP : {HP} : {damage} = {enemyattack} - {defencePoint} * 0.3f ");
+            //Debug.Log($"Player HP : {HP} : {damage} = {enemyattack} - {defencePoint} * 0.3f ");
         }
         else if (HP < 0)
         {
@@ -413,6 +416,5 @@ public class Player : StateBase
 
 
     }
-
 
 }
