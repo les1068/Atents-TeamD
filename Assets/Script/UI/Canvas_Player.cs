@@ -63,18 +63,46 @@ public class Canvas_Player : MonoBehaviour
         skill2.onSkillCoolTimeChange += Refresh_Skill2CoolTime;
         skill3.onSkillCoolTimeChange += Refresh_Skill3CoolTime;
 
+<<<<<<< Updated upstream
         //player.Score += Refresh_Score;
         //player.Exp += Refresh_Exp;
+=======
+        player = FindObjectOfType<Player>();
+
+        player.onScoreChange += Refresh_Score;
+        player.onEXPChange += Refresh_Exp;
+
+        text_Score.text = targetScore.ToString();
+        text_Exp.text = targetExp.ToString();
+>>>>>>> Stashed changes
     }
 
     void Refresh_Score(float Score)
     {
+<<<<<<< Updated upstream
         text_Score.text = Score.ToString();
+=======
+        text_Score.text = $"{targetScore}";
+        text_Exp.text = $"{targetExp}";
+
+>>>>>>> Stashed changes
     }
 
     void Refresh_Exp(float Exp)
     {
+<<<<<<< Updated upstream
         text_Exp.text = Exp.ToString();
+=======
+        //text_Score.text = Score.ToString();
+        targetScore = newScore;
+
+    }
+
+    void Refresh_Exp(int newExp)
+    {
+        //text_Exp.text = Exp.ToString();
+        targetExp = newExp;
+>>>>>>> Stashed changes
     }
 
     void Refresh_Skill1CoolTime(float SkillCoolTime)

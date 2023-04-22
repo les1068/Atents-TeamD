@@ -18,7 +18,13 @@ public class CoinBase : ItemBase
     {
         if (collision.CompareTag("Player"))
         {
+<<<<<<< Updated upstream
             player.AddExp(coinexp);
+=======
+            player.AddExp(coinExp);
+            player.AddScore(coinScore);
+            //Debug.Log($"{coinExp}{coinScore}");
+>>>>>>> Stashed changes
             StartCoroutine(LifeOver());
         }
     }
