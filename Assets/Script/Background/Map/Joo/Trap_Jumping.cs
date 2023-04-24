@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Trap_Jumping : TrapBase
 {
-    public float force = 40.0f;
+    public float force = 80.0f;
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {

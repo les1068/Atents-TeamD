@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TrapCactus : TrapBase
 {
-
+    public float cactusDamage = 6.0f;
     protected override void OnEnable()
     {
-        Damage = 5.0f;
+        Damage = cactusDamage;
         base.OnEnable();
     }
 }

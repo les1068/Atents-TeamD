@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3528564893293695372}
   - component: {fileID: 4637730057054490701}
   - component: {fileID: 3800218716470787660}
+  - component: {fileID: 8559593173429892125}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -119,8 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f7784d3168df0488bc754218d2748c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageRatio: 0.6
+  damageRatio: 0.4
   pushForce: 20
+  moveSpeed: 1
 --- !u!70 &3800218716470787660
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -137,3 +139,24 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.35}
   m_Size: {x: 0.56666666, y: 0.7}
   m_Direction: 0
+--- !u!50 &8559593173429892125
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5900584417960637436}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

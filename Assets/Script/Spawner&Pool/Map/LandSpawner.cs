@@ -5,6 +5,7 @@ using UnityEngine;
 public class LandSpawner : MonoBehaviour 
 {
     protected Player player;
+    protected PlatformKillzone killzone;
     public LandType objType;
     /// <summary>
     /// 스폰간격
@@ -18,10 +19,29 @@ public class LandSpawner : MonoBehaviour
     
     //스폰지점 확인용 변수 where(Gizmos)
     Vector3 where;
+    /// <summary>
+    /// Killplatform수
+    /// </summary>
+    protected int count;
+    /// <summary>
+    /// 게임종료전 D-플랫폼갯수 (exitplatform소환)
+    /// </summary>
+    protected int beforeCount;
+    /// <summary>
+    /// Land5 스폰될 시점
+    /// </summary>
+    protected int spawnReady;
+
+    protected bool isReady = false;
 
     private void Start()
     {
         player = FindObjectOfType<Player>();
+        killzone = GameObject.Find("PlatformKillZone").GetComponent<PlatformKillzone>();
+        
+        spawnReady = killzone.platformCountEnd - beforeCount;
+
+        killzone.onPlatformCountChanged += (platform) => count = platform;
 
         StartCoroutine(Spawn());
     }
@@ -37,6 +57,16 @@ public class LandSpawner : MonoBehaviour
             OnSpawn(obj);
         }
     }
+
+    public void SpawnExitPlatform()
+    {
+        GameObject exitPlatform = LandFactory.Inst.GetObject(LandType.Land5);
+        exitPlatform.transform.position = transform.position;
+        float r = UnityEngine.Random.value;
+        exitPlatform.transform.Translate(Vector3.up * r);      // 랜덤하게 높이 적용하기
+        isReady = false;
+    }
+
     /// <summary>
     /// 스폰하는 위치 변경시 사용할 함수
     /// </summary>

@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Master/Credits.unity
     guid: ef78b8f8793cc4295bdfa585d7fce254
   - enabled: 1
-    path: Assets/Scenes/Test_joo_Loading.unity
-    guid: 6a6d2f9f8b72fb84fb0daaad7c5992d0
+    path: Assets/Scenes/Master/LoadingScene.unity
+    guid: 776d708ec5a0ce84288f3597610999b7
   - enabled: 1
     path: Assets/Scenes/Master/TEST_ALL(Scrolling).unity
     guid: c58f2e35c978e43508fa476e7f7a0a54

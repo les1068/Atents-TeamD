@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Scroller_Background1 : MonoBehaviour
 {
+    public bool isStart = false;
+
+    UI_GameCounter counter;
+
     public float scrollingSpeed = 2.5f;  // 스크롤 이동 속도
 
     Transform[] bgSlots = null;  // 배경 이미지가 두개 붙어있는 슬롯의 집합
@@ -11,7 +15,9 @@ public class Scroller_Background1 : MonoBehaviour
     float slot_Width = 19.68f;  // 이미지 한변의 길이
 
     protected virtual void Awake()
-    {        
+    {   
+ 
+
         bgSlots = new Transform[transform.childCount];  // 슬롯이 들어갈 배열 생성
         for (int i=0;i<transform.childCount;i++)        
         {
@@ -20,8 +26,21 @@ public class Scroller_Background1 : MonoBehaviour
         slot_Width = bgSlots[1].position.x - bgSlots[0].position.x;   // 이미지 한변의 길이 계산
     }
 
+    private void Start()
+    {
+        counter = FindObjectOfType<UI_GameCounter>();
+        counter.StartRun += OnStart;
+    }
+
+    void OnStart()
+    {
+       isStart = true;
+    }
+
+
     private void Update()
     {
+        if (isStart)
         for (int i = 0; i < bgSlots.Length; i++)  // 아래 foreach와 같은 코드. 하지만 foreach가 더 빠르다.
         {
             Transform slot = bgSlots[i];

@@ -6,7 +6,8 @@ using UnityEngine;
 public class MapItem_Box : MapItem_Base
 {
     public int exp = 5;
-    public float itemspawnRatio = 0.4f;
+    public float starspawnRatio = 0.7f;
+    public float heartspawnRatio = 0.3f;
     float r;
 
     protected override void OnCollisionEnter2D(Collision2D collision)
@@ -33,12 +34,18 @@ public class MapItem_Box : MapItem_Base
 
     private void RandomItemSpawn()
     {
-        r=Random.Range(0f,1f);
-        if (r < itemspawnRatio)
+        r=Random.value;
+        if (r < starspawnRatio)
         {
             GameObject obj = Factory.Inst.GetObject(PoolObjectType.ItemStar);
             ItemStar item = obj.GetComponent<ItemStar>();
             item.transform.position = transform.position + Vector3.up * r;
+        }
+        else if(r < heartspawnRatio)
+        {
+            GameObject obj = Factory.Inst.GetObject(PoolObjectType.ItemHeart);
+            ItemHeart item = obj.GetComponent<ItemHeart>();
+            item.transform.position = transform.position + Vector3.left * r;
         }
     }
 }
