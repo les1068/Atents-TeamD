@@ -20,7 +20,7 @@ public class LandBase : PoolObject
     }
 
 
-    protected virtual void FixedUpdate()
+    private void FixedUpdate()
     {
         transform.Translate(Time.fixedDeltaTime * moveSpeed * Vector2.left);
     }

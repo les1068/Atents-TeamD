@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objType: 0
-  interval: 1
-  minY: -2
-  maxY: 2.3
+  interval: 3
+  minY: -2.2
+  maxY: 2.5

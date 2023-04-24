@@ -5,11 +5,10 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Device;
-using UnityEngine.SceneManagement;
 
 public class PlatformKillzone : MonoBehaviour
 {
-    public int platformCountEnd = 10;
+    public int platformCountEnd = 15;
     int platformCount;
     public Action<int> onPlatformCountChanged;
     public Action onStageEnd;
@@ -17,19 +16,18 @@ public class PlatformKillzone : MonoBehaviour
     private void Start()
     {
         platformCount = 0;
-        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Platform") && collision.GetComponent<LandBase>() != null)
+        if (collision.gameObject.CompareTag("Platform") && collision.gameObject.GetComponent<LandBase>() != null)
         {
             collision.gameObject.SetActive(false);
             platformCount++;
-            //Debug.Log(platformCount);
+            Debug.Log(platformCount);
             onPlatformCountChanged?.Invoke(platformCount);
 
         }
-        else if (collision.GetComponent<Bullet>() || collision.GetComponent<CoinBase>())
+        else if (collision.gameObject.GetComponent<Bullet>() || collision.gameObject.GetComponent<CoinBase>() /*|| collision.gameObject.GetComponent<TrapBase>()*/)
         {
             collision.gameObject.SetActive(false);
         }
@@ -38,15 +36,11 @@ public class PlatformKillzone : MonoBehaviour
        //게임 종료 조건 
         if (platformCount == platformCountEnd)
         {
-            OnStageEnd();
+            Debug.Log("Stage End");                     
+            EditorApplication.isPaused = true;          //플레이 일시정지됨
+            onStageEnd?.Invoke();                       //끝났다고 알리는 델리게이트
         }
     }
-    public void OnStageEnd()
-    {
-        StopAllCoroutines();
-        Debug.Log("Stage End");
-        EditorApplication.isPaused = true;          //플레이 일시정지됨
-        onStageEnd?.Invoke();                       //끝났다고 알리는 델리게이트
-    }
+
   
 }

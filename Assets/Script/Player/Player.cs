@@ -1,26 +1,25 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : StateBase
 {
     SpriteRenderer spriteRenderer;
     PlayerInputAction inputActions;
-    Animator anim;
+    Animator anim;    
     Rigidbody2D rigid;
 
     Enemy_Batafire enemy_Batafire;
     Enemy_Boxboxer enemy_Boxboxer;
     Enemy_Boxy enemy_Boxy;
+    BossAttack bossAttack;
 
     Pause pause;
 
     Vector3 inputDir = Vector3.zero;
-
+    
     public Vector2 inputVec;
     protected bool isLeft = false;            //마지막 키 입력 방향 확인용
 
@@ -54,10 +53,7 @@ public class Player : StateBase
         anim = GetComponent<Animator>();
         playercollider = GetComponent<CapsuleCollider2D>();
         InitStat();
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
         pause = FindObjectOfType<Pause>();
     }
 
@@ -68,69 +64,18 @@ public class Player : StateBase
 
     private void OnEnable()
     {
-<<<<<<< Updated upstream
         inputActions.Player.Enable();        
         inputActions.Player.esc.performed += OnESC;
         inputActions.Player.Move.performed += OnMoveInput;
         inputActions.Player.Move.canceled += OnMoveInput;
-=======
-        if (SceneManager.GetActiveScene().name == "TEST_ALL(Scrolling)" || SceneManager.GetActiveScene().name == "Test_joo_map")
-        //if(SceneManager.GetActiveScene().buildIndex == 3)
-        {
-
-            RunningMapInputOnEnable();
-        }
-        else
-        {
-            inputActions.Player.Enable();
-            inputActions.Player.esc.performed += OnESC;
-            inputActions.Player.Move.performed += OnMoveInput;
-            inputActions.Player.Move.canceled += OnMoveInput;
-
-        }
-    }
-
-    void RunningMapInputOnEnable()
-    {
-        inputActions.PlayerRun.Enable();
-        inputActions.PlayerRun.Down.performed += OnDown;
-    }
-    void RunningMapInputOnDisable()
-    {
-        inputActions.PlayerRun.Down.performed -= OnDown;
-        inputActions.PlayerRun.Disable();
-    }
-
-    private void OnDown(InputAction.CallbackContext obj)
-    {
-        if (canFallDown)
-        {
-            StartCoroutine(Falling());
-        }
->>>>>>> Stashed changes
     }
 
     private void OnDisable()
     {
-<<<<<<< Updated upstream
         inputActions.Player.Move.canceled -= OnMoveInput;
         inputActions.Player.Move.performed -= OnMoveInput;
         inputActions.Player.esc.performed -= OnESC;        
         inputActions.Player.Disable();
-=======
-        if (SceneManager.GetActiveScene().name == "TEST_ALL(Scrolling)" || SceneManager.GetActiveScene().name == "Test_joo_map")
-        //if (SceneManager.GetActiveScene().buildIndex == 3)
-        {
-            RunningMapInputOnDisable();
-        }
-        else
-        {
-            inputActions.Player.Move.canceled -= OnMoveInput;
-            inputActions.Player.Move.performed -= OnMoveInput;
-            inputActions.Player.esc.performed -= OnESC;
-            inputActions.Player.Disable();
-        }
->>>>>>> Stashed changes
     }
 
     private void OnMoveInput(InputAction.CallbackContext context)
@@ -155,7 +100,7 @@ public class Player : StateBase
     }
 
     private void FixedUpdate()  // 물리 연산 프레임마다 호출되는 생명주기 함수
-    {
+    {        
         rigid.AddForce(Vector2.right * playerH, ForceMode2D.Impulse);
         if (rigid.velocity.x > MoveSpeed)
         {
@@ -173,21 +118,15 @@ public class Player : StateBase
             if (rayHit.collider != null)
             {
                 if (rayHit.distance < 0.5f)
-                {
+                { 
                     jumpCount = 0;
                 }
                 anim.SetBool("Jump", false);
             }
         }
-
         // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
         if (canFallDown && dirY < 0) // 아래로 내려가기
-<<<<<<< Updated upstream
         {            
-=======
-        {
->>>>>>> Stashed changes
             OnFallDown();
         }
     }
@@ -198,7 +137,7 @@ public class Player : StateBase
     private void OnFallDown()
     {
         anim.SetBool("Jump", false);
-        //anim.SetBool("Walking", false);
+        anim.SetBool("Walking", false);
         StartCoroutine(Falling());
     }
 
@@ -210,25 +149,21 @@ public class Player : StateBase
     {
         playercollider.enabled = false;
         Debug.Log("collider.enabled = false");
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         playercollider.enabled = true;
         canFallDown = false;
     }
-
-<<<<<<< Updated upstream
-=======
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
->>>>>>> Stashed changes
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 6)                                    // 플레이어가 적과 충돌 시 
         {
             OnDamaged(collision.transform.position);                            // 무적
-        }
+        }        
         else if (collision.gameObject.CompareTag("Platform"))                   //부딪힌 태그가 Platform이면
         {
-            if (collision.gameObject.GetComponent<LandBase>() != null)         //LandBase를 가졌다면,
+            if (collision.gameObject.GetComponent<LandBase>() != null )         //LandBase를 가졌다면,
             {
                 canFallDown = true;
                 //Debug.Log("canFallDown(true)");
@@ -238,49 +173,36 @@ public class Player : StateBase
                 canFallDown = false;
                 //Debug.Log("canFallDown(false)");
             }
-            
+            canFallDown = false;
             jumpCount = 0;
-        }
+        }        
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<LandBase>() != null)
         {
-<<<<<<< Updated upstream
             canFallDown = false;          
-=======
-            canFallDown = false;
->>>>>>> Stashed changes
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("EnemyAttack"))                 // 플레이어가 적에게 공격 당할 시 
-        {
+        {            
             if (collision.transform.parent.CompareTag("Enemy_BoxBoxer"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
-            {
+            {                
                 enemy_Boxboxer = collision.transform.GetComponentInParent<Enemy_Boxboxer>();
-<<<<<<< Updated upstream
                 enemyattack = enemy_Boxboxer.AttackPoint;
-=======
-                //enemyattack = enemy_Boxboxer.AttackPoint;
->>>>>>> Stashed changes
             }
             if (collision.transform.parent.CompareTag("Enemy_Batafire"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Batafire = collision.transform.GetComponentInParent<Enemy_Batafire>();
-<<<<<<< Updated upstream
                 enemyattack = enemy_Batafire.AttackPoint;
-=======
-                //enemyattack = enemy_Batafire.AttackPoint;
->>>>>>> Stashed changes
             }
             if (collision.transform.parent.CompareTag("Enemy_Boxy"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Boxy = collision.transform.GetComponentInParent<Enemy_Boxy>();
-<<<<<<< Updated upstream
                 enemyattack = enemy_Boxy.AttackPoint;
             }
             if (collision.transform.parent.CompareTag("BossAttack"))              
@@ -288,9 +210,6 @@ public class Player : StateBase
                 bossAttack = collision.transform.GetComponentInParent<BossAttack>();
                 enemyattack = bossAttack.attackPoint;
                 Debug.Log("b");
-=======
-                //enemyattack = enemy_Boxy.AttackPoint;
->>>>>>> Stashed changes
             }
             OnDamage(enemyattack);                                              // 대미지 처리 함수            
         }
@@ -298,42 +217,35 @@ public class Player : StateBase
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name != "TEST_ALL(Scrolling)" || SceneManager.GetActiveScene().name != "Test_joo_map")
+        if (Mathf.Abs(rigid.velocity.x) < 0.3)  // 애니메이션 
         {
-            if (Mathf.Abs(rigid.velocity.x) < 0.3)  // 애니메이션 
-            {
-                anim.SetBool("Walking", false);
-            }
-            else
-            {
-                anim.SetBool("Walking", true);
-            }
+            anim.SetBool("Walking", false);
         }
-            if (Input.GetButton("Horizontal"))
-            {
-                spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
-            }
+        else
+        {
+            anim.SetBool("Walking", true);
+        }
 
-           //transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
+        if (Input.GetButton("Horizontal"))
+        {
+            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        }
+        
+        transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
 
-            if (Input.GetButtonDown("Jump") && jumpCount < 2)
-            {
-                rigid.AddForce(Vector2.up * JumpPower * 2, ForceMode2D.Impulse);
-                jumpCount++;
-                anim.SetBool("Jump", true);
-            }
+        if (Input.GetButtonDown("Jump") && jumpCount < 2)
+        {
+            rigid.AddForce(Vector2.up * JumpPower * 2, ForceMode2D.Impulse);
+            jumpCount++;
+            anim.SetBool("Jump", true);
+        }
 
-            if (currentExp >= maxExp)
-            {
-                LevelUp();
-
-            }
+        if (currentExp >= maxExp)
+        {
+            LevelUp();
+        }
     }
-<<<<<<< Updated upstream
     
-=======
-
->>>>>>> Stashed changes
     /// <summary>
     /// -----------------------무적/데미지관련----------------------------
     /// <summary>
@@ -343,24 +255,23 @@ public class Player : StateBase
     void OnDamaged(Vector2 targetPos)
     {
         HP -= 1.0f;
-
+        
         OnInvincibleMode();
-        float dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;
-        rigid.AddForce(new Vector2(dirc, 1) * 10, ForceMode2D.Impulse);
+        float dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;        
+        rigid.AddForce(new Vector2(dirc,1) * 10, ForceMode2D.Impulse);
     }
 
     public void OnInvincibleMode()
     {   //무적 처리 코드
-        
+
         gameObject.layer = 9;
         spriteRenderer.color = new Color(1, 1, 1, 0.1f);
         Invoke("OffDamaged", 1);
     }
-
+    
     void OffDamaged()
-    {
+    {        
         gameObject.layer = 7;
-        gameObject.tag = "Player";
         spriteRenderer.color = new Color(1, 1, 1, 10);
     }
 
@@ -381,19 +292,13 @@ public class Player : StateBase
         set
         {
             currentHp = value;
-<<<<<<< Updated upstream
             //Debug.Log($"현재 HP:{HP}");
             if(HP<0)
-=======
-            onHPChange?.Invoke(currentHp);
-            Debug.Log($"현재 HP:{HP}");
-            if (HP < 0)
->>>>>>> Stashed changes
             {
                 isPlayerDead = true;
                 PlayerDie();
             }
-            else if (HP > maxHp)
+            else if(HP>maxHp)
             {
                 currentHp = maxHp;
             }
@@ -419,30 +324,6 @@ public class Player : StateBase
             onEXPChange?.Invoke(currentExp);
         }
     }
-<<<<<<< Updated upstream
-=======
-    int getExp;                                 //얻은 경험치
-
-    //-----------------------------------------------------------------------------------------------------------
-    // ----------- delegate-----------
-    Action<float> onHPChange;
-    // ---------------------------------
-
-
-    ///초기스탯
-    protected override void InitStat()
-    {
-        base.InitStat();
-        EXP = 0;
-        maxExp = 10;
-        HP = maxHp = 100.0f;
-    }
-
-    public void AddHP(float plus)
-    {
-        HP += plus;
-    }
->>>>>>> Stashed changes
 
     public void AddExp(int plus)
     {
@@ -509,22 +390,4 @@ public class Player : StateBase
             pause.OnPause();
         }
     }
-<<<<<<< Updated upstream
-=======
-
-    protected void OnDamage(float enemyattack)
-    {
-        if (HP > 0)
-        {
-            float damage = enemyattack - (defencePoint * 0.3f);                 //데미지 = 적 공격력 - 방어점수의30%                        
-            HP -= (damage > 0) ? damage : 1.0f;                          //데미지 최소값 확보
-            Debug.Log($"Player HP : {HP} : {damage} = {enemyattack} - {defencePoint} * 0.3f ");
-        }
-        else if (HP < 0)
-        {
-            isPlayerDead = true;
-            PlayerDie();
-        }
-    }
->>>>>>> Stashed changes
 }

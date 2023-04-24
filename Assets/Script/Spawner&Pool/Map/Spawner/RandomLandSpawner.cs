@@ -8,17 +8,27 @@ public class RandomLandSpawner : LandSpawner
     protected override IEnumerator Spawn()
     {
         //Debug.Log(transform.position);
+        
         while (true)
         {
-            
             yield return new WaitForSeconds(interval);
 
-                GameObject obj = LandFactory.Inst.GetObject(RandomLandPool.LandPicker());   // 랜덤오브젝트 스포너위치에서 생성              
-                OnSpawn(obj);
+            GameObject obj = LandFactory.Inst.GetObject(RandomLandPool.LandPicker()) ;   // 랜덤오브젝트 스포너위치에서 생성              
+            OnSpawn(obj);
         }
     }
 
-     
+    protected override void OnSpawn(GameObject obj)
+    {
+        base.OnSpawn(obj);
+        
+    }
+      void SetStop()
+    {
+
+    }
+
+
     private void OnDrawGizmos()
     {
         //스폰위치 확인용
