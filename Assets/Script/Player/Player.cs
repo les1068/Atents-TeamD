@@ -237,6 +237,7 @@ public class Player : StateBase
             {
                 bossAttack = collision.transform.GetComponentInParent<BossAttack>();
                 enemyattack = bossAttack.attackPoint;
+                Debug.Log("b");
             }
             OnDamage(enemyattack);                                              // 대미지 처리 함수 
         }

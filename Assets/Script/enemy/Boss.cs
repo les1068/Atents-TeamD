@@ -5,7 +5,7 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class Boss : PoolObject
@@ -41,6 +41,8 @@ public class Boss : PoolObject
     public float spawnDistance = 5.0f;  // 몬스터가 생성될 거리
     public float SpawnInterval = 5.0f;
 
+
+    public string nextSceneName = "TEST_ALL(Scrolling)";
     /// <summary>
     /// 보스최대hp
     /// </summary>    
@@ -107,7 +109,7 @@ public class Boss : PoolObject
     /// </summary>
     public TMP_Text EnemyHpText;
 
-
+    Pause pause;
     /// <summary>
     /// 스텟 초기화용
     /// </summary>
@@ -158,7 +160,7 @@ public class Boss : PoolObject
     {
         while (true)
         {
-            Vector3 spawnPosition = new Vector3(0f, -2f, 0f); // 보스 위치
+            Vector3 spawnPosition = new Vector3(4f, -2f, 0f); // 보스 위치
             Quaternion spawnRotation = Quaternion.identity; // 기본 회전값
 
             // 보스 위치에서 왼쪽으로 이동하는 프로젝타일 생성
@@ -186,6 +188,7 @@ public class Boss : PoolObject
             StartCoroutine(Explode());
             StopCoroutine(SpawnMonster());
             StopCoroutine(SpawnAttack());
+            
         }
     }
     private IEnumerator Explode()
@@ -313,8 +316,7 @@ public class Boss : PoolObject
     void Die_Enemy()
     {
         isLive = false;
-        
-        
+
         //gameObject.SetActive(false);                                            // Enemy 비활성화
 
         //player.AddExp((int)exp);                                              // player에 exp 추가
