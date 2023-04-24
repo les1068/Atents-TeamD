@@ -7,10 +7,11 @@ public class CoinBase : ItemBase
     protected int coinscore;
     protected int coinexp;
 
+
     protected override void OnEnable()
     {
-        ItemScore = coinscore;
-        ItemExp = coinexp;
+        itemScore = coinscore;
+        itemExp = coinexp;
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -18,8 +19,6 @@ public class CoinBase : ItemBase
         if (collision.CompareTag("Player"))
         {
             player.AddExp(coinexp);
-            player.AddScore(coinscore);
-            
             StartCoroutine(LifeOver());
         }
     }

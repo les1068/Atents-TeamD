@@ -43,7 +43,7 @@ public class Player : StateBase
     public float jumpCount;
 
     float enemyattack;
-    
+
     //---------------------------------------------------------------------------------------------------
 
     private void Awake()
@@ -54,10 +54,6 @@ public class Player : StateBase
         anim = GetComponent<Animator>();
         playercollider = GetComponent<CapsuleCollider2D>();
         InitStat();
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
         pause = FindObjectOfType<Pause>();
     }
 
@@ -68,12 +64,6 @@ public class Player : StateBase
 
     private void OnEnable()
     {
-<<<<<<< Updated upstream
-        inputActions.Player.Enable();        
-        inputActions.Player.esc.performed += OnESC;
-        inputActions.Player.Move.performed += OnMoveInput;
-        inputActions.Player.Move.canceled += OnMoveInput;
-=======
         if (SceneManager.GetActiveScene().name == "TEST_ALL(Scrolling)" || SceneManager.GetActiveScene().name == "Test_joo_map")
         //if(SceneManager.GetActiveScene().buildIndex == 3)
         {
@@ -107,17 +97,10 @@ public class Player : StateBase
         {
             StartCoroutine(Falling());
         }
->>>>>>> Stashed changes
     }
 
     private void OnDisable()
     {
-<<<<<<< Updated upstream
-        inputActions.Player.Move.canceled -= OnMoveInput;
-        inputActions.Player.Move.performed -= OnMoveInput;
-        inputActions.Player.esc.performed -= OnESC;        
-        inputActions.Player.Disable();
-=======
         if (SceneManager.GetActiveScene().name == "TEST_ALL(Scrolling)" || SceneManager.GetActiveScene().name == "Test_joo_map")
         //if (SceneManager.GetActiveScene().buildIndex == 3)
         {
@@ -130,7 +113,6 @@ public class Player : StateBase
             inputActions.Player.esc.performed -= OnESC;
             inputActions.Player.Disable();
         }
->>>>>>> Stashed changes
     }
 
     private void OnMoveInput(InputAction.CallbackContext context)
@@ -183,11 +165,7 @@ public class Player : StateBase
         // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
         if (canFallDown && dirY < 0) // 아래로 내려가기
-<<<<<<< Updated upstream
-        {            
-=======
         {
->>>>>>> Stashed changes
             OnFallDown();
         }
     }
@@ -215,11 +193,8 @@ public class Player : StateBase
         canFallDown = false;
     }
 
-<<<<<<< Updated upstream
-=======
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
->>>>>>> Stashed changes
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 6)                                    // 플레이어가 적과 충돌 시 
@@ -247,11 +222,7 @@ public class Player : StateBase
     {
         if (collision.gameObject.GetComponent<LandBase>() != null)
         {
-<<<<<<< Updated upstream
-            canFallDown = false;          
-=======
             canFallDown = false;
->>>>>>> Stashed changes
         }
     }
 
@@ -262,37 +233,19 @@ public class Player : StateBase
             if (collision.transform.parent.CompareTag("Enemy_BoxBoxer"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Boxboxer = collision.transform.GetComponentInParent<Enemy_Boxboxer>();
-<<<<<<< Updated upstream
-                enemyattack = enemy_Boxboxer.AttackPoint;
-=======
                 //enemyattack = enemy_Boxboxer.AttackPoint;
->>>>>>> Stashed changes
             }
             if (collision.transform.parent.CompareTag("Enemy_Batafire"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Batafire = collision.transform.GetComponentInParent<Enemy_Batafire>();
-<<<<<<< Updated upstream
-                enemyattack = enemy_Batafire.AttackPoint;
-=======
                 //enemyattack = enemy_Batafire.AttackPoint;
->>>>>>> Stashed changes
             }
             if (collision.transform.parent.CompareTag("Enemy_Boxy"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Boxy = collision.transform.GetComponentInParent<Enemy_Boxy>();
-<<<<<<< Updated upstream
-                enemyattack = enemy_Boxy.AttackPoint;
-            }
-            if (collision.transform.parent.CompareTag("BossAttack"))              
-            {
-                bossAttack = collision.transform.GetComponentInParent<BossAttack>();
-                enemyattack = bossAttack.attackPoint;
-                Debug.Log("b");
-=======
                 //enemyattack = enemy_Boxy.AttackPoint;
->>>>>>> Stashed changes
             }
-            OnDamage(enemyattack);                                              // 대미지 처리 함수            
+            OnDamage(enemyattack);                                              // 대미지 처리 함수 
         }
     }
 
@@ -329,11 +282,7 @@ public class Player : StateBase
 
             }
     }
-<<<<<<< Updated upstream
-    
-=======
 
->>>>>>> Stashed changes
     /// <summary>
     /// -----------------------무적/데미지관련----------------------------
     /// <summary>
@@ -364,16 +313,8 @@ public class Player : StateBase
         spriteRenderer.color = new Color(1, 1, 1, 10);
     }
 
-    ///초기스탯
-    protected override void InitStat()
-    {
-        base.InitStat();
-        EXP = 0;
-        maxExp = 20;
-        HP = maxHp;
-    }
+    protected int Level;
 
-    public Action<float> onHPChange;
     protected float currentHp;                            //Hp 관련 (+ 프로퍼티)
     public float HP
     {
@@ -381,32 +322,19 @@ public class Player : StateBase
         set
         {
             currentHp = value;
-<<<<<<< Updated upstream
-            //Debug.Log($"현재 HP:{HP}");
-            if(HP<0)
-=======
             onHPChange?.Invoke(currentHp);
             Debug.Log($"현재 HP:{HP}");
             if (HP < 0)
->>>>>>> Stashed changes
             {
-                isPlayerDead = true;
                 PlayerDie();
             }
             else if (HP > maxHp)
             {
                 currentHp = maxHp;
             }
-            onHPChange?.Invoke(currentHp);
         }
     }
 
-    public void AddHP(float plus)
-    {
-        HP += plus;
-    }
-
-    public Action<int> onEXPChange;
     protected int maxExp;                         //Exp 경험치 + (프로퍼티)
     protected int currentExp;
     public int EXP
@@ -415,12 +343,10 @@ public class Player : StateBase
         set
         {
             currentExp = value;
-            
             onEXPChange?.Invoke(currentExp);
+            Debug.Log($"Current Exp:{currentExp}");
         }
     }
-<<<<<<< Updated upstream
-=======
     int getExp;                                 //얻은 경험치
 
     //-----------------------------------------------------------------------------------------------------------
@@ -442,75 +368,39 @@ public class Player : StateBase
     {
         HP += plus;
     }
->>>>>>> Stashed changes
 
     public void AddExp(int plus)
     {
-        EXP += plus;        
+        EXP += plus;
     }
-
-    public Action<int> onScoreChange;
-    int score;
-    public int Score
-    {
-        get => score;
-        set
-        {
-            score = value;
-            onScoreChange?.Invoke(Score);
-        }
-    }
-
-    public void AddScore(int plus)
-    {
-        Score += plus;
-    }
-
     void LevelUp()                   // 레벨업
     {
         EXP -= maxExp;
-        level += 1;                  //레벨업시 어떻게 변화할지는 의논필요
+        Level += 1;                  //레벨업시 어떻게 변화할지는 의논필요
         maxHp *= 1.2f;
         HP = maxHp;
         maxExp *= 2;                //부드러운 경험치 bar를 위해 float으로 변경해야할지?        
         attackPoint *= 1.2f;
         defencePoint *= 1.2f;
         attackSpeed *= 1.2f;
-        pause.OnLeveUp();
-    }
-    public Action<float> ondamage;
-    protected void OnDamage(float enemyattack)
-    {                
-        float damage = enemyattack - (defencePoint * 0.3f);                 //데미지 = 적 공격력 - 방어점수의30%
-        if(damage > 0)
-        {
-            AddHP(-damage);
-        }
-        else
-        {
-            AddHP(-1);
-        }
-        OnDamageText();
-        ondamage?.Invoke(damage);
-        //Debug.Log($"Player HP : {HP} : {damage} = {enemyattack} - {defencePoint} * 0.3f ");        
     }
 
-    void OnDamageText()
+    //--------------delegate-----------------
+    Action<int> onEXPChange;
+    //---------------------------------------
+    void GetEXP()
     {
-        GameObject obj = Factory.Inst.GetObject(PoolObjectType.DamageText);
-        obj.transform.position = this.transform.position;
+        AddExp(getExp);
     }
 
     private void PlayerDie()
     {
         if (!isPlayerDead)
         {
-            AddExp(-50);            
+            EXP = EXP - 50;   // player 사망시 경험치 감소
             pause.OnPause();
         }
     }
-<<<<<<< Updated upstream
-=======
 
     protected void OnDamage(float enemyattack)
     {
@@ -526,5 +416,4 @@ public class Player : StateBase
             PlayerDie();
         }
     }
->>>>>>> Stashed changes
 }
