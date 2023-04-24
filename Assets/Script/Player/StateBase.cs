@@ -7,9 +7,9 @@ public class StateBase : MonoBehaviour
     /// <summary>
     /// 레
     /// </summary>
-    
-    public byte level;
-    
+
+    protected int level;
+
     /// <summary>
     /// 기본 hp
     /// </summary>    
@@ -39,9 +39,7 @@ public class StateBase : MonoBehaviour
     {
         level = 1;
         maxHp = 100;
-        attackPoint = 10.0f;
-        defencePoint = 10.0f;
-        attackSpeed = 1.0f;
+    
     }
 
 

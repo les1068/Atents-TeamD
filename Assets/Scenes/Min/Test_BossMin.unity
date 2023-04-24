@@ -1512,9 +1512,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossexplosionEffectPrefab: {fileID: 3752667827826174148, guid: 6aac6af20df024d43995963ebb27c069, type: 3}
+  projectilePrefab: {fileID: 4596818601558133650, guid: 6d6fa9cd258da1447a38b5129e00dfe1, type: 3}
   monsterPrefab: {fileID: 3673097552442205923, guid: 32343801bbdf5475492677406740ca79, type: 3}
   spawnDistance: 5
-  maxHealth: 10
+  SpawnInterval: 5
+  maxHealth: 500
   attackPoint: 10
   defencePoint: 10
   attackSpeed: 1

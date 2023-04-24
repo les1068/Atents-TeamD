@@ -10,8 +10,14 @@ public class ItemStar : ItemBase
 
     protected override void OnEnable()
     {
+<<<<<<< Updated upstream
+        ItemScore = Score;
+        ItemExp = Exp;
+
+=======
         itemScore = Score;
         itemExp = Exp;
+>>>>>>> Stashed changes
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
