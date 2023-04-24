@@ -1516,7 +1516,7 @@ MonoBehaviour:
   monsterPrefab: {fileID: 3673097552442205923, guid: 32343801bbdf5475492677406740ca79, type: 3}
   spawnDistance: 5
   SpawnInterval: 5
-  maxHealth: 10
+  maxHealth: 500
   attackPoint: 10
   defencePoint: 10
   attackSpeed: 1
