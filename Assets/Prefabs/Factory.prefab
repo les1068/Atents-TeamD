@@ -337,6 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9001467907007326115}
+  - component: {fileID: 5539325094824318785}
   m_Layer: 0
   m_Name: DamageText
   m_TagString: Untagged
@@ -359,6 +360,20 @@ Transform:
   m_Father: {fileID: 25218104010425443}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5539325094824318785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378911643760661686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed985f761d5a24ae7877d48b6dff2e6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalPrefab: {fileID: 4730750934392595027, guid: 382a455e5332b4a99ad950684bc50b77, type: 3}
+  poolSize: 32
 --- !u!1 &6580100617350557514
 GameObject:
   m_ObjectHideFlags: 0

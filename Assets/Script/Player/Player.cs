@@ -239,24 +239,26 @@ public class Player : StateBase
                 enemy_Boxboxer = collision.transform.GetComponentInParent<Enemy_Boxboxer>();
                 enemyattack = enemy_Boxboxer.AttackPoint;
             }
-            if (collision.transform.parent.CompareTag("Enemy_Batafire"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
+            else if (collision.transform.parent.CompareTag("Enemy_Batafire"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Batafire = collision.transform.GetComponentInParent<Enemy_Batafire>();
                 enemyattack = enemy_Batafire.AttackPoint;
             }
-            if (collision.transform.parent.CompareTag("Enemy_Boxy"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
+            else if (collision.transform.parent.CompareTag("Enemy_Boxy"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Boxy = collision.transform.GetComponentInParent<Enemy_Boxy>();
-                //enemyattack = enemy_Boxy.AttackPoint; --------------------------------------------------- 오류/주석처리함
                 enemyattack = enemy_Boxy.attackPoint;
+                //enemyattack = enemy_Boxy.attackPoint;
             }
-            if (collision.transform.parent.CompareTag("BossAttack"))
+            
+            OnDamage(enemyattack);                                              // 대미지 처리 함수            
+        }
+        else if(collision.transform.parent.CompareTag("BossAttack"))
             {
-                bossAttack = collision.transform.GetComponentInParent<BossAttack>();
-                //enemyattack = bossAttack.AttackPoint; --------------------------------------------------- 오류/주석처리함
-                enemyattack = bossAttack.attackPoint;
-                Debug.Log("b");
-            }
+            bossAttack = collision.transform.GetComponentInParent<BossAttack>();
+            //enemyattack = bossAttack.AttackPoint; --------------------------------------------------- 오류/주석처리함
+            enemyattack = bossAttack.attackPoint;
+            Debug.Log("b");
             OnDamage(enemyattack);                                              // 대미지 처리 함수            
         }
     }
@@ -389,6 +391,8 @@ public class Player : StateBase
         EXP += plus;
     }
 
+
+
     public Action<int> onScoreChange;
     int score;
     public int Score
@@ -416,7 +420,7 @@ public class Player : StateBase
         attackPoint *= 1.2f;
         defencePoint *= 1.2f;
         attackSpeed *= 1.2f;
-        //pause.OnLeveUp();
+        pause.OnLeveUp();
     }
     public Action<float> ondamage;
     protected void OnDamage(float enemyattack)
@@ -449,4 +453,6 @@ public class Player : StateBase
             pause.OnPause();
         }
     }
+
+
 }
