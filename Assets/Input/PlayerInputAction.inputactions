@@ -330,6 +330,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PlayerRun",
+            "id": "14045c06-8d85-46a8-99ce-d90fc73d027c",
+            "actions": [
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "4adb1958-7c9a-4289-bd11-6f2a379a1eb9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "09b2d975-3c98-463d-925f-aa1993aac37e",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

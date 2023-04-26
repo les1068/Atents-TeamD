@@ -22,8 +22,8 @@ public class RandomLandPool : MonoBehaviour
         {
             result = LandType.Land3;
         }
-        else result = LandType.Land4;
 
+        else result = LandType.Land4;
 
         return result;
     }

@@ -2,13 +2,16 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : StateBase
 {
+    UI_GameCounter gameCounter;         //gameCounter(3,2,1 카운트)
+
     SpriteRenderer spriteRenderer;
     PlayerInputAction inputActions;
-    Animator anim;    
+    Animator anim;
     Rigidbody2D rigid;
 
     Enemy_Batafire enemy_Batafire;
@@ -19,11 +22,12 @@ public class Player : StateBase
     Pause pause;
 
     Vector3 inputDir = Vector3.zero;
-    
+
     public Vector2 inputVec;
     protected bool isLeft = false;            //마지막 키 입력 방향 확인용
 
     // -------------------------------------연주 수정
+    bool isStart = false;           //3,2,1 완료여부 :  true면 게임시작, false면 카운트중임
     bool canFallDown = false;
     float dirY;
     CapsuleCollider2D playercollider;
@@ -42,7 +46,7 @@ public class Player : StateBase
     public float jumpCount;
 
     float enemyattack;
-    
+
     //---------------------------------------------------------------------------------------------------
 
     private void Awake()
@@ -53,29 +57,62 @@ public class Player : StateBase
         anim = GetComponent<Animator>();
         playercollider = GetComponent<CapsuleCollider2D>();
         InitStat();
-
+        gameCounter = FindObjectOfType<UI_GameCounter>(); // gameCounter 찾기
         pause = FindObjectOfType<Pause>();
     }
 
     private void Start()
     {
         moveSpeed = MoveSpeed;
+        if (gameCounter !=null)
+        {
+            gameCounter.StartRun = () => isStart = true;
+        }
     }
 
     private void OnEnable()
     {
-        inputActions.Player.Enable();        
-        inputActions.Player.esc.performed += OnESC;
-        inputActions.Player.Move.performed += OnMoveInput;
-        inputActions.Player.Move.canceled += OnMoveInput;
+        if (SceneManager.GetActiveScene().name == "TEST_ALL(Scrolling)" || SceneManager.GetActiveScene().name == "Test_joo_map")
+        {
+            inputActions.Player.Disable();
+            RunningMapInputOnEnable();
+        }
+        else
+        {
+            inputActions.Player.Enable();
+            inputActions.Player.esc.performed += OnESC;
+            inputActions.Player.Move.performed += OnMoveInput;
+            inputActions.Player.Move.canceled += OnMoveInput;
+            anim.SetInteger("IdleCount", 0);
+        }
     }
 
     private void OnDisable()
     {
-        inputActions.Player.Move.canceled -= OnMoveInput;
-        inputActions.Player.Move.performed -= OnMoveInput;
-        inputActions.Player.esc.performed -= OnESC;        
-        inputActions.Player.Disable();
+        if (SceneManager.GetActiveScene().name == "TEST_ALL(Scrolling)" || SceneManager.GetActiveScene().name == "Test_joo_map")
+        {
+            RunningMapInputOnDisable();
+        }
+        else
+        {
+            inputActions.Player.Move.canceled -= OnMoveInput;
+            inputActions.Player.Move.performed -= OnMoveInput;
+            inputActions.Player.esc.performed -= OnESC;
+            inputActions.Player.Disable();
+        }
+    }
+    void RunningMapInputOnEnable()
+    {   if (isStart)
+        {
+            inputActions.Player.Enable();
+            inputActions.PlayerRun.Enable();
+            inputActions.PlayerRun.Down.performed += OnDown;
+        }
+    }
+    void RunningMapInputOnDisable()
+    {
+        inputActions.PlayerRun.Down.performed -= OnDown;
+        inputActions.PlayerRun.Disable();
     }
 
     private void OnMoveInput(InputAction.CallbackContext context)
@@ -93,6 +130,13 @@ public class Player : StateBase
             isLeft = true;
         }
     }
+    private void OnDown(InputAction.CallbackContext obj)
+    {
+        if (canFallDown)
+        {
+            StartCoroutine(Falling());
+        }
+    }
 
     private void OnESC(InputAction.CallbackContext context)
     {
@@ -100,7 +144,7 @@ public class Player : StateBase
     }
 
     private void FixedUpdate()  // 물리 연산 프레임마다 호출되는 생명주기 함수
-    {        
+    {
         rigid.AddForce(Vector2.right * playerH, ForceMode2D.Impulse);
         if (rigid.velocity.x > MoveSpeed)
         {
@@ -118,7 +162,7 @@ public class Player : StateBase
             if (rayHit.collider != null)
             {
                 if (rayHit.distance < 0.5f)
-                { 
+                {
                     jumpCount = 0;
                 }
                 anim.SetBool("Jump", false);
@@ -126,7 +170,7 @@ public class Player : StateBase
         }
         // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
         if (canFallDown && dirY < 0) // 아래로 내려가기
-        {            
+        {
             OnFallDown();
         }
     }
@@ -160,10 +204,10 @@ public class Player : StateBase
         if (collision.gameObject.layer == 6)                                    // 플레이어가 적과 충돌 시 
         {
             OnDamaged(collision.transform.position);                            // 무적
-        }        
+        }
         else if (collision.gameObject.CompareTag("Platform"))                   //부딪힌 태그가 Platform이면
         {
-            if (collision.gameObject.GetComponent<LandBase>() != null )         //LandBase를 가졌다면,
+            if (collision.gameObject.GetComponent<LandBase>() != null)         //LandBase를 가졌다면,
             {
                 canFallDown = true;
                 //Debug.Log("canFallDown(true)");
@@ -175,23 +219,23 @@ public class Player : StateBase
             }
             canFallDown = false;
             jumpCount = 0;
-        }        
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<LandBase>() != null)
         {
-            canFallDown = false;          
+            canFallDown = false;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("EnemyAttack"))                 // 플레이어가 적에게 공격 당할 시 
-        {            
+        {
             if (collision.transform.parent.CompareTag("Enemy_BoxBoxer"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
-            {                
+            {
                 enemy_Boxboxer = collision.transform.GetComponentInParent<Enemy_Boxboxer>();
                 enemyattack = enemy_Boxboxer.AttackPoint;
             }
@@ -203,11 +247,13 @@ public class Player : StateBase
             if (collision.transform.parent.CompareTag("Enemy_Boxy"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Boxy = collision.transform.GetComponentInParent<Enemy_Boxy>();
-                enemyattack = enemy_Boxy.AttackPoint;
+                //enemyattack = enemy_Boxy.AttackPoint; --------------------------------------------------- 오류/주석처리함
+                enemyattack = enemy_Boxy.attackPoint;
             }
-            if (collision.transform.parent.CompareTag("BossAttack"))              
+            if (collision.transform.parent.CompareTag("BossAttack"))
             {
                 bossAttack = collision.transform.GetComponentInParent<BossAttack>();
+                //enemyattack = bossAttack.AttackPoint; --------------------------------------------------- 오류/주석처리함
                 enemyattack = bossAttack.attackPoint;
                 Debug.Log("b");
             }
@@ -217,6 +263,19 @@ public class Player : StateBase
 
     private void Update()
     {
+        if (isStart)
+        {
+            anim.SetInteger("IdleCount", 1);
+        }
+        if (SceneManager.GetActiveScene().name == "TEST_ALL(Scrolling)" || SceneManager.GetActiveScene().name == "Test_joo_map")
+        {
+            anim.SetInteger("IdleCount", 1);
+        }
+        else
+        {
+            anim.SetInteger("IdleCount", 0);
+        }
+
         if (Mathf.Abs(rigid.velocity.x) < 0.3)  // 애니메이션 
         {
             anim.SetBool("Walking", false);
@@ -230,7 +289,7 @@ public class Player : StateBase
         {
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
-        
+
         transform.Translate(Time.deltaTime * MoveSpeed * inputDir);
 
         if (Input.GetButtonDown("Jump") && jumpCount < 2)
@@ -245,7 +304,7 @@ public class Player : StateBase
             LevelUp();
         }
     }
-    
+
     /// <summary>
     /// -----------------------무적/데미지관련----------------------------
     /// <summary>
@@ -255,10 +314,10 @@ public class Player : StateBase
     void OnDamaged(Vector2 targetPos)
     {
         HP -= 1.0f;
-        
+
         OnInvincibleMode();
-        float dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;        
-        rigid.AddForce(new Vector2(dirc,1) * 10, ForceMode2D.Impulse);
+        float dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;
+        rigid.AddForce(new Vector2(dirc, 1) * 10, ForceMode2D.Impulse);
     }
 
     public void OnInvincibleMode()
@@ -268,9 +327,9 @@ public class Player : StateBase
         spriteRenderer.color = new Color(1, 1, 1, 0.1f);
         Invoke("OffDamaged", 1);
     }
-    
+
     void OffDamaged()
-    {        
+    {
         gameObject.layer = 7;
         spriteRenderer.color = new Color(1, 1, 1, 10);
     }
@@ -293,12 +352,12 @@ public class Player : StateBase
         {
             currentHp = value;
             //Debug.Log($"현재 HP:{HP}");
-            if(HP<0)
+            if (HP < 0)
             {
                 isPlayerDead = true;
                 PlayerDie();
             }
-            else if(HP>maxHp)
+            else if (HP > maxHp)
             {
                 currentHp = maxHp;
             }
@@ -320,14 +379,14 @@ public class Player : StateBase
         set
         {
             currentExp = value;
-            
+
             onEXPChange?.Invoke(currentExp);
         }
     }
 
     public void AddExp(int plus)
     {
-        EXP += plus;        
+        EXP += plus;
     }
 
     public Action<int> onScoreChange;
@@ -357,13 +416,13 @@ public class Player : StateBase
         attackPoint *= 1.2f;
         defencePoint *= 1.2f;
         attackSpeed *= 1.2f;
-        pause.OnLeveUp();
+        //pause.OnLeveUp();
     }
     public Action<float> ondamage;
     protected void OnDamage(float enemyattack)
-    {                
+    {
         float damage = enemyattack - (defencePoint * 0.3f);                 //데미지 = 적 공격력 - 방어점수의30%
-        if(damage > 0)
+        if (damage > 0)
         {
             AddHP(-damage);
         }
@@ -386,7 +445,7 @@ public class Player : StateBase
     {
         if (!isPlayerDead)
         {
-            AddExp(-50);            
+            AddExp(-50);
             pause.OnPause();
         }
     }

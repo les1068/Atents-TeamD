@@ -53,7 +53,11 @@ public class ItemBase : PoolObject
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
-        {  
+        {
+            
+            transform.Translate(Vector2.up * 0.5f,Space.Self);
+            transform.Rotate(transform.position,360f);
+            
             //collision.gameObject.GetComponent<Player>().AddExp(ItemExp);
             //collision.gameObject.GetComponent<Player>().AddExp(ItemScore);
             StartCoroutine(LifeOver());

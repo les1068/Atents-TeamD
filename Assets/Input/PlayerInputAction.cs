@@ -352,6 +352,34 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerRun"",
+            ""id"": ""14045c06-8d85-46a8-99ce-d90fc73d027c"",
+            ""actions"": [
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""4adb1958-7c9a-4289-bd11-6f2a379a1eb9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""09b2d975-3c98-463d-925f-aa1993aac37e"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -386,6 +414,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_AnyKey = m_UI.FindAction("AnyKey", throwIfNotFound: true);
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
+        // PlayerRun
+        m_PlayerRun = asset.FindActionMap("PlayerRun", throwIfNotFound: true);
+        m_PlayerRun_Down = m_PlayerRun.FindAction("Down", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -612,6 +643,39 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // PlayerRun
+    private readonly InputActionMap m_PlayerRun;
+    private IPlayerRunActions m_PlayerRunActionsCallbackInterface;
+    private readonly InputAction m_PlayerRun_Down;
+    public struct PlayerRunActions
+    {
+        private @PlayerInputAction m_Wrapper;
+        public PlayerRunActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Down => m_Wrapper.m_PlayerRun_Down;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerRun; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerRunActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerRunActions instance)
+        {
+            if (m_Wrapper.m_PlayerRunActionsCallbackInterface != null)
+            {
+                @Down.started -= m_Wrapper.m_PlayerRunActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_PlayerRunActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_PlayerRunActionsCallbackInterface.OnDown;
+            }
+            m_Wrapper.m_PlayerRunActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
+            }
+        }
+    }
+    public PlayerRunActions @PlayerRun => new PlayerRunActions(this);
     private int m_KeyBoardSchemeIndex = -1;
     public InputControlScheme KeyBoardScheme
     {
@@ -641,5 +705,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     {
         void OnAnyKey(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
+    }
+    public interface IPlayerRunActions
+    {
+        void OnDown(InputAction.CallbackContext context);
     }
 }

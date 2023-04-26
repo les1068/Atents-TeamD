@@ -12,12 +12,10 @@ public enum PoolObjectType
     CoinCopper,
     CoinSilver,
     CoinGold,
-<<<<<<< Updated upstream
     DamageText,
-=======
     ItemHeart
->>>>>>> Stashed changes
 }
+
 public class Factory : Singleton<Factory>
 {
 
@@ -27,11 +25,8 @@ public class Factory : Singleton<Factory>
     Coin1Pool coin1pool;
     Coin2Pool coin2pool;
     Coin3Pool coin3pool;
-<<<<<<< Updated upstream
     DamageTextPool damageTextPool;
-=======
     ItemHeartPool heartpool;
->>>>>>> Stashed changes
 
     protected override void PreInitialize()
     {
@@ -41,11 +36,8 @@ public class Factory : Singleton<Factory>
         coin1pool= GetComponentInChildren<Coin1Pool>();
         coin2pool = GetComponentInChildren<Coin2Pool>();
         coin3pool = GetComponentInChildren<Coin3Pool>();
-<<<<<<< Updated upstream
         damageTextPool = GetComponentInChildren<DamageTextPool>();
-=======
         heartpool = GetComponentInChildren<ItemHeartPool>();
->>>>>>> Stashed changes
     }
 
     protected override void Initialize()
@@ -57,11 +49,8 @@ public class Factory : Singleton<Factory>
         coin1pool?.Initialize();
         coin2pool?.Initialize();
         coin3pool?.Initialize();
-<<<<<<< Updated upstream
         damageTextPool?.Initialize();
-=======
         heartpool?.Initialize();
->>>>>>> Stashed changes
     }
 
     public GameObject GetObject(PoolObjectType type)
@@ -89,13 +78,11 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.CoinGold:
                 result = GetCoin3().gameObject;
                 break;
-<<<<<<< Updated upstream
             case PoolObjectType.DamageText:
                 result = GetdamageText().gameObject;
-=======
+                break;
             case PoolObjectType.ItemHeart:
                 result = GetHeart().gameObject;
->>>>>>> Stashed changes
                 break;
         }
         return result;
@@ -107,7 +94,6 @@ public class Factory : Singleton<Factory>
     public Coin2Silver GetCoin2() => coin2pool?.GetObject();
     public Coin3Gold GetCoin3() => coin3pool?.GetObject();
     public DamageText GetdamageText() => damageTextPool?.GetObject();
-
     public ItemHeart GetHeart() => heartpool?.GetObject();
 
 }
