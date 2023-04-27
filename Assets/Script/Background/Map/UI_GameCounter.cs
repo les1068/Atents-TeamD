@@ -9,7 +9,7 @@ public class UI_GameCounter : MonoBehaviour
     Transform two;
     Transform three;
 
-    WaitForSeconds waitTime = new WaitForSeconds(1.0f);
+    WaitForSecondsRealtime waitTime = new WaitForSecondsRealtime(1.0f);
 
     public Action StartRun;
 
@@ -33,6 +33,7 @@ public class UI_GameCounter : MonoBehaviour
 
     IEnumerator StartCount()
     {
+        Time.timeScale = 0.0f;
         three.gameObject.SetActive(true);
         yield return waitTime;
         three.gameObject.SetActive(false);
@@ -41,6 +42,7 @@ public class UI_GameCounter : MonoBehaviour
         two.gameObject.SetActive(false);
         one.gameObject.SetActive(true);
         yield return waitTime;
+        Time.timeScale = 1.0f;
         one.gameObject.SetActive(false);
         group.alpha = 0.0f;
         StartRun?.Invoke();
