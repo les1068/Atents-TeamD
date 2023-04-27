@@ -5,10 +5,13 @@ using UnityEngine;
 public class BossAttack : MonoBehaviour
 {
     public float speed = 10.0f;
-    public float attackPoint;
+    public float attackPoint=10.0f;
 
     Rigidbody rigid;
     Animator anim_Enemy;
+
+    BossAttack bossAttack;
+    float enemyattack;
 
     private void Awake()
     {
@@ -18,13 +21,7 @@ public class BossAttack : MonoBehaviour
     {
         transform.position += Time.deltaTime * speed * -transform.right;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            
-        }
-    }
+    
     public float Attack_Enemy()
     {
         return attackPoint;

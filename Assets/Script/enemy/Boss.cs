@@ -27,7 +27,7 @@ public class Boss : PoolObject
     Transform tran_Target;
     //Rigidbody2D rigi_Target;
     //Collider2D coll_Target;
-    GameObject obj;   //collision.gameObject 줄여쓰기 위해 ..
+    GameObject obj;                                                             //collision.gameObject 줄여쓰기 위해 ..
 
     Vector2 dirVec;
     Vector2 nextVec;
@@ -130,7 +130,6 @@ public class Boss : PoolObject
         spri_Enemy = GetComponent<SpriteRenderer>();
         anim_Enemy = GetComponent<Animator>();
         player = FindObjectOfType<Player>();
-        slider = FindObjectOfType<Canvas>().GetComponent<Slider>();
         coll_Enemy_PlayerChecker = GetComponentInChildren<CircleCollider2D>();
     }
 
@@ -146,10 +145,13 @@ public class Boss : PoolObject
     void Start()
     {
         StartCoroutine(SpawnMonster());
-        currentHealth = maxHealth;
+        StartCoroutine(SpawnAttack());
 
+        currentHealth = maxHealth;
+        Debug.Log($"{currentHealth}");
+
+        slider = GameObject.Find("Hp").transform.GetChild(0).GetComponent<Slider>();
         // Canvas에서 Slider 오브젝트를 찾습니다.
-        slider = GameObject.FindObjectOfType<Slider>();
         currentHealth = maxHealth;
         slider.minValue = 0f;  // Slider의 minValue를 0으로 설정합니다.
         slider.maxValue = maxHealth;  // Slider의 maxValue를 maxHealth로 설정합니다.
@@ -179,7 +181,7 @@ public class Boss : PoolObject
     {
         slider.value = currentHealth;
         //slider.value = currentHealth/maxHealth;
-
+        
         // 보스가 죽었을 때
         if (!isLive)
         {
@@ -319,7 +321,7 @@ public class Boss : PoolObject
 
         //player.AddExp((int)exp);                                              // player에 exp 추가
     }
-    
+
     public float GetEnemyHP()
     {
         return currentHealth;
