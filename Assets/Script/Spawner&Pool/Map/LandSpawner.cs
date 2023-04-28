@@ -5,6 +5,7 @@ using UnityEngine;
 public class LandSpawner : MonoBehaviour 
 {
     protected Player player;
+    
     public LandType objType;
     /// <summary>
     /// 스폰간격
@@ -13,28 +14,27 @@ public class LandSpawner : MonoBehaviour
     /// <summary>
     /// 스폰되는 위치
     /// </summary>
-    public float minY = -2.2f;
+    public float minY = -2.0f;
     public float maxY = 2.5f;
     
     //스폰지점 확인용 변수 where(Gizmos)
     Vector3 where;
 
+
     private void Start()
     {
         player = FindObjectOfType<Player>();
-
         StartCoroutine(Spawn());
     }
+
     protected virtual IEnumerator Spawn()
     {
-        //Debug.Log(transform.position);
-
         while (true)
         {
             yield return new WaitForSeconds(interval);
             GameObject obj = LandFactory.Inst.GetObject(objType);   // 오브젝트 스폰
-            // 상속 받은 클래스별 별도 처리
-            OnSpawn(obj);
+
+            OnSpawn(obj);             // 상속 받은 클래스별 별도 처리
         }
     }
     /// <summary>

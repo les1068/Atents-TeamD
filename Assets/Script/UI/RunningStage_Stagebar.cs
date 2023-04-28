@@ -22,13 +22,13 @@ public class RunningStage_Stagebar : MonoBehaviour
     private void OnEnable()
     {
         killzone = FindObjectOfType<PlatformKillzone>();
-        killzone.onPlatformCountChanged += SetValue;
+        killzone.onPlatformChanged += SetValue;
 
     }
 
     void SetValue(int platform)
     {
-        float ratio  = (float)platform / (float)killzone.platformCountEnd;
+        float ratio  = (float)(platform) / (float)(killzone.platformCountEnd);
         slider.value = ratio;
     }
 

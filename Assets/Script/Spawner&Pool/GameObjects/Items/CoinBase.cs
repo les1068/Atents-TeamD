@@ -7,7 +7,6 @@ public class CoinBase : ItemBase
     protected int coinScore;
     protected int coinExp;
 
-
     protected override void OnEnable()
     {
         ItemScore = coinScore;

@@ -292,9 +292,8 @@ public class Enemy_Base : PoolObject
     protected virtual void Die_Enemy()
     {
         isLive = false;
-        gameObject.SetActive(false);                                            // Enemy 비활성화
-
-        player.AddExp((int)exp);                                                // player에 exp 추가
+        player.AddExp(exp);                                                     // player에 exp 추가
+        gameObject.SetActive(false);                                            // Enemy 비활성화        
     }
 
     protected virtual float GetEnemyHP()

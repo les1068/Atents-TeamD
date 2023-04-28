@@ -15,6 +15,7 @@ public class Canvas_Player : MonoBehaviour
     TextMeshProUGUI text_Skill3;
     TextMeshProUGUI text_Score;
     TextMeshProUGUI text_Exp;
+    Slider sliderHP;
 
     Player player;
     Skill1 skill1;
@@ -40,11 +41,13 @@ public class Canvas_Player : MonoBehaviour
         text_Skill2 = tran_Skill2.GetComponentInChildren<TextMeshProUGUI>();
         text_Skill3 = tran_Skill3.GetComponentInChildren<TextMeshProUGUI>();
 
-        Transform tran_Text = transform.GetChild(5);
-        Transform tran_Score = tran_Text.GetChild(0);
-        Transform tran_Exp = tran_Text.GetChild(1);
+        sliderHP = transform.GetChild(4).GetChild(1).GetComponent<Slider>();
 
+        Transform tran_Text = transform.GetChild(5);
+        
+        Transform tran_Score = tran_Text.GetChild(0);
         text_Score = tran_Score.GetComponent<TextMeshProUGUI>();
+        Transform tran_Exp = tran_Text.GetChild(1);
         text_Exp = tran_Exp.GetComponent<TextMeshProUGUI>();
     }
 
@@ -78,24 +81,26 @@ public class Canvas_Player : MonoBehaviour
 
         text_Score.text = currentScore.ToString();
         text_Exp.text = currentExp.ToString();
+        sliderHP.minValue = 0f;
+        sliderHP.maxValue = player.maxHp;
+        sliderHP.value = player.maxHp;
     }
 
     private void Update()
     {
-        text_Score.text = $"{currentScore}";
-        text_Score.text = $"{currentExp}";
+        text_Score.text = $"{targetScore}";
+        text_Exp.text = $"{targetExp}";
+        sliderHP.value = player.HP;
     }
 
     void Refresh_Score(int newScore)
-    {
-        //text_Score.text = Score.ToString();
+    {        
         targetScore = newScore;
     }
 
     void Refresh_Exp(int newExp)
     {
-        //text_Exp.text = Exp.ToString();
-        targetScore = newExp;
+        targetExp = newExp;        
     }
 
     void Refresh_Skill1CoolTime(float SkillCoolTime)
@@ -115,7 +120,7 @@ public class Canvas_Player : MonoBehaviour
 
     void Refresh_Skill1Combo(int SkillCombo)
     {
-        text_Skill1.text = SkillCombo.ToString();        
+        text_Skill1.text = SkillCombo.ToString();
     }
 
     void Refresh_Skill2Combo(int SkillCombo)

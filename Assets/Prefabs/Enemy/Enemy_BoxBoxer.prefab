@@ -147,15 +147,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dac54a885e474148bf8ba605ecf49ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
   maxHp: 50
   attackPoint: 5
   defencePoint: 15
   attackSpeed: 1
+  skill_Range: 2
   moveSpeed: 4
   exp: 10
-  isHit: 0
-  skill_Range: 2
   EnemyHpText: {fileID: 0}
 --- !u!212 &3673097552442205932
 SpriteRenderer:
