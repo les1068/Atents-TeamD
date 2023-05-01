@@ -41,8 +41,6 @@ public class Boss : PoolObject
     public float spawnDistance = 5.0f;  // 몬스터가 생성될 거리
     public float SpawnInterval = 5.0f;
 
-
-    public string nextSceneName = "TEST_ALL(Scrolling)";
     /// <summary>
     /// 보스최대hp
     /// </summary>    
@@ -176,7 +174,11 @@ public class Boss : PoolObject
     {
 
     }
-
+    IEnumerator SwitchScene()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("Test_joo_Loading");
+    }
     void Update()
     {
         slider.value = currentHealth;
@@ -187,8 +189,12 @@ public class Boss : PoolObject
         {
             // 폭발 이펙트를 생성하는 코루틴 함수를 실행
             StartCoroutine(Explode());
+            // 적 소환 막는 코루틴
             StopCoroutine(SpawnMonster());
+            // 적이 공격을 막는 코루틴
             StopCoroutine(SpawnAttack());
+            // 씬전환을 시작하는 코루틴
+            StartCoroutine(SwitchScene());
         }
     }
     private IEnumerator Explode()
