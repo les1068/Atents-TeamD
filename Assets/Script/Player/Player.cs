@@ -13,6 +13,7 @@ public class Player : StateBase
     PlayerInputAction inputActions;
     Animator anim;
     Rigidbody2D rigid;
+    Transform tran_Player;
 
     Enemy_Batafire enemy_Batafire;
     Enemy_Boxboxer enemy_Boxboxer;
@@ -60,6 +61,7 @@ public class Player : StateBase
         InitStat();
         gameCounter = FindObjectOfType<UI_GameCounter>(); // gameCounter 찾기
         pause = FindObjectOfType<Pause>();
+        tran_Player = GetComponent<Transform>();
     }
 
     private void Start()
@@ -250,7 +252,7 @@ public class Player : StateBase
             else if (collision.transform.parent.CompareTag("Enemy_Boxy"))              // 적이 무엇인지 태그로 확인하여 해당 스크립트의 공격력을 enemyattack에 대입 
             {
                 enemy_Boxy = collision.transform.GetComponentInParent<Enemy_Boxy>();
-                enemyattack = enemy_Boxy.attackPoint;
+                enemyattack = enemy_Boxy.AttackPoint;
                 //enemyattack = enemy_Boxy.attackPoint;
             }
             OnDamage(enemyattack);                                              // 대미지 처리 함수            
@@ -314,18 +316,17 @@ public class Player : StateBase
     ///  무적 판정 처리 
     /// </summary>
     /// <param name="targetPos">충돌 체크시 위치</param>
-     void OnDamaged(Vector2 targetPos)
+    void OnDamaged(Vector2 targetPos)
     {
-        HP -= 1.0f;
-
+        AddHP(-1);
         OnInvincibleMode();
         float dirc = transform.position.x - targetPos.x > 0 ? 1 : 0;
         rigid.AddForce(new Vector2(dirc, 1) * 10, ForceMode2D.Impulse);
     }
 
+    //무적 처리 코드
     public void OnInvincibleMode()
-    {   //무적 처리 코드
-
+    {        
         gameObject.layer = 9;
         spriteRenderer.color = new Color(1, 1, 1, 0.1f);
         Invoke("OffDamaged", 1);
@@ -392,8 +393,6 @@ public class Player : StateBase
         EXP += plus;
     }
 
-
-
     public Action<int> onScoreChange;
     int score;
     public int Score
@@ -423,7 +422,7 @@ public class Player : StateBase
         attackSpeed *= 1.2f;
         pause.OnLeveUp();
     }
-    public Action<float> ondamage;
+   
     protected void OnDamage(float enemyattack)
     {
         float damage = enemyattack - (defencePoint * 0.3f);                 //데미지 = 적 공격력 - 방어점수의30%
@@ -435,15 +434,7 @@ public class Player : StateBase
         {
             AddHP(-1);
         }
-        OnDamageText();
-        ondamage?.Invoke(damage);
         //Debug.Log($"Player HP : {HP} : {damage} = {enemyattack} - {defencePoint} * 0.3f ");        
-    }
-
-    void OnDamageText()
-    {
-        GameObject obj = Factory.Inst.GetObject(PoolObjectType.DamageText);
-        obj.transform.position = this.transform.position;
     }
 
     private void PlayerDie()

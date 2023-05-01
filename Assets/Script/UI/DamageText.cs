@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class DamageText : PoolObject
+public class DamageText : MonoBehaviour
 {
     Player player;
     TextMeshProUGUI damagetext;
+    RectTransform rect_DamageText;
+
     Color alpha;
 
     private float moveSpeed;
@@ -15,30 +17,35 @@ public class DamageText : PoolObject
     private float destroyTime;    
     float viewdamage;
 
-    void Start()
+    private void Awake()
     {
-        player = FindObjectOfType<Player>();
-        damagetext = GetComponentInChildren<TextMeshProUGUI>();
+        rect_DamageText = GetComponentInChildren<RectTransform>();
+        damagetext = rect_DamageText.GetComponentInChildren<TextMeshProUGUI>();
+
         alpha = damagetext.color;
 
-        player.ondamage += ViewDamageText;
-
+        moveSpeed = 2.0f;
+        alphaSpeed = 2.0f;
         destroyTime = 2.0f;
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        player = FindObjectOfType<Player>();       
+        //player.onDamageView += ViewDamageText;      
+    }
+
+    private void Update()
+    {        
+        transform.Translate(new Vector3(0, moveSpeed * Time.deltaTime, 0)); // 텍스트 위치
+        alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * alphaSpeed); // 텍스트 알파값
+        damagetext.color = alpha;
+        Invoke("SetDeActive", destroyTime);               
+    }
+        
     void ViewDamageText(float damage)
     {
-        float time = 0;
-        while(destroyTime > time)
-        {
-            time += Time.deltaTime;
-            damagetext.text = damage.ToString();
-            transform.Translate(new Vector3(0, moveSpeed * Time.deltaTime, 0)); // 텍스트 위치
-            alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * alphaSpeed); // 텍스트 알파값
-            damagetext.color = alpha;            
-        }        
-        SetDeActive();        
+        damagetext.text = damage.ToString();
     }
 
     private void SetDeActive()
