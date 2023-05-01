@@ -8,7 +8,7 @@ public class ItemBase : PoolObject
     protected Player player;
     Animator anim;
     float moveSpeed = 4;
-
+    public float effectSpeed = 0.3f;
     int itemscore;  //점수
     protected int ItemScore //점수프로퍼티
     {
@@ -54,13 +54,18 @@ public class ItemBase : PoolObject
     {
         if(collision.CompareTag("Player"))
         {
-            
-            transform.Translate(Vector2.up * 0.5f,Space.Self);
-            transform.Rotate(transform.position,360f);
-            
+            ItemEffect();
             //collision.gameObject.GetComponent<Player>().AddExp(ItemExp);
             //collision.gameObject.GetComponent<Player>().AddExp(ItemScore);
-            StartCoroutine(LifeOver());
+            //StartCoroutine(LifeOver());
         }
+    }
+
+    protected void ItemEffect()
+    {
+        transform.Translate(Vector2.up * effectSpeed, Space.World) ;
+        //transform.rotation *= Quaternion.AngleAxis( 180f, Vector2.up);
+
+        StartCoroutine(LifeOver(0.3f));
     }
 }
