@@ -11,8 +11,8 @@ public class RandomCoinPool : MonoBehaviour
     public static PoolObjectType RandomCoin()
     {
         float Rate = Random.Range(0.0f, 1.0f);
-        float goldRate = 0.1f;
-        float silverRate = 0.3f;
+        float goldRate = 0.2f;
+        float silverRate = 0.4f;
 
         PoolObjectType result;
         if (Rate < goldRate)

@@ -17,7 +17,6 @@ public class Player : StateBase
     Enemy_Batafire enemy_Batafire;
     Enemy_Boxboxer enemy_Boxboxer;
     Enemy_Boxy enemy_Boxy;
-
     BossAttack bossAttack;
 
     Pause pause;
@@ -27,12 +26,11 @@ public class Player : StateBase
     public Vector2 inputVec;
     protected bool isLeft = false;            //마지막 키 입력 방향 확인용
 
-    // -------------------------------------연주 수정
     bool isStart = false;           //3,2,1 완료여부 :  true면 게임시작, false면 카운트중임
     bool canFallDown = false;
     float dirY;
     CapsuleCollider2D playercollider;
-    //-----------------------------------------
+
 
     float playerH;                          //키 입력 방향 우측:1, 좌측 :-1
     [Header("스킬관련-------------------------------------")]
@@ -65,7 +63,7 @@ public class Player : StateBase
     private void Start()
     {
         moveSpeed = MoveSpeed;
-        if (gameCounter != null)
+        if (gameCounter !=null)
         {
             gameCounter.StartRun = () => isStart = true;
         }
@@ -103,9 +101,10 @@ public class Player : StateBase
         }
     }
     void RunningMapInputOnEnable()
-    {
-        if (isStart)
+    {   if (isStart)
         {
+            
+            inputActions.UI.Enable();
             inputActions.Player.Enable();
             inputActions.PlayerRun.Enable();
             inputActions.PlayerRun.Down.performed += OnDown;
@@ -115,6 +114,8 @@ public class Player : StateBase
     {
         inputActions.PlayerRun.Down.performed -= OnDown;
         inputActions.PlayerRun.Disable();
+        inputActions.Player.Disable();
+        inputActions.UI.Disable();
     }
 
     private void OnMoveInput(InputAction.CallbackContext context)
@@ -222,7 +223,6 @@ public class Player : StateBase
             canFallDown = false;
             jumpCount = 0;
         }
-        
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -253,14 +253,16 @@ public class Player : StateBase
                 enemyattack = enemy_Boxy.attackPoint;
                 //enemyattack = enemy_Boxy.attackPoint;
             }
+            
             OnDamage(enemyattack);                                              // 대미지 처리 함수            
         }
-        else if (collision.CompareTag("BossAttack"))
-        {
+        else if(collision.transform.parent.CompareTag("BossAttack"))
+            {
             bossAttack = collision.transform.GetComponentInParent<BossAttack>();
+            //enemyattack = bossAttack.AttackPoint; --------------------------------------------------- 오류/주석처리함
             enemyattack = bossAttack.attackPoint;
+            Debug.Log("b");
             OnDamage(enemyattack);                                              // 대미지 처리 함수            
-            Debug.Log("123");
         }
     }
 
@@ -314,7 +316,7 @@ public class Player : StateBase
     ///  무적 판정 처리 
     /// </summary>
     /// <param name="targetPos">충돌 체크시 위치</param>
-     void OnDamaged(Vector2 targetPos)
+    void OnDamaged(Vector2 targetPos)
     {
         HP -= 1.0f;
 

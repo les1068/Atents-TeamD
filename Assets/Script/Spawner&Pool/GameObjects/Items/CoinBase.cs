@@ -19,8 +19,8 @@ public class CoinBase : ItemBase
         {
             player.AddExp(coinexp);
             player.AddScore(coinscore);
-            
-            StartCoroutine(LifeOver());
+            ItemEffect();
+            //StartCoroutine(LifeOver());
         }
     }
 }

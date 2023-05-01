@@ -6,6 +6,7 @@ using UnityEngine;
 public class PoolObject : MonoBehaviour
 {
     public Action onDisable;
+
     protected virtual void OnDisable()
     {
         onDisable?.Invoke();
