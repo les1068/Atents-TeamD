@@ -27,8 +27,8 @@ public class MainLobby : MonoBehaviour
     Vector3 moveDelta = Vector3.zero;
     Vector3 moveDir;
 
-    public float moveSpeed = 100.0f;
-    public float targetDistance = 50.0f;
+    float moveSpeed = 500.0f;
+    float targetDistance = 50.0f;
 
 
     private void Awake()
@@ -95,7 +95,7 @@ public class MainLobby : MonoBehaviour
     {
         this.target = target;                                                   
         moveDir = (this.target.position - tran_image.position).normalized;      //이동 방향 설정 
-        moveSpeed = Random.Range(100.0f, 200.0f);                               //이동 랜덤하게 설정 
+        moveSpeed = Random.Range(300.0f, 500.0f);                               //이동 랜덤하게 설정 
     }
 
     private void OnArrived()
