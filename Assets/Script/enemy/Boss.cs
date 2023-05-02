@@ -21,6 +21,7 @@ public class Boss : PoolObject
     SpriteRenderer spri_Enemy;
     Animator anim_Enemy;
     Slider slider;
+    Pause pause;
 
     Collider2D coll_Enemy_PlayerChecker;
 
@@ -107,7 +108,7 @@ public class Boss : PoolObject
     /// </summary>
     public TMP_Text EnemyHpText;
 
-    Pause pause;
+    
     /// <summary>
     /// 스텟 초기화용
     /// </summary>
@@ -129,6 +130,7 @@ public class Boss : PoolObject
         anim_Enemy = GetComponent<Animator>();
         player = FindObjectOfType<Player>();
         coll_Enemy_PlayerChecker = GetComponentInChildren<CircleCollider2D>();
+        pause = FindObjectOfType<Pause>();
     }
 
     private void OnEnable()
@@ -154,6 +156,7 @@ public class Boss : PoolObject
         slider.minValue = 0f;  // Slider의 minValue를 0으로 설정합니다.
         slider.maxValue = maxHealth;  // Slider의 maxValue를 maxHealth로 설정합니다.
         slider.value = maxHealth;  // Slider의 value를 maxHealth로 초기화합니다.
+        
     }
     
     protected virtual void FixedUpdate()
@@ -290,16 +293,18 @@ public class Boss : PoolObject
     /// </summary>
     void Die_Enemy()
     {
-        // 씬전환을 시작하는 코루틴
-        StartCoroutine(SwitchScene());
-        // 폭발 이펙트를 생성하는 코루틴 함수를 실행
-        StartCoroutine(Explode());
-
         // 적 소환 막는 코루틴
         StopCoroutine(SpawnMonster());
 
         // 적이 공격을 막는 코루틴
         StopCoroutine(SpawnAttack());
+
+        // 폭발 이펙트를 생성하는 코루틴 함수를 실행
+        StartCoroutine(Explode());
+
+        // 씬전환을 시작하는 코루틴
+        StartCoroutine(SwitchScene());
+
         //isLive = false;
         //gameObject.SetActive(false);                                            // Enemy 비활성화
 
@@ -322,15 +327,17 @@ public class Boss : PoolObject
             Rigidbody2D projectileRigidbody = projectile.GetComponent<Rigidbody2D>();
             projectileRigidbody.velocity = new Vector2(attackSpeed, 0f);
 
-            yield return new WaitForSeconds(SpawnInterval); // 프로젝타일 생성 주기
+            yield return new WaitForSeconds(SpawnInterval); // 프로젝타일 생성 주기            
         }
     }
     IEnumerator SwitchScene()
     {
         Debug.Log("시작");
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
         Debug.Log("종료");
-        SceneManager.LoadScene("StageClear");
+        pause.Stage3End();
+        
+            
     }
     private IEnumerator Explode()
     {

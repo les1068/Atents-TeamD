@@ -13,6 +13,7 @@ public class BossAttack : MonoBehaviour
     BossAttack bossAttack;
     float enemyattack;
 
+    
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -20,6 +21,8 @@ public class BossAttack : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position += Time.deltaTime * speed * -transform.right;
+        Destroy(gameObject, 1.5f);
+
     }
     
     public float Attack_Enemy()

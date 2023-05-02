@@ -227,7 +227,7 @@ public class Player : StateBase
             canFallDown = false;
             jumpCount = 0;
         }
-        if (collision.transform.parent.CompareTag("BossAttack"))
+        if (collision.transform.CompareTag("BossAttack"))
         {
             bossAttack = collision.transform.GetComponentInParent<BossAttack>();
             enemyattack = bossAttack.attackPoint;

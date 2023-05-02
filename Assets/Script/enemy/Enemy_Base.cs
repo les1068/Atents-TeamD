@@ -126,6 +126,10 @@ public class Enemy_Base : PoolObject
         spri_Enemy = GetComponent<SpriteRenderer>();
         anim_Enemy = GetComponent<Animator>();        
         coll_Enemy_PlayerChecker = GetComponentInChildren<CircleCollider2D>();
+        player = FindObjectOfType<Player>();
+        skill1 = FindObjectOfType<Skill1>();
+        skill2 = FindObjectOfType<Skill2>();
+        bullet = FindObjectOfType<Bullet>();
     }
 
     protected virtual void OnEnable()
@@ -139,10 +143,6 @@ public class Enemy_Base : PoolObject
 
     protected virtual void Start()
     {
-        player = FindObjectOfType<Player>();
-        skill1 = FindObjectOfType<Skill1>();
-        skill2 = FindObjectOfType<Skill2>();
-        bullet = FindObjectOfType<Bullet>();
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

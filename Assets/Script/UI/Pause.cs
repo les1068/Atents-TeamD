@@ -22,9 +22,7 @@ public class Pause : MonoBehaviour
     Button button_NextStage2;
     Button button_NextStage3;
     Player player;
-
-    
-
+        
     public static bool isPause = false;
 
     private void Awake()
@@ -175,26 +173,26 @@ public class Pause : MonoBehaviour
     {
         isPause = false;
         Time.timeScale = 1;
+        SceneManager.LoadScene(3);
         canvas_Pause.SetActive(false);
         Stage1End_menu.SetActive(false);        
-        SceneManager.LoadScene(3);
     }
 
     private void OnNextStage2()
     {
         isPause = false;
         Time.timeScale = 1;
+        SceneManager.LoadScene(5);
         canvas_Pause.SetActive(false);
         Stage2End_menu.SetActive(false);
-        SceneManager.LoadScene(5);
     }
 
     private void OnNextStage3()
     {
         isPause = false;
         Time.timeScale = 1;
+        SceneManager.LoadScene(7);
         canvas_Pause.SetActive(false);
         Stage3End_menu.SetActive(false);
-        SceneManager.LoadScene(7);
     }
 }

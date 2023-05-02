@@ -1611,6 +1611,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6552695167479510352, guid: 28ca76cfe4b9d6b46ac73810f988913a, type: 3}
+      propertyPath: platformCountEnd
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6552695167479510355, guid: 28ca76cfe4b9d6b46ac73810f988913a, type: 3}
       propertyPath: m_Name
       value: PlatformKillZone
