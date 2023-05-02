@@ -14,14 +14,15 @@ public class EnemySpawner : MonoBehaviour
     public int stageClearCount = 10;
     int spawnCount;
 
-    private void Start()
+    private void Awake()
     {
         pause = FindObjectOfType<Pause>();
-                
+    }
+
+    private void Start()
+    {
         spawnCount = 0;
-
         player = FindObjectOfType<Player>();
-
         StartCoroutine(Spawn());
     }
 
@@ -29,6 +30,11 @@ public class EnemySpawner : MonoBehaviour
     public float maxInterval=8.0f;
 
     float interval;
+
+    private void Update()
+    {
+        
+    }
 
     protected virtual IEnumerator Spawn()
     {
@@ -41,10 +47,12 @@ public class EnemySpawner : MonoBehaviour
             // 상속 받은 클래스별 별도 처리
             OnSpawn(obj);
             spawnCount++;
-            if(stageClearCount < spawnCount)
+            if (stageClearCount < spawnCount)
             {
                 pause.Stage2End();
+                StopAllCoroutines();
             }
+
         }
     }
     /// <summary>
