@@ -8,13 +8,15 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class LoadingScene : Singleton<LoadingScene>
+public class LoadingScene_1 : Singleton<LoadingScene_1>
 {
     float loadRatio = 0.0f;                         //로딩바의 value가 목표로 하는 값
     [Range(0.0f, 1.0f)]
     public float loadingBarSpeed = 0.5f;           //로딩바 증가 속도
-    public string nextSceneName = "TEST_ALL(Scrolling)";
+    //public string nextSceneName = "TEST_ALL(Scrolling)";
     bool loadingComplete = false;
+
+    int LoadingSceneCount=2;    
 
     PlayerInputAction inputAction;
     AsyncOperation async;           //비동기 명령 처리용
@@ -80,6 +82,8 @@ public class LoadingScene : Singleton<LoadingScene>
         loadingText.text = loadings[0];
         loadingText.color = Color.white;
 
+
+        
         StartCoroutine(LoadScene());
         StartCoroutine(LoadingText());
 
@@ -98,8 +102,9 @@ public class LoadingScene : Singleton<LoadingScene>
     }
 
     IEnumerator LoadScene()
-    {
-        async = SceneManager.LoadSceneAsync(nextSceneName);
+    {      
+        async = SceneManager.LoadSceneAsync(LoadingSceneCount);
+      
         async.allowSceneActivation = false;
 
         while (loadRatio < 1.0f) 

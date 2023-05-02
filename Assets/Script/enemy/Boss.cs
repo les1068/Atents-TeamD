@@ -41,8 +41,6 @@ public class Boss : PoolObject
     public float spawnDistance = 5.0f;  // 몬스터가 생성될 거리
     public float SpawnInterval = 5.0f;
 
-
-    public string nextSceneName = "TEST_ALL(Scrolling)";
     /// <summary>
     /// 보스최대hp
     /// </summary>    
@@ -115,7 +113,7 @@ public class Boss : PoolObject
     /// </summary>
     protected virtual void InitStat()
     {
-        maxHealth = 100;
+        
         attackPoint = 10.0f;
         defencePoint = 10.0f;
         attackSpeed = 1.0f;
@@ -200,6 +198,7 @@ public class Boss : PoolObject
             GameObject explosionEffect1 = Instantiate(bossexplosionEffectPrefab, transform.position + Random.insideUnitSphere * 3f, Quaternion.identity);
             // 2초간 대기
             yield return new WaitForSeconds(2.0f);
+            pause.Stage3End();
             gameObject.SetActive(false);
         }
     }
@@ -316,6 +315,7 @@ public class Boss : PoolObject
     void Die_Enemy()
     {
         isLive = false;
+        
 
         //gameObject.SetActive(false);                                            // Enemy 비활성화
 

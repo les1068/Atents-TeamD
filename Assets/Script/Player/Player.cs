@@ -357,17 +357,17 @@ public class Player : StateBase
         set
         {
             currentHp = value;
-            //Debug.Log($"현재 HP:{HP}");
-            if (HP < 0)
+            if (currentHp < 1)
             {
                 isPlayerDead = true;
                 PlayerDie();
             }
-            else if (HP > maxHp)
+            else if (currentHp > maxHp)
             {
                 currentHp = maxHp;
             }
             onHPChange?.Invoke(currentHp);
+            //Debug.Log($"현재 HP:{HP}");
         }
     }
 
@@ -441,7 +441,7 @@ public class Player : StateBase
 
     private void PlayerDie()
     {
-        if (!isPlayerDead)
+        if (isPlayerDead)
         {
             AddExp(-50);
             pause.OnPause();

@@ -31,7 +31,7 @@ public class Credits : MonoBehaviour
 
     private void OnBack()
     {
-        SceneManager.LoadScene("MainLobby");
+        SceneManager.LoadScene(0);
         //Debug.Log("OnBakc()");
     }
 
