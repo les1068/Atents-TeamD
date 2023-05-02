@@ -17,6 +17,7 @@ public class MainLobby : MonoBehaviour
     Image image;
     RectTransform recttransform;
     Transform tran_image;
+    
 
     // 이미지 이동용 웨이포인트 외  
     public Waypoints targetWaypoints;
@@ -48,6 +49,7 @@ public class MainLobby : MonoBehaviour
 
     private void Start()
     {
+      
         SetTarget(targetWaypoints.CurruntWaypoint);                             // 시작 이동할 , 현재 웨이포인트 찾기 
     }
 
@@ -57,14 +59,14 @@ public class MainLobby : MonoBehaviour
     }
 
     private void OnGameStart()                                                  // 버튼용 함수 
-    {
-        SceneManager.LoadScene("TEST_ALL(Battle)");
+    {        
+        SceneManager.LoadScene(1);       
         //Debug.Log("OnGameStart()");
     }
 
     private void OnCredits()                                                    // 버튼용 함수 
-    {
-        SceneManager.LoadScene("Credits");
+    {        
+        SceneManager.LoadScene(7);
         //Debug.Log("OnCredits()");
     }
 

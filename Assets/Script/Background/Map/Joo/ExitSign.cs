@@ -8,7 +8,8 @@ public class ExitSign : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("exit");
+            PlatformKillzone killzone = FindObjectOfType<PlatformKillzone>();
+            killzone.OnStageEnd();
         }
     }
 }

@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class PlatformKillzone : MonoBehaviour
 {
+    Pause pause;
+
     public int platformCountEnd = 10;
     int platformCount=0;
     public int PlatformCount
@@ -22,6 +24,11 @@ public class PlatformKillzone : MonoBehaviour
 
     public Action<int> onPlatformChanged;
     public Action onStageEnd;
+
+    private void Start()
+    {
+        pause = FindObjectOfType<Pause>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -46,9 +53,10 @@ public class PlatformKillzone : MonoBehaviour
     public void OnStageEnd()
     {
         StopAllCoroutines();
-        Debug.Log("Stage End");
-        EditorApplication.isPaused = true;          //플레이 일시정지됨
+        //Debug.Log("Stage End");
+        //EditorApplication.isPaused = true;          //플레이 일시정지됨
         onStageEnd?.Invoke();                       //끝났다고 알리는 델리게이트
+        pause.Stage1End();        
     }
   
 }

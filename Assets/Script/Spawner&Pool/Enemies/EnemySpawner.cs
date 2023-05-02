@@ -6,12 +6,20 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : MonoBehaviour
 {
     protected Player player;
+    Pause pause;
     //스폰지점 확인용 변수 where(Gizmos)
     Vector3 where;
     public EnemyType enemyType;
 
+    public int stageClearCount = 10;
+    int spawnCount;
+
     private void Start()
     {
+        pause = FindObjectOfType<Pause>();
+                
+        spawnCount = 0;
+
         player = FindObjectOfType<Player>();
 
         StartCoroutine(Spawn());
@@ -32,6 +40,11 @@ public class EnemySpawner : MonoBehaviour
             GameObject obj = EnemyFactory.Inst.GetObject(enemyType); // 오브젝트 스폰
             // 상속 받은 클래스별 별도 처리
             OnSpawn(obj);
+            spawnCount++;
+            if(stageClearCount < spawnCount)
+            {
+                pause.Stage2End();
+            }
         }
     }
     /// <summary>

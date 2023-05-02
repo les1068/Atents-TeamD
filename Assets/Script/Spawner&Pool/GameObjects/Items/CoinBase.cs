@@ -17,9 +17,10 @@ public class CoinBase : ItemBase
     {
         if (collision.CompareTag("Player"))
         {
-            player.AddExp(coinExp);
-            player.AddScore(coinScore);
-            StartCoroutine(LifeOver());
+            player.AddExp(coinexp);
+            player.AddScore(coinscore);
+            ItemEffect();
+            //StartCoroutine(LifeOver());
         }
     }
 }

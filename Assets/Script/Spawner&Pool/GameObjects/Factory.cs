@@ -11,8 +11,7 @@ public enum PoolObjectType
     ItemStar,
     CoinCopper,
     CoinSilver,
-    CoinGold,
-    DamageText,
+    CoinGold,    
     ItemHeart
 }
 
@@ -24,8 +23,7 @@ public class Factory : Singleton<Factory>
     StarPool starpool;
     Coin1Pool coin1pool;
     Coin2Pool coin2pool;
-    Coin3Pool coin3pool;
-    DamageTextPool damageTextPool;
+    Coin3Pool coin3pool;    
     ItemHeartPool heartpool;
 
     protected override void PreInitialize()
@@ -36,20 +34,17 @@ public class Factory : Singleton<Factory>
         coin1pool= GetComponentInChildren<Coin1Pool>();
         coin2pool = GetComponentInChildren<Coin2Pool>();
         coin3pool = GetComponentInChildren<Coin3Pool>();
-        damageTextPool = GetComponentInChildren<DamageTextPool>();
         heartpool = GetComponentInChildren<ItemHeartPool>();
     }
 
     protected override void Initialize()
     {
-
         bulletpool?.Initialize();
         hitpool?.Initialize();
         starpool?.Initialize();
         coin1pool?.Initialize();
         coin2pool?.Initialize();
         coin3pool?.Initialize();
-        damageTextPool?.Initialize();
         heartpool?.Initialize();
     }
 
@@ -77,10 +72,7 @@ public class Factory : Singleton<Factory>
                 break;
             case PoolObjectType.CoinGold:
                 result = GetCoin3().gameObject;
-                break;
-            case PoolObjectType.DamageText:
-                result = GetdamageText().gameObject;
-                break;
+                break;            
             case PoolObjectType.ItemHeart:
                 result = GetHeart().gameObject;
                 break;
@@ -92,8 +84,7 @@ public class Factory : Singleton<Factory>
     public ItemStar GetStar() => starpool?.GetObject();
     public Coin1Copper GetCoin1() => coin1pool?.GetObject();
     public Coin2Silver GetCoin2() => coin2pool?.GetObject();
-    public Coin3Gold GetCoin3() => coin3pool?.GetObject();
-    public DamageText GetdamageText() => damageTextPool?.GetObject();
+    public Coin3Gold GetCoin3() => coin3pool?.GetObject();    
     public ItemHeart GetHeart() => heartpool?.GetObject();
 
 }

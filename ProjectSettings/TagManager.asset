@@ -15,6 +15,7 @@ TagManager:
   - Enemy_Batafire
   - Enemy_BoxBoxer
   - Enemy_Boxy
+  - BossAttack
   layers:
   - Default
   - TransparentFX

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c72ca94a20834e44a8aad9aeae1bf221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
-  minInterval: 3
-  maxInterval: 8
+  enemyType: 2
+  stageClearCount: 10
+  minInterval: 10
+  maxInterval: 10

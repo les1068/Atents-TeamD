@@ -6,6 +6,7 @@ using UnityEngine;
 public class PoolObject : MonoBehaviour
 {
     public Action onDisable;
+
     protected virtual void OnDisable()
     {
         onDisable?.Invoke();
@@ -13,7 +14,6 @@ public class PoolObject : MonoBehaviour
 
     protected virtual IEnumerator LifeOver(float delay = 0.0f)
     {
-
         yield return new WaitForSeconds(delay);
         this.gameObject.SetActive(false);
     }
