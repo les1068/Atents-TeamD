@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class ItemBase : PoolObject 
+public class ItemBase : PoolObject
 {
     protected Player player;
     Animator anim;
@@ -35,7 +35,7 @@ public class ItemBase : PoolObject
 
     protected virtual void Awake()
     {
-        anim= GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         player = FindObjectOfType<Player>();
     }
 
@@ -52,20 +52,28 @@ public class ItemBase : PoolObject
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             ItemEffect();
-            //collision.gameObject.GetComponent<Player>().AddExp(ItemExp);
-            //collision.gameObject.GetComponent<Player>().AddExp(ItemScore);
-            //StartCoroutine(LifeOver());
         }
     }
 
     protected void ItemEffect()
     {
-        transform.Translate(Vector2.up * effectSpeed, Space.World) ;
-        //transform.rotation *= Quaternion.AngleAxis( 180f, Vector2.up);
+        transform.Translate(Vector2.up * effectSpeed, Space.World);
+        StartCoroutine(ItemRotator());
 
         StartCoroutine(LifeOver(0.3f));
+    }
+
+    IEnumerator ItemRotator()
+    {
+        while (this.gameObject != null && Time.timeScale != 0)
+        {
+            transform.Rotate(0, 360.0f*Time.deltaTime, 0);
+            yield return null;
+        }
+
+        StopCoroutine(ItemRotator());
     }
 }

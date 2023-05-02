@@ -20,9 +20,9 @@ public class LandBase : PoolObject
     }
 
 
-    protected virtual void FixedUpdate()
+    protected virtual void Update()
     {
-        transform.Translate(Time.fixedDeltaTime * moveSpeed * Vector2.left);
+        transform.Translate(Time.deltaTime * moveSpeed * Vector2.left);
     }
 
 }
