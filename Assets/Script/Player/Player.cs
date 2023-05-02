@@ -65,7 +65,7 @@ public class Player : StateBase
     private void Start()
     {
         moveSpeed = MoveSpeed;
-        if (gameCounter !=null)
+        if (gameCounter != null)
         {
             gameCounter.StartRun = () => isStart = true;
         }
@@ -103,9 +103,10 @@ public class Player : StateBase
         }
     }
     void RunningMapInputOnEnable()
-    {   if (isStart)
+    {
+        if (isStart)
         {
-            
+
             inputActions.UI.Enable();
             inputActions.Player.Enable();
             inputActions.PlayerRun.Enable();
@@ -222,8 +223,16 @@ public class Player : StateBase
                 canFallDown = false;
                 //Debug.Log("canFallDown(false)");
             }
+            
             canFallDown = false;
             jumpCount = 0;
+        }
+        if (collision.transform.parent.CompareTag("BossAttack"))
+        {
+            bossAttack = collision.transform.GetComponentInParent<BossAttack>();
+            enemyattack = bossAttack.attackPoint;
+            Debug.Log("b");
+            OnDamage(enemyattack);                                              // 대미지 처리 함수            
         }
     }
 
@@ -255,17 +264,17 @@ public class Player : StateBase
                 enemyattack = enemy_Boxy.AttackPoint;
                 //enemyattack = enemy_Boxy.attackPoint;
             }
-            
-            OnDamage(enemyattack);                                              // 대미지 처리 함수            
-        }
-        else if(collision.transform.parent.CompareTag("BossAttack"))
+            if (collision.transform.parent.CompareTag("BossAttack"))
             {
-            bossAttack = collision.transform.GetComponentInParent<BossAttack>();
-            //enemyattack = bossAttack.AttackPoint; --------------------------------------------------- 오류/주석처리함
-            enemyattack = bossAttack.attackPoint;
-            Debug.Log("b");
+                bossAttack = collision.transform.GetComponentInParent<BossAttack>();
+                enemyattack = bossAttack.attackPoint;
+                Debug.Log("b");
+                OnDamage(enemyattack);                                              // 대미지 처리 함수            
+            }
+
             OnDamage(enemyattack);                                              // 대미지 처리 함수            
         }
+        
     }
 
     private void Update()
@@ -328,7 +337,7 @@ public class Player : StateBase
 
     //무적 처리 코드
     public void OnInvincibleMode()
-    {        
+    {
         gameObject.layer = 9;
         spriteRenderer.color = new Color(1, 1, 1, 0.1f);
         Invoke("OffDamaged", 1);
@@ -424,7 +433,7 @@ public class Player : StateBase
         attackSpeed *= 1.2f;
         pause.OnLeveUp();
     }
-   
+
     protected void OnDamage(float enemyattack)
     {
         float damage = enemyattack - (defencePoint * 0.3f);                 //데미지 = 적 공격력 - 방어점수의30%
