@@ -103,9 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3fb820c2b65660479415cf22b332325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
   maxHp: 100
-  attackPoint: 20
+  attackPoint: 10
   defencePoint: 11
   attackSpeed: 1
   inputVec: {x: 0, y: 0}

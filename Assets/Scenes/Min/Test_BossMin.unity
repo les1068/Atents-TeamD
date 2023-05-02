@@ -1001,17 +1001,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3313352767453639682, guid: c83a5a9c6a2cc714d95b94e42d6830c0, type: 3}
-      propertyPath: attackPoint
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 3313352767453639683, guid: c83a5a9c6a2cc714d95b94e42d6830c0, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3313352767453639686, guid: c83a5a9c6a2cc714d95b94e42d6830c0, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c83a5a9c6a2cc714d95b94e42d6830c0, type: 3}
@@ -1574,7 +1566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossexplosionEffectPrefab: {fileID: 3752667827826174148, guid: 6aac6af20df024d43995963ebb27c069, type: 3}
   projectilePrefab: {fileID: 4596818601558133650, guid: 6d6fa9cd258da1447a38b5129e00dfe1, type: 3}
-  monsterPrefab: {fileID: 0}
+  monsterPrefab: {fileID: 3673097552442205923, guid: 32343801bbdf5475492677406740ca79, type: 3}
   spawnDistance: 5
   SpawnInterval: 5
   maxHealth: 10
@@ -1862,14 +1854,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5865132170997723762, guid: 312c25f8056294af095ec50efb717c41, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b3fdeb0bf2133b14983f2edad6e9adc8, type: 3}
-    - target: {fileID: 7732806567213744455, guid: 312c25f8056294af095ec50efb717c41, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 5e6110cbcfc85684eaeadcc225f321a1, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 312c25f8056294af095ec50efb717c41, type: 3}
 --- !u!1 &2112897399

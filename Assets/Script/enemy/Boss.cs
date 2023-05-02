@@ -155,30 +155,12 @@ public class Boss : PoolObject
         slider.maxValue = maxHealth;  // Slider의 maxValue를 maxHealth로 설정합니다.
         slider.value = maxHealth;  // Slider의 value를 maxHealth로 초기화합니다.
     }
-    IEnumerator SpawnAttack()
-    {
-        while (true)
-        {
-            Vector3 spawnPosition = new Vector3(4f, -2f, 0f); // 보스 위치
-            Quaternion spawnRotation = Quaternion.identity; // 기본 회전값
-
-            // 보스 위치에서 왼쪽으로 이동하는 프로젝타일 생성
-            GameObject projectile = Instantiate(projectilePrefab, spawnPosition, spawnRotation);
-            Rigidbody2D projectileRigidbody = projectile.GetComponent<Rigidbody2D>();
-            projectileRigidbody.velocity = new Vector2(attackSpeed, 0f);
-
-            yield return new WaitForSeconds(SpawnInterval); // 프로젝타일 생성 주기
-        }
-    }
+    
     protected virtual void FixedUpdate()
     {
 
     }
-    IEnumerator SwitchScene()
-    {
-        yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene("Test_joo_Loading");
-    }
+    
     void Update()
     {
         slider.value = currentHealth;
@@ -187,28 +169,13 @@ public class Boss : PoolObject
         // 보스가 죽었을 때
         if (!isLive)
         {
-            // 폭발 이펙트를 생성하는 코루틴 함수를 실행
-            StartCoroutine(Explode());
-            // 적 소환 막는 코루틴
-            StopCoroutine(SpawnMonster());
-            // 적이 공격을 막는 코루틴
-            StopCoroutine(SpawnAttack());
-            // 씬전환을 시작하는 코루틴
-            StartCoroutine(SwitchScene());
+            
+            
+            
+            //Die_Enemy();
         }
     }
-    private IEnumerator Explode()
-    {
-        // 폭발 이펙트를 여러번 생성하는 루프
-        for (int i = 0; i < 5; i++)
-        {
-            // 폭발 이펙트를 생성하고 보스의 위치에 배치
-            GameObject explosionEffect1 = Instantiate(bossexplosionEffectPrefab, transform.position + Random.insideUnitSphere * 3f, Quaternion.identity);
-            // 2초간 대기
-            yield return new WaitForSeconds(2.0f);
-            gameObject.SetActive(false);
-        }
-    }
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 8)                                    //skill layer의 tirger와 충돌 시 
@@ -311,9 +278,11 @@ public class Boss : PoolObject
                 //anim_Enemy.SetTrigger("isDie");                                 //죽는 에니메이션 트리거 발동 
                 //Debug.Log("죽음");
                 Die_Enemy();
+
             }
         }
         Debug.Log($"{currentHealth}");                                              //UI 붙으면 삭제 
+
     }
 
     /// <summary>
@@ -321,8 +290,17 @@ public class Boss : PoolObject
     /// </summary>
     void Die_Enemy()
     {
-        isLive = false;
+        // 씬전환을 시작하는 코루틴
+        StartCoroutine(SwitchScene());
+        // 폭발 이펙트를 생성하는 코루틴 함수를 실행
+        StartCoroutine(Explode());
 
+        // 적 소환 막는 코루틴
+        StopCoroutine(SpawnMonster());
+
+        // 적이 공격을 막는 코루틴
+        StopCoroutine(SpawnAttack());
+        //isLive = false;
         //gameObject.SetActive(false);                                            // Enemy 비활성화
 
         //player.AddExp((int)exp);                                              // player에 exp 추가
@@ -331,6 +309,39 @@ public class Boss : PoolObject
     public float GetEnemyHP()
     {
         return currentHealth;
+    }
+    IEnumerator SpawnAttack()
+    {
+        while (true)
+        {
+            Vector3 spawnPosition = new Vector3(4f, -2f, 0f); // 보스 위치
+            Quaternion spawnRotation = Quaternion.identity; // 기본 회전값
+
+            // 보스 위치에서 왼쪽으로 이동하는 프로젝타일 생성
+            GameObject projectile = Instantiate(projectilePrefab, spawnPosition, spawnRotation);
+            Rigidbody2D projectileRigidbody = projectile.GetComponent<Rigidbody2D>();
+            projectileRigidbody.velocity = new Vector2(attackSpeed, 0f);
+
+            yield return new WaitForSeconds(SpawnInterval); // 프로젝타일 생성 주기
+        }
+    }
+    IEnumerator SwitchScene()
+    {
+        Debug.Log("시작");
+        yield return new WaitForSeconds(3.0f);
+        Debug.Log("종료");
+        SceneManager.LoadScene("StageClear");
+    }
+    private IEnumerator Explode()
+    {
+        // 폭발 이펙트를 여러번 생성하는 루프
+        for (int i = 0; i < 50; i++)
+        {
+            // 폭발 이펙트를 생성하고 보스의 위치에 배치
+            GameObject explosionEffect1 = Instantiate(bossexplosionEffectPrefab, transform.position + Random.insideUnitSphere * 3f, Quaternion.identity);
+            // 2초간 대기
+            yield return new WaitForSeconds(0f);
+        }
     }
     private IEnumerator SpawnMonster()
     {

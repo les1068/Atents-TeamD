@@ -20,7 +20,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Master/TEST_ALL(Battle).unity
     guid: cd7be45f14adc4124a9790c50614878a
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Master/Test_BossMin.unity
-    guid: 013a20cebf3c448bbb1f831829ce4024
+    guid: 00570df00d849cd428779f731830b6d0
+  - enabled: 1
+    path: Assets/Scenes/Master/StageClear.unity
+    guid: 7db5e24de578c4a6390c7569734e60a7
   m_configObjects: {}
