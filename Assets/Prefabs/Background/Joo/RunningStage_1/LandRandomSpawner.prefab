@@ -48,3 +48,5 @@ MonoBehaviour:
   interval: 4
   minY: -1
   maxY: 2
+  minusCount: 9
+  originalPrefab: {fileID: 4716310732309764317, guid: d27f384cd95cf884681940468d98c3e0, type: 3}

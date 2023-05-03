@@ -101,9 +101,9 @@ public class Pause : MonoBehaviour
         else
         {
             isPause = true;
-            Time.timeScale = 0;
             canvas_Pause.SetActive(true);
             Stage1End_menu.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 

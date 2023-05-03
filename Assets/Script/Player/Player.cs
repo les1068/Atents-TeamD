@@ -75,17 +75,16 @@ public class Player : StateBase
     {
         if (SceneManager.GetActiveScene().name == "TEST_ALL(Scrolling)" || SceneManager.GetActiveScene().name == "Test_joo_map")
         {
-            inputActions.Player.Disable();
             RunningMapInputOnEnable();
         }
         else
         {
             inputActions.Player.Enable();
-            inputActions.Player.esc.performed += OnESC;
             inputActions.Player.Move.performed += OnMoveInput;
             inputActions.Player.Move.canceled += OnMoveInput;
             anim.SetInteger("IdleCount", 0);
         }
+            inputActions.Player.esc.performed += OnESC;
     }
 
     private void OnDisable()
@@ -96,19 +95,20 @@ public class Player : StateBase
         }
         else
         {
+            inputActions.Player.esc.performed -= OnESC;
             inputActions.Player.Move.canceled -= OnMoveInput;
             inputActions.Player.Move.performed -= OnMoveInput;
-            inputActions.Player.esc.performed -= OnESC;
             inputActions.Player.Disable();
         }
     }
     void RunningMapInputOnEnable()
     {
+        inputActions.Player.Disable();
         if (isStart)
         {
-
             inputActions.UI.Enable();
             inputActions.Player.Enable();
+            inputActions.Player.esc.performed += OnESC;
             inputActions.PlayerRun.Enable();
             inputActions.PlayerRun.Down.performed += OnDown;
         }
@@ -117,6 +117,7 @@ public class Player : StateBase
     {
         inputActions.PlayerRun.Down.performed -= OnDown;
         inputActions.PlayerRun.Disable();
+        inputActions.Player.esc.performed -= OnESC;
         inputActions.Player.Disable();
         inputActions.UI.Disable();
     }
@@ -144,7 +145,7 @@ public class Player : StateBase
         }
     }
 
-    private void OnESC(InputAction.CallbackContext context)
+    private void OnESC(InputAction.CallbackContext _)
     {
         pause.OnPause();
     }
