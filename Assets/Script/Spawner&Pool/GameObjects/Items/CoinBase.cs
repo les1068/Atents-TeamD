@@ -11,6 +11,7 @@ public class CoinBase : ItemBase
     {
         ItemScore = coinScore;
         ItemExp = coinExp;
+        RefreshRotate();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -20,7 +21,6 @@ public class CoinBase : ItemBase
             player.AddExp(coinExp);
             player.AddScore(coinScore);
             ItemEffect();
-            //StartCoroutine(LifeOver());
         }
     }
 }

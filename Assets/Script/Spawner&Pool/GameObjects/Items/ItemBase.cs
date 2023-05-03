@@ -10,6 +10,8 @@ public class ItemBase : PoolObject
     float moveSpeed = 4;
     public float effectSpeed = 0.3f;
     int itemscore;  //점수
+
+
     protected int ItemScore //점수프로퍼티
     {
         private get => itemscore;
@@ -33,25 +35,35 @@ public class ItemBase : PoolObject
 
     float frequency; //빈도수
 
+
+    Quaternion startRot; // 시작 회전값
+
+
     protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
         player = FindObjectOfType<Player>();
+        startRot = transform.rotation;
+
     }
 
     protected virtual void OnEnable()
     {
+        
         ItemScore = 1;
         ItemExp = 1;
-    }
+        RefreshRotate();
 
+
+    }
     protected virtual void Update()
     {
-        transform.Translate(Time.deltaTime * Vector2.left * moveSpeed);
+        transform.Translate(Time.deltaTime * Vector2.left * moveSpeed,Space.World);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.CompareTag("Player"))
         {
             ItemEffect();
@@ -60,8 +72,11 @@ public class ItemBase : PoolObject
 
     protected void ItemEffect()
     {
+
+       
         transform.Translate(Vector2.up * effectSpeed, Space.World);
         StartCoroutine(ItemRotator());
+        
 
         StartCoroutine(LifeOver(0.3f));
     }
@@ -70,10 +85,14 @@ public class ItemBase : PoolObject
     {
         while (this.gameObject != null && Time.timeScale != 0)
         {
-            transform.Rotate(0, 360.0f*Time.deltaTime, 0);
+            transform.Rotate(0, 360.0f * Time.deltaTime, 0);
             yield return null;
         }
-
         StopCoroutine(ItemRotator());
+    }
+
+    protected void RefreshRotate()
+    {
+        transform.rotation = startRot;
     }
 }
