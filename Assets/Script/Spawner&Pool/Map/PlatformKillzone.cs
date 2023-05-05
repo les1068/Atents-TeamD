@@ -35,7 +35,11 @@ public class PlatformKillzone : MonoBehaviour
         {
             collision.gameObject.SetActive(false);
              PlatformCount++;
-
+            //게임 종료 조건 
+            if (PlatformCount == platformCountEnd)
+            {
+                OnStageEnd();
+            }
         }
         else if (collision.GetComponent<Bullet>() || collision.GetComponent<CoinBase>())
         {
@@ -43,11 +47,7 @@ public class PlatformKillzone : MonoBehaviour
         }
 
 
-       //게임 종료 조건 
-        if (PlatformCount == platformCountEnd)
-        {
-            OnStageEnd();
-        }
+      
     }
     public void OnStageEnd()
     {
